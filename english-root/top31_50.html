@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 31-50</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- JS将在这里生成所有的词根区块 -->
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-labor-",
+                meaning: "工作 (work)",
+                words: [
+                    { word: "labor", display: "<span class='r'>labor</span>", pronunciation: "/ˈleɪ·bər/", translation: "n./v. 劳动，劳工", mnemonic: "labor(工作) = 纯粹的体力劳动", example: "The law protects the rights of manual <span class='highlight-word'>labor</span>. (法律保护体力劳动者的权益。)" },
+                    { word: "collaborate", display: "<span class='p'>col</span><span class='r'>labor</span><span class='s'>ate</span>", pronunciation: "/kəˈlæb·ə·reɪt/", translation: "v. 合作，协作", mnemonic: "col(共同) + labor(工作) + ate = 在一起工作 = 合作", example: "We need to <span class='highlight-word'>collaborate</span> to finish this project. (我们需要合作来完成这个项目。)" },
+                    { word: "laboratory", display: "<span class='r'>labor</span><span class='s'>atory</span>", pronunciation: "/ˈlæb·rə·tɔː·ri/", translation: "n. 实验室", mnemonic: "labor(工作) + atory(场所) = 科学家工作的地方 = 实验室", example: "The samples were sent to the <span class='highlight-word'>laboratory</span> for testing. (样本被送往实验室进行检测。)" },
+                    { word: "elaborate", display: "<span class='p'>e</span><span class='r'>labor</span><span class='s'>ate</span>", pronunciation: "/ɪˈlæb·ə·rət/", translation: "adj. 精心制作的 v. 详细说明", mnemonic: "e(出) + labor(工作) + ate = 把心血全部做出来 = 精心制作/详尽说明", example: "Could you <span class='highlight-word'>elaborate</span> on that idea? (你能详细说明一下那个想法吗？)" }
+                ]
+            },
+            {
+                root: "-oper-",
+                meaning: "工作、操作 (work)",
+                words: [
+                    { word: "operate", display: "<span class='r'>oper</span><span class='s'>ate</span>", pronunciation: "/ˈɒp·ə·reɪt/", translation: "v. 操作，运转，动手术", mnemonic: "oper(工作/操作) + ate(动词) = 操纵机器或人体 = 运转/手术", example: "The surgeon will <span class='highlight-word'>operate</span> on him tomorrow. (外科医生明天将为他动手术。)" },
+                    { word: "operation", display: "<span class='r'>oper</span><span class='s'>ation</span>", pronunciation: "/ˌɒp·əˈreɪ·ʃn/", translation: "n. 运作，行动，手术", mnemonic: "oper(操作) + ation(名词后缀) = 行动/运作", example: "The military <span class='highlight-word'>operation</span> was a total success. (那次军事行动取得了全面成功。)" },
+                    { word: "cooperate", display: "<span class='p'>co</span><span class='r'>oper</span><span class='s'>ate</span>", pronunciation: "/kəʊˈɒp·ə·reɪt/", translation: "v. 合作，配合", mnemonic: "co(共同) + oper(工作) + ate = 共同操作一件事 = 配合", example: "The two tech giants agreed to <span class='highlight-word'>cooperate</span>. (两家科技巨头同意合作。)" },
+                    { word: "operator", display: "<span class='r'>oper</span><span class='s'>ator</span>", pronunciation: "/ˈɒp·ə·reɪ·tər/", translation: "n. 操作员，接线员", mnemonic: "oper(操作) + ator(人) = 执行操作的人 = 操作员", example: "Please hold, I will connect you to an <span class='highlight-word'>operator</span>. (请稍等，我将为您接通人工客服。)" }
+                ]
+            },
+            {
+                root: "-fin-",
+                meaning: "结束，边界 (end/limit)",
+                words: [
+                    { word: "final", display: "<span class='r'>fin</span><span class='s'>al</span>", pronunciation: "/ˈfaɪ·nl/", translation: "adj. 最后的，最终的", mnemonic: "fin(结束) + al(形容词) = 走到尽头的 = 最终的", example: "This is my <span class='highlight-word'>final</span> offer. (这是我的最终报价。)" },
+                    { word: "finish", display: "<span class='r'>fin</span><span class='s'>ish</span>", pronunciation: "/ˈfɪn·ɪʃ/", translation: "v. 结束，完成", mnemonic: "fin(结束) + ish(动词) = 使其达到终点 = 完成", example: "Did you <span class='highlight-word'>finish</span> your homework? (你完成作业了吗？)" },
+                    { word: "define", display: "<span class='p'>de</span><span class='r'>fine</span>", pronunciation: "/dɪˈfaɪn/", translation: "v. 给...下定义，明确", mnemonic: "de(向下) + fine(边界) = 画下底线和边界 = 明确界定", example: "It is hard to <span class='highlight-word'>define</span> the meaning of success. (很难给成功的含义下定义。)" },
+                    { word: "infinite", display: "<span class='p'>in</span><span class='r'>fin</span><span class='s'>ite</span>", pronunciation: "/ˈɪn·fɪ·nət/", translation: "adj. 无限的，无穷的", mnemonic: "in(无/不) + fin(边界) + ite = 没有边界的 = 无穷的", example: "The universe is <span class='highlight-word'>infinite</span>. (宇宙是无限的。)" }
+                ]
+            },
+            {
+                root: "-rupt-",
+                meaning: "打破 (break)",
+                words: [
+                    { word: "erupt", display: "<span class='p'>e</span><span class='r'>rupt</span>", pronunciation: "/ɪˈrʌpt/", translation: "v. 爆发，喷发", mnemonic: "e(向外) + rupt(打破) = 冲破地壳喷出来 = 火山爆发", example: "The volcano is expected to <span class='highlight-word'>erupt</span> soon. (预计火山很快就会喷发。)" },
+                    { word: "interrupt", display: "<span class='p'>inter</span><span class='r'>rupt</span>", pronunciation: "/ˌɪn·təˈrʌpt/", translation: "v. 打断，中断", mnemonic: "inter(在中间) + rupt(打破) = 从中间强行劈开 = 打断", example: "Please don't <span class='highlight-word'>interrupt</span> me while I'm speaking. (我说话时请不要打断我。)" },
+                    { word: "bankrupt", display: "<span class='r'>bank</span><span class='r'>rupt</span>", pronunciation: "/ˈbæŋk·rʌpt/", translation: "adj. 破产的", mnemonic: "bank(长凳/钱庄) + rupt(打破) = 钱庄的板凳被砸了 = 破产", example: "The company went <span class='highlight-word'>bankrupt</span> last year. (那家公司去年破产了。)" },
+                    { word: "corrupt", display: "<span class='p'>cor</span><span class='r'>rupt</span>", pronunciation: "/kəˈrʌpt/", translation: "adj. 腐败的 v. 腐化", mnemonic: "cor(全部) + rupt(打破) = 道德底线全盘崩溃 = 腐败的", example: "The official was arrested for <span class='highlight-word'>corrupt</span> practices. (那名官员因腐败行为被捕。)" }
+                ]
+            },
+            {
+                root: "-fract- / -frag-",
+                meaning: "打碎 (break)",
+                words: [
+                    { word: "fragile", display: "<span class='r'>frag</span><span class='s'>ile</span>", pronunciation: "/ˈfrædʒ·aɪl/", translation: "adj. 易碎的，脆弱的", mnemonic: "frag(碎) + ile(容易...的) = 很容易碎的", example: "Handle this box carefully, the contents are <span class='highlight-word'>fragile</span>. (小心搬运这个箱子，里面是易碎品。)" },
+                    { word: "fragment", display: "<span class='r'>frag</span><span class='s'>ment</span>", pronunciation: "/ˈfræɡ·mənt/", translation: "n. 碎片，片段", mnemonic: "frag(碎) + ment(名词) = 打碎后掉下来的东西 = 碎片", example: "The glass broke into a million <span class='highlight-word'>fragments</span>. (玻璃碎成了无数的碎片。)" },
+                    { word: "fraction", display: "<span class='r'>fract</span><span class='s'>ion</span>", pronunciation: "/ˈfræk·ʃn/", translation: "n. 分数，小部分", mnemonic: "fract(碎) + ion = 整体被打碎后的一小份 = 分数", example: "She owns a small <span class='highlight-word'>fraction</span> of the company. (她拥有公司一小部分的股份。)" },
+                    { word: "fracture", display: "<span class='r'>fract</span><span class='s'>ure</span>", pronunciation: "/ˈfræk·tʃər/", translation: "n./v. 骨折，断裂", mnemonic: "fract(碎) + ure(名词) = 骨头裂开 = 骨折", example: "He suffered a minor <span class='highlight-word'>fracture</span> in his left arm. (他左臂有轻微骨折。)" }
+                ]
+            },
+            {
+                root: "-press-",
+                meaning: "压 (press)",
+                words: [
+                    { word: "press", display: "<span class='r'>press</span>", pronunciation: "/pres/", translation: "v. 压，按 n. 新闻界", mnemonic: "press = 印刷机用力压出油墨 = 引申为新闻媒体", example: "Please <span class='highlight-word'>press</span> the button to start the machine. (请按按钮启动机器。)" },
+                    { word: "pressure", display: "<span class='r'>press</span><span class='s'>ure</span>", pronunciation: "/ˈpreʃ·ər/", translation: "n. 压力", mnemonic: "press(压) + ure(名词) = 压迫的感觉 = 压力", example: "The team is working under extreme <span class='highlight-word'>pressure</span>. (团队正在承受极大的压力工作。)" },
+                    { word: "express", display: "<span class='p'>ex</span><span class='r'>press</span>", pronunciation: "/ɪkˈspres/", translation: "v. 表达 adj. 特快的", mnemonic: "ex(向外) + press(压) = 把脑子里的想法挤压出来 = 表达", example: "Words cannot <span class='highlight-word'>express</span> my gratitude. (言语无法表达我的感激之情。)" },
+                    { word: "compress", display: "<span class='p'>com</span><span class='r'>press</span>", pronunciation: "/kəmˈpres/", translation: "v. 压缩", mnemonic: "com(共同/一起) + press(压) = 把东西挤压到一起 = 压缩", example: "You need to <span class='highlight-word'>compress</span> the file before emailing it. (发邮件前你需要压缩这个文件。)" },
+                    { word: "depress", display: "<span class='p'>de</span><span class='r'>press</span>", pronunciation: "/dɪˈpres/", translation: "v. 使沮丧，使萧条", mnemonic: "de(向下) + press(压) = 把情绪往下压 = 让人沮丧", example: "The bad news really <span class='highlight-word'>depressed</span> me. (这个坏消息真让我沮丧。)" }
+                ]
+            },
+            {
+                root: "-flu- / -flux-",
+                meaning: "流动 (flow)",
+                words: [
+                    { word: "fluent", display: "<span class='r'>flu</span><span class='s'>ent</span>", pronunciation: "/ˈfluː·ənt/", translation: "adj. 流利的，流畅的", mnemonic: "flu(流动) + ent(形容词) = 像水一样流出的 = (口语)流利的", example: "She is <span class='highlight-word'>fluent</span> in both English and Spanish. (她英语和西班牙语都很流利。)" },
+                    { word: "fluid", display: "<span class='r'>flu</span><span class='s'>id</span>", pronunciation: "/ˈfluː·ɪd/", translation: "n. 液体 adj. 流动的", mnemonic: "flu(流动) + id(物质) = 流动的物质 = 液体", example: "Water and milk are both <span class='highlight-word'>fluids</span>. (水和牛奶都是液体。)" },
+                    { word: "influence", display: "<span class='p'>in</span><span class='r'>flu</span><span class='s'>ence</span>", pronunciation: "/ˈɪn·flu·əns/", translation: "n./v. 影响", mnemonic: "in(向内) + flu(流动) + ence = 像潜流一样注入别人的大脑 = 影响", example: "Social media has a huge <span class='highlight-word'>influence</span> on teenagers. (社交媒体对青少年有巨大的影响。)" },
+                    { word: "flush", display: "<span class='r'>flu</span><span class='s'>sh</span>", pronunciation: "/flʌʃ/", translation: "v. 冲洗，脸红", mnemonic: "flu(流动) + sh = 用水流冲走 = 冲马桶/血液流到脸上", example: "Don't forget to <span class='highlight-word'>flush</span> the toilet. (别忘了冲马桶。)" }
+                ]
+            },
+            {
+                root: "-mov- / -mot-",
+                meaning: "移动 (move)",
+                words: [
+                    { word: "motion", display: "<span class='r'>mot</span><span class='s'>ion</span>", pronunciation: "/ˈməʊ·ʃn/", translation: "n. 运动，动作，提议", mnemonic: "mot(动) + ion(名词) = 移动的状态 = 运动/会议上的动议", example: "The train was in <span class='highlight-word'>motion</span>. (火车正在行驶中。)" },
+                    { word: "promote", display: "<span class='p'>pro</span><span class='r'>mot</span><span class='s'>e</span>", pronunciation: "/prəˈməʊt/", translation: "v. 促进，晋升，促销", mnemonic: "pro(向前) + mote(移动) = 把人或产品往前推 = 晋升/促销", example: "He was <span class='highlight-word'>promoted</span> to senior manager. (他被晋升为高级经理。)" },
+                    { word: "remove", display: "<span class='p'>re</span><span class='r'>mov</span><span class='s'>e</span>", pronunciation: "/rɪˈmuːv/", translation: "v. 移除，消除", mnemonic: "re(向后/回) + move(移动) = 把它移回去 = 移除", example: "Please <span class='highlight-word'>remove</span> your shoes before entering. (进门前请脱鞋。)" },
+                    { word: "remote", display: "<span class='p'>re</span><span class='r'>mot</span><span class='s'>e</span>", pronunciation: "/rɪˈməʊt/", translation: "adj. 遥远的，偏僻的", mnemonic: "re(远离) + mote(移动) = 移得很远的地方 = 遥远的", example: "They live in a <span class='highlight-word'>remote</span> mountain village. (他们住在一个偏远的深山村庄里。)" }
+                ]
+            },
+            {
+                root: "-vert- / -vers-",
+                meaning: "转 (turn)",
+                words: [
+                    { word: "version", display: "<span class='r'>vers</span><span class='s'>ion</span>", pronunciation: "/ˈvɜː·ʃn/", translation: "n. 版本，说法", mnemonic: "vers(转) + ion = 事物转换成的新形态 = 版本", example: "This is the latest <span class='highlight-word'>version</span> of the software. (这是该软件的最新版本。)" },
+                    { word: "reverse", display: "<span class='p'>re</span><span class='r'>vers</span><span class='s'>e</span>", pronunciation: "/rɪˈvɜːs/", translation: "v./n. 颠倒，反转，背面", mnemonic: "re(往回) + verse(转) = 调转车头 = 倒退/反转", example: "Can you <span class='highlight-word'>reverse</span> the car into the garage? (你能把车倒进车库吗？)" },
+                    { word: "convert", display: "<span class='p'>con</span><span class='r'>vert</span>", pronunciation: "/kənˈvɜːt/", translation: "v. 转换，转变信仰", mnemonic: "con(彻底) + vert(转) = 彻底改变状态 = 转换", example: "We need to <span class='highlight-word'>convert</span> dollars into euros. (我们需要把美元兑换成欧元。)" },
+                    { word: "universe", display: "<span class='p'>uni</span><span class='r'>vers</span><span class='s'>e</span>", pronunciation: "/ˈjuː·nɪ·vɜːs/", translation: "n. 宇宙", mnemonic: "uni(一/统一) + verse(转) = 万物统转向一处构成整体 = 宇宙", example: "Are we alone in the <span class='highlight-word'>universe</span>? (我们在宇宙中是孤独的吗？)" }
+                ]
+            },
+            {
+                root: "-ject-",
+                meaning: "投掷 (throw)",
+                words: [
+                    { word: "project", display: "<span class='p'>pro</span><span class='r'>ject</span>", pronunciation: "/ˈprɒ·dʒekt/", translation: "n. 项目 v. 投射", mnemonic: "pro(向前) + ject(扔) = 把想法丢到未来去执行 = 项目/投射", example: "The <span class='highlight-word'>project</span> will take three months to finish. (这个项目需要三个月才能完成。)" },
+                    { word: "reject", display: "<span class='p'>re</span><span class='r'>ject</span>", pronunciation: "/rɪˈdʒekt/", translation: "v. 拒绝，排斥", mnemonic: "re(往回) + ject(扔) = 把别人给的东西扔回脸上 = 拒绝", example: "My visa application got <span class='highlight-word'>rejected</span>. (我的签证申请被拒了。)" },
+                    { word: "inject", display: "<span class='p'>in</span><span class='r'>ject</span>", pronunciation: "/ɪnˈdʒekt/", translation: "v. 注射，注入", mnemonic: "in(进入) + ject(扔) = 用针管把药水打进去 = 注射", example: "The nurse will <span class='highlight-word'>inject</span> the medicine into your arm. (护士会把药注射进你的胳膊。)" },
+                    { word: "object", display: "<span class='p'>ob</span><span class='r'>ject</span>", pronunciation: "/ˈɒb·dʒɪkt/", translation: "n. 物体 v. 反对", mnemonic: "ob(在前面挡着) + ject(扔) = 扔个石头挡住去路 = 反对", example: "I strongly <span class='highlight-word'>object</span> to this decision. (我强烈反对这个决定。)" }
+                ]
+            },
+            {
+                root: "-cast-",
+                meaning: "投掷，撒 (throw)",
+                words: [
+                    { word: "broadcast", display: "<span class='p'>broad</span><span class='r'>cast</span>", pronunciation: "/ˈbrɔːd·kɑːst/", translation: "v./n. 广播，播送", mnemonic: "broad(宽广地) + cast(撒/扔) = 把信号大面积撒出去 = 广播", example: "The news will be <span class='highlight-word'>broadcast</span> live tonight. (这则新闻今晚将进行现场直播。)" },
+                    { word: "forecast", display: "<span class='p'>fore</span><span class='r'>cast</span>", pronunciation: "/ˈfɔː·kɑːst/", translation: "v./n. 预测，预报", mnemonic: "fore(提前) + cast(投掷) = 提前抛出结论 = 天气预报", example: "The weather <span class='highlight-word'>forecast</span> says it will rain tomorrow. (天气预报说明天会下雨。)" },
+                    { word: "podcast", display: "<span class='p'>pod</span><span class='r'>cast</span>", pronunciation: "/ˈpɒd·kɑːst/", translation: "n. 播客", mnemonic: "iPod + broadcast = 随时随地听的广播 = 播客", example: "I love listening to English <span class='highlight-word'>podcasts</span> on my commute. (我喜欢在通勤时听英语播客。)" }
+                ]
+            },
+            {
+                root: "-fac- / -fic- / -fact- / -fect-",
+                meaning: "做，制造 (make/do)",
+                words: [
+                    { word: "fact", display: "<span class='r'>fact</span>", pronunciation: "/fækt/", translation: "n. 事实，真相", mnemonic: "fact(做) = 已经做出来、发生过的事情 = 事实", example: "It is a known <span class='highlight-word'>fact</span> that smoking causes cancer. (众所周知，吸烟会导致癌症。)" },
+                    { word: "factory", display: "<span class='r'>fact</span><span class='s'>ory</span>", pronunciation: "/ˈfæk·tə·ri/", translation: "n. 工厂", mnemonic: "fact(制造) + ory(场所) = 制造物品的地方 = 工厂", example: "They work in a car <span class='highlight-word'>factory</span>. (他们在一家汽车制造厂工作。)" },
+                    { word: "perfect", display: "<span class='p'>per</span><span class='r'>fect</span>", pronunciation: "/ˈpɜː·fɪkt/", translation: "adj. 完美的", mnemonic: "per(从头贯穿到尾) + fect(做) = 每一个细节都做到底 = 完美的", example: "Nobody is <span class='highlight-word'>perfect</span>. (人无完人。)" },
+                    { word: "effect", display: "<span class='p'>ef</span><span class='r'>fect</span>", pronunciation: "/ɪˈfekt/", translation: "n. 效果，影响", mnemonic: "ef(向外) + fect(做) = 做出来显现在外的结果 = 效果", example: "The medicine had no <span class='highlight-word'>effect</span> on the pain. (这种药对止痛没有任何效果。)" },
+                    { word: "efficient", display: "<span class='p'>ef</span><span class='r'>fic</span><span class='s'>ient</span>", pronunciation: "/ɪˈfɪʃ·nt/", translation: "adj. 高效的", mnemonic: "ef(向外) + fic(做) + ient = 能持续做出漂亮结果的 = 高效的", example: "We need a more <span class='highlight-word'>efficient</span> way to solve this. (我们需要一种更高效的方法来解决这个问题。)" }
+                ]
+            },
+            {
+                root: "-gen-",
+                meaning: "产生，出生，种类 (produce/birth)",
+                words: [
+                    { word: "gender", display: "<span class='r'>gen</span><span class='s'>der</span>", pronunciation: "/ˈdʒen·dər/", translation: "n. 性别", mnemonic: "gen(出生/种类) + der = 人类出生的生理种类 = 性别", example: "Please select your <span class='highlight-word'>gender</span> on the form. (请在表格上选择您的性别。)" },
+                    { word: "generate", display: "<span class='r'>gen</span><span class='s'>erate</span>", pronunciation: "/ˈdʒen·ə·reɪt/", translation: "v. 产生，发生(电力/利润)", mnemonic: "gen(产生) + erate(动词) = 使其生出来 = 产生", example: "Wind turbines <span class='highlight-word'>generate</span> clean energy. (风力发电机产生清洁能源。)" },
+                    { word: "general", display: "<span class='r'>gen</span><span class='s'>eral</span>", pronunciation: "/ˈdʒen·ər·əl/", translation: "adj. 普遍的，总的 n. 将军", mnemonic: "gen(种属) + eral(形容词) = 适用于整个群体的 = 普遍的", example: "The <span class='highlight-word'>general</span> public supports the new law. (广大公众普遍支持这项新法律。)" },
+                    { word: "genetic", display: "<span class='r'>gen</span><span class='s'>etic</span>", pronunciation: "/dʒəˈnet·ɪk/", translation: "adj. 基因的，遗传的", mnemonic: "gen(出生) + etic(形容词) = 决定人出生的密码 = 基因的", example: "He has a <span class='highlight-word'>genetic</span> disease. (他患有某种遗传性疾病。)" }
+                ]
+            },
+            {
+                root: "-nat-",
+                meaning: "出生 (birth)",
+                words: [
+                    { word: "native", display: "<span class='r'>nat</span><span class='s'>ive</span>", pronunciation: "/ˈneɪ·tɪv/", translation: "adj. 本地的，天生的", mnemonic: "nat(出生) + ive = 出生就在那里的 = 本地的", example: "English is not my <span class='highlight-word'>native</span> language. (英语不是我的母语。)" },
+                    { word: "nation", display: "<span class='r'>nat</span><span class='s'>ion</span>", pronunciation: "/ˈneɪ·ʃn/", translation: "n. 国家，民族", mnemonic: "nat(出生) + ion = 拥有相同出生血统的庞大群体 = 国家", example: "China is a great <span class='highlight-word'>nation</span>. (中国是一个伟大的国家。)" },
+                    { word: "natural", display: "<span class='r'>nat</span><span class='s'>ural</span>", pronunciation: "/ˈnætʃ·rəl/", translation: "adj. 自然的，天然的", mnemonic: "nat(生) + ural = 天生就是那个样子的 = 自然的", example: "It is <span class='highlight-word'>natural</span> to feel nervous before a test. (考前感到紧张是很自然的。)" },
+                    { word: "innate", display: "<span class='p'>in</span><span class='r'>nat</span><span class='s'>e</span>", pronunciation: "/ɪˈneɪt/", translation: "adj. 天生的，固有的", mnemonic: "in(向内/里面) + nate(生) = 从娘胎里带出来的 = 天生的", example: "He has an <span class='highlight-word'>innate</span> talent for music. (他有着与生俱来的音乐天赋。)" }
+                ]
+            },
+            {
+                root: "-mort-",
+                meaning: "死亡 (death)",
+                words: [
+                    { word: "mortal", display: "<span class='r'>mort</span><span class='s'>al</span>", pronunciation: "/ˈmɔː·tl/", translation: "adj. 终有一死的，凡人的", mnemonic: "mort(死) + al(形容词) = 终究逃不过一死 = 凡人的", example: "All human beings are <span class='highlight-word'>mortal</span>. (所有人都是终有一死的。)" },
+                    { word: "mortality", display: "<span class='r'>mort</span><span class='s'>ality</span>", pronunciation: "/mɔːˈtæl·ə·ti/", translation: "n. 死亡率", mnemonic: "mort(死) + ality(名词) = 死亡的数据 = 死亡率", example: "The infant <span class='highlight-word'>mortality</span> rate has dropped significantly. (婴儿死亡率已大幅下降。)" },
+                    { word: "immortal", display: "<span class='p'>im</span><span class='r'>mort</span><span class='s'>al</span>", pronunciation: "/ɪˈmɔː·tl/", translation: "adj. 不朽的，永生的", mnemonic: "im(不) + mort(死) + al = 不会死去的 = 永生的", example: "The soul is considered <span class='highlight-word'>immortal</span> in many religions. (在许多宗教中，灵魂被认为是不朽的。)" },
+                    { word: "mortgage", display: "<span class='r'>mort</span><span class='s'>gage</span>", pronunciation: "/ˈmɔː·ɡɪdʒ/", translation: "n. 房屋抵押贷款", mnemonic: "mort(死) + gage(契约) = 死契 (还清或违约前一直锁死) = 房贷", example: "It takes 30 years to pay off the <span class='highlight-word'>mortgage</span>. (还清房贷需要30年。)" }
+                ]
+            },
+            {
+                root: "-viv- / -vit-",
+                meaning: "生命，存活 (live)",
+                words: [
+                    { word: "vivid", display: "<span class='r'>viv</span><span class='s'>id</span>", pronunciation: "/ˈvɪv·ɪd/", translation: "adj. 生动的，鲜艳的", mnemonic: "viv(生命) + id(充满...的) = 充满生命力的 = 生动的", example: "I have <span class='highlight-word'>vivid</span> memories of my childhood. (我对童年有极其生动的记忆。)" },
+                    { word: "survive", display: "<span class='p'>sur</span><span class='r'>viv</span><span class='s'>e</span>", pronunciation: "/səˈvaɪv/", translation: "v. 幸存，活下来", mnemonic: "sur(在上面/超越) + vive(活) = 跨越了灾难活下来 = 幸存", example: "Only a few people <span class='highlight-word'>survived</span> the crash. (那场空难中只有几个人幸存。)" },
+                    { word: "revive", display: "<span class='p'>re</span><span class='r'>viv</span><span class='s'>e</span>", pronunciation: "/rɪˈvaɪv/", translation: "v. 复苏，使恢复生机", mnemonic: "re(再次) + vive(活) = 重新活过来 = 复苏", example: "The economy is starting to <span class='highlight-word'>revive</span>. (经济开始复苏了。)" },
+                    { word: "vitamin", display: "<span class='r'>vit</span><span class='s'>amin</span>", pronunciation: "/ˈvɪt·ə·mɪn/", translation: "n. 维生素", mnemonic: "vit(生命) + amin(氨基酸) = 维持生命的关键物质 = 维生素", example: "Oranges are rich in <span class='highlight-word'>vitamin</span> C. (橙子富含维生素C。)" }
+                ]
+            },
+            {
+                root: "-corp- / -corpor-",
+                meaning: "身体，团体 (body)",
+                words: [
+                    { word: "corpse", display: "<span class='r'>corp</span><span class='s'>se</span>", pronunciation: "/kɔːps/", translation: "n. 尸体", mnemonic: "corp(身体) + se = 没有灵魂的肉体 = 尸体", example: "The police found a <span class='highlight-word'>corpse</span> in the river. (警察在河里发现了一具尸体。)" },
+                    { word: "corporate", display: "<span class='r'>corpor</span><span class='s'>ate</span>", pronunciation: "/ˈkɔː·pər·ət/", translation: "adj. 公司的，法人的", mnemonic: "corpor(团体/躯体) + ate(形容词) = 属于一个大型商业躯体的", example: "He hates the rigid <span class='highlight-word'>corporate</span> culture. (他讨厌刻板的公司文化。)" },
+                    { word: "corporation", display: "<span class='r'>corpor</span><span class='s'>ation</span>", pronunciation: "/ˌkɔː·pəˈreɪ·ʃn/", translation: "n. 大型公司，企业", mnemonic: "corpor(团体) + ation(名词) = 把很多人聚合成一个身体 = 集团公司", example: "Microsoft is a multinational <span class='highlight-word'>corporation</span>. (微软是一家跨国公司。)" },
+                    { word: "incorporate", display: "<span class='p'>in</span><span class='r'>corpor</span><span class='s'>ate</span>", pronunciation: "/ɪnˈkɔː·pə·reɪt/", translation: "v. 合并，纳入", mnemonic: "in(进入) + corpor(身体) + ate = 把外面的一块肉吸收进身体里 = 纳入", example: "We will <span class='highlight-word'>incorporate</span> your feedback into the new design. (我们将把你的反馈纳入新设计中。)" }
+                ]
+            },
+            {
+                root: "-carn-",
+                meaning: "肉 (flesh)",
+                words: [
+                    { word: "carnival", display: "<span class='r'>carn</span><span class='s'>ival</span>", pronunciation: "/ˈkɑː·nɪ·vl/", translation: "n. 狂欢节", mnemonic: "carn(肉) + val(告别) = 斋戒期前吃肉的盛大告别派对 = 狂欢节", example: "We danced all night at the Rio <span class='highlight-word'>carnival</span>. (我们在里约狂欢节上跳了一整夜。)" },
+                    { word: "carnivore", display: "<span class='r'>carn</span><span class='s'>ivore</span>", pronunciation: "/ˈkɑː·nɪ·vɔːr/", translation: "n. 食肉动物", mnemonic: "carn(肉) + vore(吃) = 吃肉的动物 = 食肉动物", example: "Lions and tigers are <span class='highlight-word'>carnivores</span>. (狮子和老虎都是食肉动物。)" },
+                    { word: "incarnation", display: "<span class='p'>in</span><span class='r'>carn</span><span class='s'>ation</span>", pronunciation: "/ˌɪn·kɑːˈneɪ·ʃn/", translation: "n. 化身", mnemonic: "in(进入) + carn(肉体) + ation = 精神或神灵被赋予了血肉之躯 = 化身", example: "He is the <span class='highlight-word'>incarnation</span> of evil. (他简直是邪恶的化身。)" }
+                ]
+            },
+            {
+                root: "-path-",
+                meaning: "感受，疾病 (feeling/suffering)",
+                words: [
+                    { word: "pathetic", display: "<span class='r'>path</span><span class='s'>etic</span>", pronunciation: "/pəˈθet·ɪk/", translation: "adj. 可怜的，引起怜悯的", mnemonic: "path(感受/痛苦) + etic(形容词) = 让人感到痛苦/怜悯的", example: "The starving dog looked incredibly <span class='highlight-word'>pathetic</span>. (那只快饿死的狗看起来可怜极了。)" },
+                    { word: "sympathy", display: "<span class='p'>sym</span><span class='r'>path</span><span class='s'>y</span>", pronunciation: "/ˈsɪm·pə·θi/", translation: "n. 同情", mnemonic: "sym(共同) + path(感受) + y = 别人痛苦我也觉得痛苦 = 同情心", example: "I have deep <span class='highlight-word'>sympathy</span> for the victims. (我对受害者深表同情。)" },
+                    { word: "empathy", display: "<span class='p'>em</span><span class='r'>path</span><span class='s'>y</span>", pronunciation: "/ˈem·pə·θi/", translation: "n. 共情，同理心", mnemonic: "em(进入) + path(感受) + y = 完全进入/代入别人的情绪 = 共情", example: "A good doctor needs to show <span class='highlight-word'>empathy</span> towards patients. (一个好医生需要对病人展现出极强的同理心。)" },
+                    { word: "pathology", display: "<span class='r'>path</span><span class='s'>ology</span>", pronunciation: "/pəˈθɒl·ə·dʒi/", translation: "n. 病理学", mnemonic: "path(疾病) + ology(学科) = 研究疾病的学科", example: "She works in the <span class='highlight-word'>pathology</span> lab. (她在病理学实验室工作。)" }
+                ]
+            },
+            {
+                root: "-senti- / -sens-",
+                meaning: "感觉，理智 (feel)",
+                words: [
+                    { word: "sense", display: "<span class='r'>sens</span><span class='s'>e</span>", pronunciation: "/sens/", translation: "n. 感觉，理智，意义", mnemonic: "sens(感觉) = 大脑对外界的知觉", example: "It makes no <span class='highlight-word'>sense</span> to me. (这对我来说毫无意义/完全讲不通。)" },
+                    { word: "sensitive", display: "<span class='r'>sens</span><span class='s'>itive</span>", pronunciation: "/ˈsen·sə·tɪv/", translation: "adj. 敏感的", mnemonic: "sens(感觉) + itive(形容词) = 感觉极其容易被触动的 = 敏感的", example: "My teeth are highly <span class='highlight-word'>sensitive</span> to cold. (我的牙齿对冷极其敏感。)" },
+                    { word: "sentiment", display: "<span class='r'>senti</span><span class='s'>ment</span>", pronunciation: "/ˈsen·tɪ·mənt/", translation: "n. 情绪，观点", mnemonic: "senti(感觉) + ment(名词) = 内心深处的感情倾向", example: "The public <span class='highlight-word'>sentiment</span> is turning against the war. (公众情绪正转向反战。)" },
+                    { word: "consent", display: "<span class='p'>con</span><span class='r'>sent</span>", pronunciation: "/kənˈsent/", translation: "n./v. 同意，赞成", mnemonic: "con(共同) + sent(感觉) = 大家的感受达成一致 = 同意", example: "You cannot share my data without my <span class='highlight-word'>consent</span>. (未经我同意，你不能分享我的数据。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 31}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

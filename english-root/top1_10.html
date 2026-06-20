@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 1-10</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- JS将在这里生成所有的词根区块 -->
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-spect- / -spic-",
+                meaning: "看 (look)",
+                words: [
+                    { word: "inspect", display: "<span class='p'>in</span><span class='r'>spect</span>", pronunciation: "/ɪnˈspekt/", translation: "v. 检查，视察", mnemonic: "in(向内) + spect(看) = 往里面仔细看 = 检查", example: "The manager will <span class='highlight-word'>inspect</span> the facility tomorrow. (经理明天将视察该设施。)" },
+                    { word: "expect", display: "<span class='p'>ex</span><span class='r'>pect</span>", pronunciation: "/ɪkˈspekt/", translation: "v. 期待，预期", mnemonic: "ex(向外) + pect(看) = 向外看，盼望发生 = 期待", example: "We <span class='highlight-word'>expect</span> the project to be completed by Friday. (我们预计项目周五完工。)" },
+                    { word: "respect", display: "<span class='p'>re</span><span class='r'>spect</span>", pronunciation: "/rɪˈspekt/", translation: "v./n. 尊重，敬重", mnemonic: "re(一再/往回) + spect(看) = 让人忍不住回头再看一眼 = 尊重", example: "You have to earn their <span class='highlight-word'>respect</span>. (你必须赢得他们的尊重。)" },
+                    { word: "suspect", display: "<span class='p'>sus</span><span class='r'>pect</span>", pronunciation: "/səˈspekt/", translation: "v. 怀疑 n. 嫌疑犯", mnemonic: "sus(在下面) + pect(看) = 从底下偷偷看/斜眼看 = 怀疑", example: "The police <span class='highlight-word'>suspect</span> him of stealing the money. (警方怀疑他偷了钱。)" },
+                    { word: "prospect", display: "<span class='p'>pro</span><span class='r'>spect</span>", pronunciation: "/ˈprɒspekt/", translation: "n. 前景，展望；潜在客户", mnemonic: "pro(向前) + spect(看) = 往前看 = 前景", example: "The job offers excellent career <span class='highlight-word'>prospects</span>. (这份工作提供极好的职业前景。)" },
+                    { word: "spectator", display: "<span class='r'>spect</span><span class='s'>ator</span>", pronunciation: "/spekˈteɪtər/", translation: "n. 观众，旁观者", mnemonic: "spect(看) + ator(人) = 看比赛的人 = 观众", example: "Thousands of <span class='highlight-word'>spectators</span> cheered for the team. (成千上万的观众为球队欢呼。)" }
+                ]
+            },
+            {
+                root: "-dict- / -dic-",
+                meaning: "说 (speak)",
+                words: [
+                    { word: "dictate", display: "<span class='r'>dict</span><span class='s'>ate</span>", pronunciation: "/dɪkˈteɪt/", translation: "v. 口述；命令，规定", mnemonic: "dict(说) + ate(动词后缀) = 居高临下地一直说 = 命令", example: "The teacher <span class='highlight-word'>dictated</span> a passage to the class. (老师向全班口述了一段文章。)" },
+                    { word: "predict", display: "<span class='p'>pre</span><span class='r'>dict</span>", pronunciation: "/prɪˈdɪkt/", translation: "v. 预言，预测", mnemonic: "pre(在...之前) + dict(说) = 提前说出来 = 预测", example: "Experts <span class='highlight-word'>predict</span> the economy will recover next year. (专家预测经济明年会复苏。)" },
+                    { word: "indicate", display: "<span class='p'>in</span><span class='r'>dic</span><span class='s'>ate</span>", pronunciation: "/ˈɪndɪkeɪt/", translation: "v. 指示，表明", mnemonic: "in(向内) + dic(说) + ate = 在里面说/暗示 = 表明", example: "The survey results <span class='highlight-word'>indicate</span> a shift in consumer behavior. (调查结果表明消费者行为发生了转变。)" },
+                    { word: "contradict", display: "<span class='p'>contra</span><span class='r'>dict</span>", pronunciation: "/ˌkɒntrəˈdɪkt/", translation: "v. 反驳；与...矛盾", mnemonic: "contra(相反) + dict(说) = 跟你反着说 = 反驳", example: "His actions completely <span class='highlight-word'>contradict</span> his words. (他的言行完全自相矛盾。)" },
+                    { word: "verdict", display: "<span class='p'>ver</span><span class='r'>dict</span>", pronunciation: "/ˈvɜːdɪkt/", translation: "n. 裁决，判决", mnemonic: "ver(真实/truth) + dict(说) = 法庭上说出真相 = 判决", example: "The jury reached a guilty <span class='highlight-word'>verdict</span>. (陪审团作出了有罪的判决。)" }
+                ]
+            },
+            {
+                root: "-port-",
+                meaning: "搬运，携带 (carry)",
+                words: [
+                    { word: "import", display: "<span class='p'>im</span><span class='r'>port</span>", pronunciation: "/ɪmˈpɔːt/", translation: "v./n. 进口，输入", mnemonic: "im(向内) + port(搬运) = 搬运进国内 = 进口", example: "The US <span class='highlight-word'>imports</span> a lot of cars from Japan. (美国从日本进口大量汽车。)" },
+                    { word: "export", display: "<span class='p'>ex</span><span class='r'>port</span>", pronunciation: "/ɪkˈspɔːt/", translation: "v./n. 出口，输出", mnemonic: "ex(向外) + port(搬运) = 搬运出国外 = 出口", example: "China <span class='highlight-word'>exports</span> electronic goods all over the world. (中国向世界各地出口电子产品。)" },
+                    { word: "report", display: "<span class='p'>re</span><span class='r'>port</span>", pronunciation: "/rɪˈpɔːt/", translation: "v./n. 报告，汇报", mnemonic: "re(回) + port(搬运) = 把信息搬回来 = 汇报", example: "Please submit your monthly <span class='highlight-word'>report</span> by Friday. (请在周五前提交你的月度报告。)" },
+                    { word: "support", display: "<span class='p'>sup</span><span class='r'>port</span>", pronunciation: "/səˈpɔːt/", translation: "v./n. 支持，支撑", mnemonic: "sup(在下面) + port(搬运) = 在下面帮你扛着 = 支持", example: "My family has always <span class='highlight-word'>supported</span> my decisions. (我的家人总是支持我的决定。)" },
+                    { word: "transport", display: "<span class='p'>trans</span><span class='r'>port</span>", pronunciation: "/trænsˈpɔːt/", translation: "v./n. 运输，运送", mnemonic: "trans(跨越/穿过) + port(搬运) = 跨越两地搬运 = 运输", example: "Goods are <span class='highlight-word'>transported</span> by sea and air. (货物通过海运和空运运输。)" },
+                    { word: "portable", display: "<span class='r'>port</span><span class='s'>able</span>", pronunciation: "/ˈpɔːtəbl/", translation: "adj. 便携式的，手提的", mnemonic: "port(携带) + able(能...的) = 能随身携带的 = 便携的", example: "I bought a <span class='highlight-word'>portable</span> charger for my phone. (我给手机买了个便携充电宝。)" }
+                ]
+            },
+            {
+                root: "-scrib- / -script-",
+                meaning: "写 (write)",
+                words: [
+                    { word: "describe", display: "<span class='p'>de</span><span class='r'>scribe</span>", pronunciation: "/dɪˈskraɪb/", translation: "v. 描述，形容", mnemonic: "de(向下) + scribe(写) = 把看到的写下来 = 描述", example: "Can you <span class='highlight-word'>describe</span> the suspect to the police? (你能向警方描述一下嫌疑人吗？)" },
+                    { word: "subscribe", display: "<span class='p'>sub</span><span class='r'>scribe</span>", pronunciation: "/səbˈskraɪb/", translation: "v. 订阅，赞同", mnemonic: "sub(在下面) + scribe(写) = 在合同下方签字 = 订阅", example: "Don't forget to like and <span class='highlight-word'>subscribe</span> to my channel. (别忘了点赞并订阅我的频道。)" },
+                    { word: "prescribe", display: "<span class='p'>pre</span><span class='r'>scribe</span>", pronunciation: "/prɪˈskraɪb/", translation: "v. 开处方，规定", mnemonic: "pre(提前) + scribe(写) = 医生提前写好的药单 = 开处方", example: "The doctor <span class='highlight-word'>prescribed</span> some antibiotics for my throat. (医生给我的嗓子开了些抗生素。)" },
+                    { word: "script", display: "<span class='r'>script</span>", pronunciation: "/skrɪpt/", translation: "n. 剧本，脚本，手稿", mnemonic: "script(写) = 写出来的文字 = 剧本", example: "The actors are reading the <span class='highlight-word'>script</span> for the new movie. (演员们正在读新电影的剧本。)" },
+                    { word: "manuscript", display: "<span class='p'>manu</span><span class='r'>script</span>", pronunciation: "/ˈmænjuskrɪpt/", translation: "n. 手稿，原稿", mnemonic: "manu(手) + script(写) = 手写的东西 = 手稿", example: "The author sent his <span class='highlight-word'>manuscript</span> to the publisher. (作者把手稿寄给了出版商。)" }
+                ]
+            },
+            {
+                root: "-cred-",
+                meaning: "相信 (believe)",
+                words: [
+                    { word: "credit", display: "<span class='r'>cred</span><span class='s'>it</span>", pronunciation: "/ˈkredɪt/", translation: "n. 信用，信贷；学分", mnemonic: "cred(相信) + it(名词后缀) = 别人对你的信任 = 信用", example: "You need a good <span class='highlight-word'>credit</span> score to buy a house. (你需要良好的信用分数才能买房。)" },
+                    { word: "credible", display: "<span class='r'>cred</span><span class='s'>ible</span>", pronunciation: "/ˈkredəbl/", translation: "adj. 可信的，可靠的", mnemonic: "cred(相信) + ible(能...的) = 能被相信的 = 可信的", example: "We need a <span class='highlight-word'>credible</span> witness for the trial. (法庭审判我们需要一位可靠的证人。)" },
+                    { word: "incredible", display: "<span class='p'>in</span><span class='r'>cred</span><span class='s'>ible</span>", pronunciation: "/ɪnˈkredəbl/", translation: "adj. 难以置信的，极好的", mnemonic: "in(不) + cred(相信) + ible = 不敢相信的 = 难以置信的", example: "The view from the top of the mountain is <span class='highlight-word'>incredible</span>. (山顶的景色美得令人难以置信。)" },
+                    { word: "credentials", display: "<span class='r'>cred</span><span class='s'>ential</span><span class='s'>s</span>", pronunciation: "/krɪˈdenʃlz/", translation: "n. 资历，资格证书", mnemonic: "cred(相信) + entials(证明物) = 让人相信你的东西 = 资历证书", example: "Let's review the candidate's <span class='highlight-word'>credentials</span> before the interview. (面试前我们先审查一下候选人的资历。)" }
+                ]
+            },
+            {
+                root: "-tract-",
+                meaning: "拉，扯 (pull)",
+                words: [
+                    { word: "attract", display: "<span class='p'>at</span><span class='r'>tract</span>", pronunciation: "/əˈtrækt/", translation: "v. 吸引", mnemonic: "at(朝向) + tract(拉) = 把人拉过来 = 吸引", example: "Magnets <span class='highlight-word'>attract</span> iron. (磁铁吸引铁。)" },
+                    { word: "distract", display: "<span class='p'>dis</span><span class='r'>tract</span>", pronunciation: "/dɪˈstrækt/", translation: "v. 分心，转移注意力", mnemonic: "dis(分开/散开) + tract(拉) = 把注意力拉散 = 分心", example: "Please don't <span class='highlight-word'>distract</span> me while I'm driving. (我开车时请不要让我分心。)" },
+                    { word: "extract", display: "<span class='p'>ex</span><span class='r'>tract</span>", pronunciation: "/ɪkˈstrækt/", translation: "v. 提取，拔出 n. 精华", mnemonic: "ex(向外) + tract(拉) = 向外拉出来 = 提取", example: "They <span class='highlight-word'>extract</span> oil from the ground. (他们从地下提取石油。)" },
+                    { word: "contract", display: "<span class='p'>con</span><span class='r'>tract</span>", pronunciation: "/ˈkɒntrækt/", translation: "n. 合同 v. 收缩", mnemonic: "con(共同) + tract(拉) = 双方拉到一起受约束 = 合同", example: "I haven't signed the employment <span class='highlight-word'>contract</span> yet. (我还没签雇佣合同。)" },
+                    { word: "abstract", display: "<span class='p'>abs</span><span class='r'>tract</span>", pronunciation: "/ˈæbstrækt/", translation: "adj. 抽象的 n. 摘要", mnemonic: "abs(离开) + tract(拉) = 把具体的东西抽离出来 = 抽象的", example: "Love and beauty are <span class='highlight-word'>abstract</span> concepts. (爱和美是抽象的概念。)" },
+                    { word: "tractor", display: "<span class='r'>tract</span><span class='s'>or</span>", pronunciation: "/ˈtræktər/", translation: "n. 拖拉机", mnemonic: "tract(拉) + or(机器) = 用来拉东西的机器 = 拖拉机", example: "The farmer bought a new <span class='highlight-word'>tractor</span>. (农夫买了一台新拖拉机。)" }
+                ]
+            },
+            {
+                root: "-mit- / -miss-",
+                meaning: "发送，投掷 (send)",
+                words: [
+                    { word: "admit", display: "<span class='p'>ad</span><span class='r'>mit</span>", pronunciation: "/ədˈmɪt/", translation: "v. 承认，准许进入", mnemonic: "ad(朝向) + mit(发送) = 送进去 = 允许进入/承认", example: "He refused to <span class='highlight-word'>admit</span> his mistake. (他拒绝承认自己的错误。)" },
+                    { word: "commit", display: "<span class='p'>com</span><span class='r'>mit</span>", pronunciation: "/kəˈmɪt/", translation: "v. 承诺，犯(罪)，投入", mnemonic: "com(全部) + mit(发送) = 把心全部交出去 = 承诺/投入", example: "We are fully <span class='highlight-word'>committed</span> to this project. (我们全身心投入到这个项目中。)" },
+                    { word: "submit", display: "<span class='p'>sub</span><span class='r'>mit</span>", pronunciation: "/səbˈmɪt/", translation: "v. 提交，屈服", mnemonic: "sub(在下面) + mit(发送) = 从下往上送 = 提交", example: "Please <span class='highlight-word'>submit</span> your application by tomorrow. (请在明天前提交你的申请。)" },
+                    { word: "permit", display: "<span class='p'>per</span><span class='r'>mit</span>", pronunciation: "/pəˈmɪt/", translation: "v. 允许 n. 许可证", mnemonic: "per(贯穿/一直) + mit(发送) = 一路放行 = 允许", example: "Smoking is not <span class='highlight-word'>permitted</span> in this building. (这栋楼内不允许吸烟。)" },
+                    { word: "transmit", display: "<span class='p'>trans</span><span class='r'>mit</span>", pronunciation: "/trænsˈmɪt/", translation: "v. 传输，传播", mnemonic: "trans(跨越) + mit(发送) = 跨越空间发送 = 传输", example: "The disease is <span class='highlight-word'>transmitted</span> by mosquitoes. (这种疾病由蚊子传播。)" },
+                    { word: "mission", display: "<span class='r'>miss</span><span class='s'>ion</span>", pronunciation: "/ˈmɪʃn/", translation: "n. 任务，使命", mnemonic: "miss(发送) + ion(名词后缀) = 被派出去做的事 = 任务", example: "Our <span class='highlight-word'>mission</span> is to provide affordable healthcare. (我们的使命是提供负担得起的医疗服务。)" }
+                ]
+            },
+            {
+                root: "-duc- / -duct-",
+                meaning: "引导 (lead)",
+                words: [
+                    { word: "educate", display: "<span class='p'>e</span><span class='r'>duc</span><span class='s'>ate</span>", pronunciation: "/ˈedʒukeɪt/", translation: "v. 教育，培养", mnemonic: "e(向外) + duc(引导) + ate = 把人的潜能引导出来 = 教育", example: "It's important to <span class='highlight-word'>educate</span> children about cyber safety. (教育孩子网络安全很重要。)" },
+                    { word: "produce", display: "<span class='p'>pro</span><span class='r'>duce</span>", pronunciation: "/prəˈdjuːs/", translation: "v. 生产，制造", mnemonic: "pro(向前) + duce(引导) = 引导出来 = 生产", example: "This factory <span class='highlight-word'>produces</span> car parts. (这家工厂生产汽车零部件。)" },
+                    { word: "reduce", display: "<span class='p'>re</span><span class='r'>duce</span>", pronunciation: "/rɪˈdjuːs/", translation: "v. 减少，降低", mnemonic: "re(向后/退) + duce(引导) = 往回引导 = 减少", example: "We must <span class='highlight-word'>reduce</span> our carbon footprint. (我们必须减少碳足迹。)" },
+                    { word: "introduce", display: "<span class='p'>intro</span><span class='r'>duce</span>", pronunciation: "/ˌɪntrəˈdjuːs/", translation: "v. 介绍，引进", mnemonic: "intro(向内) + duce(引导) = 引导进来 = 介绍/引进", example: "Allow me to <span class='highlight-word'>introduce</span> my colleague, Sarah. (请允许我介绍我的同事萨拉。)" },
+                    { word: "conduct", display: "<span class='p'>con</span><span class='r'>duct</span>", pronunciation: "/kənˈdʌkt/", translation: "v. 实施，引导，指挥", mnemonic: "con(共同) + duct(引导) = 引导大家一起做 = 实施/指挥", example: "We will <span class='highlight-word'>conduct</span> a survey to gather feedback. (我们将实施一项调查以收集反馈。)" }
+                ]
+            },
+            {
+                root: "-form-",
+                meaning: "形状 (shape)",
+                words: [
+                    { word: "inform", display: "<span class='p'>in</span><span class='r'>form</span>", pronunciation: "/ɪnˈfɔːm/", translation: "v. 通知，告知", mnemonic: "in(进入) + form(形状) = 让别人的大脑里形成概念 = 通知", example: "Please <span class='highlight-word'>inform</span> us of any changes to your schedule. (如果你的日程有变，请通知我们。)" },
+                    { word: "perform", display: "<span class='p'>per</span><span class='r'>form</span>", pronunciation: "/pəˈfɔːm/", translation: "v. 执行，表演", mnemonic: "per(贯穿/到底) + form(形状) = 把形状做到底 = 彻底完成/表演", example: "The surgeon will <span class='highlight-word'>perform</span> the operation tomorrow. (外科医生明天将执行手术。)" },
+                    { word: "reform", display: "<span class='p'>re</span><span class='r'>form</span>", pronunciation: "/rɪˈfɔːm/", translation: "v./n. 改革，改造", mnemonic: "re(重新) + form(形状) = 重新塑造形状 = 改革", example: "The government plans to <span class='highlight-word'>reform</span> the healthcare system. (政府计划改革医疗系统。)" },
+                    { word: "transform", display: "<span class='p'>trans</span><span class='r'>form</span>", pronunciation: "/trænsˈfɔːm/", translation: "v. 转变，变形", mnemonic: "trans(跨越/改变) + form(形状) = 跨越原有的形状 = 改变形态", example: "Digitalization has completely <span class='highlight-word'>transformed</span> the industry. (数字化彻底改变了该行业。)" },
+                    { word: "uniform", display: "<span class='p'>uni</span><span class='r'>form</span>", pronunciation: "/ˈjuːnɪfɔːm/", translation: "n. 制服 adj. 统一的", mnemonic: "uni(单一) + form(形状) = 同样的款式 = 制服/统一的", example: "All employees are required to wear a <span class='highlight-word'>uniform</span>. (所有员工都必须穿制服。)" }
+                ]
+            },
+            {
+                root: "-vid- / -vis-",
+                meaning: "看见 (see)",
+                words: [
+                    { word: "vision", display: "<span class='r'>vis</span><span class='s'>ion</span>", pronunciation: "/ˈvɪʒn/", translation: "n. 视力，愿景", mnemonic: "vis(看) + ion(名词后缀) = 看到的东西 = 视力/愿景", example: "The CEO outlined his <span class='highlight-word'>vision</span> for the company's future. (CEO概述了他对公司未来的愿景。)" },
+                    { word: "visible", display: "<span class='r'>vis</span><span class='s'>ible</span>", pronunciation: "/ˈvɪzəbl/", translation: "adj. 可见的，明显的", mnemonic: "vis(看) + ible(能...的) = 能被看见的 = 可见的", example: "The stars are <span class='highlight-word'>visible</span> on a clear night. (晴朗的夜晚星星清晰可见。)" },
+                    { word: "visit", display: "<span class='r'>vis</span><span class='s'>it</span>", pronunciation: "/ˈvɪzɪt/", translation: "v./n. 拜访，参观", mnemonic: "vis(看) + it(走) = 走过去看 = 拜访", example: "We plan to <span class='highlight-word'>visit</span> our grandparents this weekend. (我们计划这周末去拜访祖父母。)" },
+                    { word: "revise", display: "<span class='p'>re</span><span class='r'>vise</span>", pronunciation: "/rɪˈvaɪz/", translation: "v. 修订，复习", mnemonic: "re(重新) + vise(看) = 重新看一遍 = 修订/复习", example: "You should <span class='highlight-word'>revise</span> your essay before submitting it. (你提交论文前应该再修订一遍。)" },
+                    { word: "provide", display: "<span class='p'>pro</span><span class='r'>vide</span>", pronunciation: "/prəˈvaɪd/", translation: "v. 提供，供应", mnemonic: "pro(向前/提前) + vide(看) = 提前看到需求并准备 = 提供", example: "The hotel will <span class='highlight-word'>provide</span> towels and soap. (酒店将提供毛巾和肥皂。)" },
+                    { word: "evidence", display: "<span class='p'>e</span><span class='r'>vid</span><span class='s'>ence</span>", pronunciation: "/ˈevɪdəns/", translation: "n. 证据，证明", mnemonic: "e(出) + vid(看) + ence = 拿出来让人看到的东西 = 证据", example: "There is no <span class='highlight-word'>evidence</span> to support his claim. (没有证据支持他的说法。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 1}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

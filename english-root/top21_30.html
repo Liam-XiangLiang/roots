@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 21-30</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- JS将在这里生成所有的词根区块 -->
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-ped- / -pod-",
+                meaning: "脚 (foot)",
+                words: [
+                    { word: "pedal", display: "<span class='r'>ped</span><span class='s'>al</span>", pronunciation: "/ˈpedl/", translation: "n. 踏板 v. 骑(自行车)", mnemonic: "ped(脚) + al(名词后缀) = 脚踩的部件 = 踏板", example: "He pushed his foot down on the brake <span class='highlight-word'>pedal</span>. (他把脚踩在刹车踏板上。)" },
+                    { word: "pedestrian", display: "<span class='r'>ped</span><span class='s'>estrian</span>", pronunciation: "/pəˈdestriən/", translation: "n. 行人 adj. 徒步的，缺乏想象力的", mnemonic: "ped(脚) + estrian(人) = 走路的人 = 行人", example: "The car stopped to let the <span class='highlight-word'>pedestrian</span> cross the street. (汽车停下来让行人过马路。)" },
+                    { word: "expedite", display: "<span class='p'>ex</span><span class='r'>ped</span><span class='s'>ite</span>", pronunciation: "/ˈekspədaɪt/", translation: "v. 加快，促进", mnemonic: "ex(出) + ped(脚) + ite(动词) = 把脚拔出来，加快步伐 = 促进", example: "We will try to <span class='highlight-word'>expedite</span> the delivery of your order. (我们会尽量加快您订单的配送。)" },
+                    { word: "tripod", display: "<span class='p'>tri</span><span class='r'>pod</span>", pronunciation: "/ˈtraɪpɒd/", translation: "n. 三脚架", mnemonic: "tri(三) + pod(脚) = 三只脚的架子 = 三脚架", example: "He set up a <span class='highlight-word'>tripod</span> to film the sunset. (他支起三脚架拍摄日落。)" },
+                    { word: "podium", display: "<span class='r'>pod</span><span class='s'>ium</span>", pronunciation: "/ˈpəʊdiəm/", translation: "n. 讲台，领奖台", mnemonic: "pod(脚) + ium(地点) = 脚站立的垫高的地方 = 讲台", example: "The winner stood proudly on the <span class='highlight-word'>podium</span>. (获胜者自豪地站在领奖台上。)" }
+                ]
+            },
+            {
+                root: "-manu- / -man-",
+                meaning: "手 (hand)",
+                words: [
+                    { word: "manual", display: "<span class='r'>manu</span><span class='s'>al</span>", pronunciation: "/ˈmænjuəl/", translation: "adj. 手工的，体力的 n. 手册", mnemonic: "manu(手) + al(形容词/名词) = 用手做的 / 手边的书 = 手工的/手册", example: "Please read the user <span class='highlight-word'>manual</span> carefully. (请仔细阅读用户手册。)" },
+                    { word: "manufacture", display: "<span class='r'>manu</span><span class='s'>facture</span>", pronunciation: "/ˌmænjuˈfæktʃər/", translation: "v./n. 制造，生产", mnemonic: "manu(手) + fact(做) + ure = 用手做出来的东西 (工业化前) = 制造", example: "This company <span class='highlight-word'>manufactures</span> computer chips. (这家公司生产电脑芯片。)" },
+                    { word: "manuscript", display: "<span class='r'>manu</span><span class='s'>script</span>", pronunciation: "/ˈmænjuskrɪpt/", translation: "n. 手稿，原稿", mnemonic: "manu(手) + script(写) = 手写的东西 = 手稿", example: "The author lost his only <span class='highlight-word'>manuscript</span>. (作者弄丢了他唯一的手稿。)" },
+                    { word: "manipulate", display: "<span class='r'>manip</span><span class='s'>ulate</span>", pronunciation: "/məˈnɪpjuleɪt/", translation: "v. 操纵，控制", mnemonic: "manip(手) + ulate(操作) = 用手摆布 = 操纵(机器或人)", example: "He knows how to <span class='highlight-word'>manipulate</span> public opinion. (他懂得如何操纵公众舆论。)" },
+                    { word: "manage", display: "<span class='r'>man</span><span class='s'>age</span>", pronunciation: "/ˈmænɪdʒ/", translation: "v. 管理，经营", mnemonic: "man(手) + age = 用手去掌控 = 管理", example: "She has to <span class='highlight-word'>manage</span> a team of 50 people. (她必须管理一个50人的团队。)" }
+                ]
+            },
+            {
+                root: "-cap- / -cept- / -cip-",
+                meaning: "拿，抓 (take/hold)",
+                words: [
+                    { word: "capture", display: "<span class='r'>capt</span><span class='s'>ure</span>", pronunciation: "/ˈkæptʃər/", translation: "v./n. 捕获，捕捉", mnemonic: "capt(抓) + ure(名词/动词) = 抓住不放 = 捕获", example: "The police finally <span class='highlight-word'>captured</span> the thief. (警察终于捕获了那个小偷。)" },
+                    { word: "accept", display: "<span class='p'>ac</span><span class='r'>cept</span>", pronunciation: "/əkˈsept/", translation: "v. 接受，同意", mnemonic: "ac(朝向) + cept(拿) = 拿过来归自己 = 接受", example: "I proudly <span class='highlight-word'>accept</span> this award. (我很荣幸地接受这个奖项。)" },
+                    { word: "except", display: "<span class='p'>ex</span><span class='r'>cept</span>", pronunciation: "/ɪkˈsept/", translation: "prep. 除了...之外", mnemonic: "ex(向外) + cept(拿) = 拿出去，排除在外 = 除了", example: "The store is open every day <span class='highlight-word'>except</span> Sunday. (这家店除了周日每天都营业。)" },
+                    { word: "concept", display: "<span class='p'>con</span><span class='r'>cept</span>", pronunciation: "/ˈkɒnsept/", translation: "n. 概念，观念", mnemonic: "con(共同) + cept(拿/抓) = 大家共同掌握在脑海中的认知 = 概念", example: "It's a very difficult <span class='highlight-word'>concept</span> to understand. (这是一个很难理解的概念。)" },
+                    { word: "anticipate", display: "<span class='p'>anti</span><span class='r'>cip</span><span class='s'>ate</span>", pronunciation: "/ænˈtɪsɪpeɪt/", translation: "v. 预期，期望", mnemonic: "anti(提前) + cip(拿) + ate = 提前在脑子里拿住 = 预期", example: "We <span class='highlight-word'>anticipate</span> a massive drop in sales. (我们预计销售额将大幅下降。)" }
+                ]
+            },
+            {
+                root: "-ten- / -tent-",
+                meaning: "伸展，绷紧 (stretch)",
+                words: [
+                    { word: "extend", display: "<span class='p'>ex</span><span class='r'>tend</span>", pronunciation: "/ɪkˈstend/", translation: "v. 延伸，扩展", mnemonic: "ex(向外) + tend(伸展) = 向外伸出去 = 延伸", example: "We plan to <span class='highlight-word'>extend</span> our business to Europe. (我们计划将业务扩展到欧洲。)" },
+                    { word: "intend", display: "<span class='p'>in</span><span class='r'>tend</span>", pronunciation: "/ɪnˈtend/", translation: "v. 打算，想要", mnemonic: "in(向内) + tend(伸展) = 内心向着某个目标伸展 = 打算", example: "I <span class='highlight-word'>intend</span> to finish this project by Friday. (我打算在周五前完成这个项目。)" },
+                    { word: "pretend", display: "<span class='p'>pre</span><span class='r'>tend</span>", pronunciation: "/prɪˈtend/", translation: "v. 假装，伪称", mnemonic: "pre(在前面) + tend(伸展) = 在人前拉起一块幕布掩盖 = 假装", example: "He tried to <span class='highlight-word'>pretend</span> that everything was fine. (他试图假装一切都很好。)" },
+                    { word: "attention", display: "<span class='p'>at</span><span class='r'>tent</span><span class='s'>ion</span>", pronunciation: "/əˈtenʃn/", translation: "n. 注意，专心", mnemonic: "at(朝向) + tent(伸展) + ion = 精神紧绷伸向一处 = 注意力", example: "Please pay <span class='highlight-word'>attention</span> to the instructions. (请注意听从指示。)" },
+                    { word: "tension", display: "<span class='r'>tens</span><span class='s'>ion</span>", pronunciation: "/ˈtenʃn/", translation: "n. 紧张，张力", mnemonic: "tens(伸展/紧绷) + ion(名词后缀) = 拉紧的状态 = 紧张局势", example: "There is mounting <span class='highlight-word'>tension</span> between the two countries. (两国之间的紧张局势正在加剧。)" }
+                ]
+            },
+            {
+                root: "-sta- / -stat- / -stit-",
+                meaning: "站立，稳定 (stand)",
+                words: [
+                    { word: "status", display: "<span class='r'>stat</span><span class='s'>us</span>", pronunciation: "/ˈsteɪtəs/", translation: "n. 状态，地位", mnemonic: "stat(站立) + us = 一个人站立的位置 = 身份/地位", example: "Please check the <span class='highlight-word'>status</span> of my order. (请查一下我的订单状态。)" },
+                    { word: "station", display: "<span class='r'>stat</span><span class='s'>ion</span>", pronunciation: "/ˈsteɪʃn/", translation: "n. 车站，驻地", mnemonic: "stat(站) + ion = 车停下站立的地方 = 车站", example: "I will meet you at the train <span class='highlight-word'>station</span>. (我们火车站见。)" },
+                    { word: "stable", display: "<span class='r'>st</span><span class='s'>able</span>", pronunciation: "/ˈsteɪbl/", translation: "adj. 稳定的", mnemonic: "st(站) + able(能) = 能够稳稳站住的 = 稳定的", example: "The patient is now in a <span class='highlight-word'>stable</span> condition. (病人目前情况稳定。)" },
+                    { word: "establish", display: "<span class='p'>e</span><span class='r'>stab</span><span class='s'>lish</span>", pronunciation: "/ɪˈstæblɪʃ/", translation: "v. 建立，确立", mnemonic: "e(出) + stab(站立) + lish = 使其站稳脚跟 = 建立", example: "The company was <span class='highlight-word'>established</span> in 1999. (这家公司成立于1999年。)" },
+                    { word: "substitute", display: "<span class='p'>sub</span><span class='r'>stit</span><span class='s'>ute</span>", pronunciation: "/ˈsʌbstɪtjuːt/", translation: "v. 代替 n. 替代品", mnemonic: "sub(在下面) + stit(站立) + ute = 站在下面随时准备顶替 = 替代", example: "You can <span class='highlight-word'>substitute</span> oil for butter in this recipe. (在这个食谱中你可以用油代替黄油。)" }
+                ]
+            },
+            {
+                root: "-sist-",
+                meaning: "站立，停留 (stand/stop)",
+                words: [
+                    { word: "assist", display: "<span class='p'>as</span><span class='r'>sist</span>", pronunciation: "/əˈsɪst/", translation: "v. 帮助，协助", mnemonic: "as(在旁边) + sist(站) = 站在旁边出力 = 协助", example: "We will <span class='highlight-word'>assist</span> you in finding a new home. (我们将协助您找新房子。)" },
+                    { word: "insist", display: "<span class='p'>in</span><span class='r'>sist</span>", pronunciation: "/ɪnˈsɪst/", translation: "v. 坚持，坚决要求", mnemonic: "in(在内部) + sist(站) = 在里面稳稳站住立场 = 坚持", example: "I <span class='highlight-word'>insist</span> that you stay for dinner. (我坚决要求你留下来吃晚饭。)" },
+                    { word: "persist", display: "<span class='p'>per</span><span class='r'>sist</span>", pronunciation: "/pəˈsɪst/", translation: "v. 坚持，持续存在", mnemonic: "per(始终/贯穿) + sist(站) = 一直站到底，不退缩 = 坚持不懈", example: "If the symptoms <span class='highlight-word'>persist</span>, consult your doctor. (如果症状持续，请咨询医生。)" },
+                    { word: "resist", display: "<span class='p'>re</span><span class='r'>sist</span>", pronunciation: "/rɪˈzɪst/", translation: "v. 抵抗，反抗", mnemonic: "re(反向) + sist(站) = 反着站，对着干 = 抵抗", example: "He couldn't <span class='highlight-word'>resist</span> the temptation to eat the cake. (他无法抵抗吃蛋糕的诱惑。)" }
+                ]
+            },
+            {
+                root: "-pos- / -pon-",
+                meaning: "放置 (put/place)",
+                words: [
+                    { word: "position", display: "<span class='r'>posit</span><span class='s'>ion</span>", pronunciation: "/pəˈzɪʃn/", translation: "n. 位置，职位，立场", mnemonic: "posit(放置) + ion = 放置的地方 = 位置/职位", example: "She applied for a management <span class='highlight-word'>position</span>. (她申请了一个管理职位。)" },
+                    { word: "postpone", display: "<span class='p'>post</span><span class='r'>pone</span>", pronunciation: "/pəʊstˈpəʊn/", translation: "v. 推迟，延期", mnemonic: "post(在...之后) + pone(放) = 放到以后去做 = 推迟", example: "They had to <span class='highlight-word'>postpone</span> the trip because of the virus. (因为病毒他们不得不推迟旅行。)" },
+                    { word: "deposit", display: "<span class='p'>de</span><span class='r'>posit</span>", pronunciation: "/dɪˈpɒzɪt/", translation: "v./n. 存款，押金，沉淀物", mnemonic: "de(向下) + posit(放) = 往下放/存进银行 = 存款/押金", example: "I need to pay a security <span class='highlight-word'>deposit</span> for the apartment. (我需要为这套公寓交一笔押金。)" },
+                    { word: "compose", display: "<span class='p'>com</span><span class='r'>pose</span>", pronunciation: "/kəmˈpəʊz/", translation: "v. 组成，作曲，撰写", mnemonic: "com(共同) + pose(放) = 把东西放在一起 = 组成/创作", example: "Water is <span class='highlight-word'>composed</span> of hydrogen and oxygen. (水是由氢和氧组成的。)" },
+                    { word: "oppose", display: "<span class='p'>op</span><span class='r'>pose</span>", pronunciation: "/əˈpəʊz/", translation: "v. 反对，抵制", mnemonic: "op(反着) + pose(放) = 放在对立面 = 反对", example: "Many locals strongly <span class='highlight-word'>oppose</span> the new development. (许多当地人强烈反对这项新开发案。)" }
+                ]
+            },
+            {
+                root: "-sec- / -sequ-",
+                meaning: "跟随 (follow)",
+                words: [
+                    { word: "sequence", display: "<span class='r'>sequ</span><span class='s'>ence</span>", pronunciation: "/ˈsiːkwəns/", translation: "n. 顺序，一系列", mnemonic: "sequ(跟随) + ence(名词后缀) = 一个接一个跟着 = 顺序", example: "The numbers are arranged in a logical <span class='highlight-word'>sequence</span>. (数字是按逻辑顺序排列的。)" },
+                    { word: "consequence", display: "<span class='p'>con</span><span class='r'>sequ</span><span class='s'>ence</span>", pronunciation: "/ˈkɒnsɪkwəns/", translation: "n. 结果，后果", mnemonic: "con(共同) + sequ(跟随) + ence = 跟着你的行为一起到来的事 = 后果", example: "He must face the <span class='highlight-word'>consequences</span> of his actions. (他必须面对他行为的后果。)" },
+                    { word: "subsequent", display: "<span class='p'>sub</span><span class='r'>sequ</span><span class='s'>ent</span>", pronunciation: "/ˈsʌbsɪkwənt/", translation: "adj. 随后的，后来的", mnemonic: "sub(在后面) + sequ(跟随) + ent = 跟在后面的 = 随后的", example: "Those issues were dealt with in <span class='highlight-word'>subsequent</span> meetings. (那些问题在随后的会议中得到了处理。)" },
+                    { word: "execute", display: "<span class='p'>ex</span><span class='r'>ecut</span><span class='s'>e</span>", pronunciation: "/ˈeksɪkjuːt/", translation: "v. 执行，处决", mnemonic: "ex(向外) + ecut(=secut跟随) + e = 追随到底并得出结果 = 执行", example: "The company failed to <span class='highlight-word'>execute</span> its business plan. (公司未能执行其商业计划。)" }
+                ]
+            },
+            {
+                root: "-cur- / -cour- / -curs-",
+                meaning: "跑 (run)",
+                words: [
+                    { word: "current", display: "<span class='r'>cur</span><span class='s'>rent</span>", pronunciation: "/ˈkʌrənt/", translation: "adj. 当前的 n. 水流，电流", mnemonic: "cur(跑) + rent(状态) = 正在跑的/流动的 = 当前的/水流", example: "What is your <span class='highlight-word'>current</span> home address? (你当前的家庭住址是什么？)" },
+                    { word: "occur", display: "<span class='p'>oc</span><span class='r'>cur</span>", pronunciation: "/əˈkɜːr/", translation: "v. 发生，出现", mnemonic: "oc(朝向) + cur(跑) = 突然跑到你面前 = 发生", example: "The accident <span class='highlight-word'>occurred</span> late at night. (事故发生在深夜。)" },
+                    { word: "course", display: "<span class='r'>cour</span><span class='s'>se</span>", pronunciation: "/kɔːs/", translation: "n. 课程，路线，过程", mnemonic: "cour(跑) + se = 跑过的轨迹 = 路线/课程", example: "I am taking an online English <span class='highlight-word'>course</span>. (我正在上在线英语课程。)" },
+                    { word: "currency", display: "<span class='r'>cur</span><span class='s'>rency</span>", pronunciation: "/ˈkʌrənsi/", translation: "n. 货币，流通", mnemonic: "cur(跑) + rency(名词) = 在市面上跑来跑去流通的东西 = 货币", example: "The US dollar is a strong <span class='highlight-word'>currency</span>. (美元是一种强势货币。)" },
+                    { word: "excursion", display: "<span class='p'>ex</span><span class='r'>curs</span><span class='s'>ion</span>", pronunciation: "/ɪkˈskɜːʃn/", translation: "n. 短途旅行，远足", mnemonic: "ex(向外) + curs(跑) + ion = 跑到外面去透透气 = 远足", example: "We went on a weekend <span class='highlight-word'>excursion</span> to the mountains. (我们周末去山里短途旅行了。)" }
+                ]
+            },
+            {
+                root: "-fer-",
+                meaning: "带来，携带 (carry)",
+                words: [
+                    { word: "offer", display: "<span class='p'>of</span><span class='r'>fer</span>", pronunciation: "/ˈɒfər/", translation: "v./n. 提供，提议，录用信", mnemonic: "of(朝向) + fer(带来) = 带到别人面前 = 提供", example: "They made me a generous job <span class='highlight-word'>offer</span>. (他们给了我一份极其丰厚的工作录用信。)" },
+                    { word: "transfer", display: "<span class='p'>trans</span><span class='r'>fer</span>", pronunciation: "/trænsˈfɜːr/", translation: "v./n. 转移，转让，调动", mnemonic: "trans(跨越) + fer(带来) = 跨越空间带过去 = 转移", example: "I need to <span class='highlight-word'>transfer</span> some money to my checking account. (我需要把一些钱转到我的支票账户。)" },
+                    { word: "refer", display: "<span class='p'>re</span><span class='r'>fer</span>", pronunciation: "/rɪˈfɜːr/", translation: "v. 提及，参考，查阅", mnemonic: "re(往回) + fer(带来) = 带着问题往回找线索 = 参考/提及", example: "Please <span class='highlight-word'>refer</span> to the instruction manual. (请查阅/参考说明书。)" },
+                    { word: "prefer", display: "<span class='p'>pre</span><span class='r'>fer</span>", pronunciation: "/prɪˈfɜːr/", translation: "v. 偏好，更喜欢", mnemonic: "pre(在前面) + fer(带来) = 提前拿过来放到自己面前 = 偏好", example: "I <span class='highlight-word'>prefer</span> coffee over tea in the morning. (早上我更喜欢喝咖啡而不是茶。)" },
+                    { word: "conference", display: "<span class='p'>con</span><span class='r'>fer</span><span class='s'>ence</span>", pronunciation: "/ˈkɒnfərəns/", translation: "n. 会议，讨论会", mnemonic: "con(共同) + fer(带来) + ence = 把各自的观点带到一起 = 开会", example: "He is attending a medical <span class='highlight-word'>conference</span> in Boston. (他正在波士顿参加一个医学会议。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 21}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

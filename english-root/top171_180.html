@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 171-180</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-mens- / -met-",
+                meaning: "测量 (measure)",
+                words: [
+                    { word: "meter", display: "<span class='r'>meter</span>", pronunciation: "/ˈmiː·tər/", translation: "n. 米，公尺，计量器", mnemonic: "met(测量) + er = 用来测量长度的基准单位", example: "The table is two <span class='highlight-word'>meters</span> long. (这张桌子有两米长。)" },
+                    { word: "dimension", display: "<span class='p'>di</span><span class='r'>mens</span><span class='s'>ion</span>", pronunciation: "/daɪˈmen·ʃn/", translation: "n. 维度，尺寸，方面", mnemonic: "di(分开) + mens(测量) + ion = 测量出来的长宽高各个分开的部分 = 维度", example: "We must consider the problem from all <span class='highlight-word'>dimensions</span>. (我们必须从各个维度来考虑这个问题。)" },
+                    { word: "immense", display: "<span class='p'>im</span><span class='r'>mense</span>", pronunciation: "/ɪˈmens/", translation: "adj. 巨大的，广大的", mnemonic: "im(不/无法) + mense(测量) = 大到根本无法测量的 = 极其巨大的", example: "The universe is an <span class='highlight-word'>immense</span> space. (宇宙是一个极其浩瀚的空间。)" }
+                ]
+            },
+            {
+                root: "-merc-",
+                meaning: "交易，报酬 (trade)",
+                words: [
+                    { word: "merchant", display: "<span class='r'>merch</span><span class='s'>ant</span>", pronunciation: "/ˈmɜː·tʃənt/", translation: "n. 商人，批发商", mnemonic: "merch(=merc交易) + ant(人) = 从事交易的人 = 商人", example: "The <span class='highlight-word'>merchant</span> travels around the world to buy goods. (这位商人周游世界去采购货物。)" },
+                    { word: "commerce", display: "<span class='p'>com</span><span class='r'>merce</span>", pronunciation: "/ˈkɒm·ɜːs/", translation: "n. 商业，贸易", mnemonic: "com(共同) + merce(交易) = 大家聚在一起进行的大规模交易行为 = 商业", example: "E-<span class='highlight-word'>commerce</span> has completely changed how we shop. (电子商务彻底改变了我们购物的方式。)" },
+                    { word: "mercenary", display: "<span class='r'>mercen</span><span class='s'>ary</span>", pronunciation: "/ˈmɜː·sən·ri/", translation: "n. 雇佣兵 adj. 唯利是图的", mnemonic: "mercen(=merc报酬) + ary = 只要给钱/报酬就替谁卖命的人 = 雇佣兵", example: "He is a <span class='highlight-word'>mercenary</span> who fights for money, not loyalty. (他是个为了钱而不是忠诚去战斗的雇佣兵。)" }
+                ]
+            },
+            {
+                root: "-merg- / -mers-",
+                meaning: "沉浸，没入 (dip, plunge)",
+                words: [
+                    { word: "merge", display: "<span class='r'>merge</span>", pronunciation: "/mɜːdʒ/", translation: "v. 合并，融入", mnemonic: "merge = 沉没进去，像两条河流汇聚在一起 = 合并", example: "The two companies decided to <span class='highlight-word'>merge</span> to reduce costs. (这两家公司决定合并以降低成本。)" },
+                    { word: "emerge", display: "<span class='p'>e</span><span class='r'>merge</span>", pronunciation: "/ɪˈmɜːdʒ/", translation: "v. 浮现，出现", mnemonic: "e(向外/出) + merge(沉没) = 从水底沉没的状态冒出来 = 浮现", example: "The sun <span class='highlight-word'>emerged</span> from behind the clouds. (太阳从云层后面冒了出来。)" },
+                    { word: "immerse", display: "<span class='p'>im</span><span class='r'>merse</span>", pronunciation: "/ɪˈmɜːs/", translation: "v. 使沉浸，使陷入", mnemonic: "im(进入) + merse(没入) = 整个人完全没入水中/完全投入某事", example: "She wanted to <span class='highlight-word'>immerse</span> herself in learning French. (她想让自己完全沉浸在法语学习中。)" }
+                ]
+            },
+            {
+                root: "-migr-",
+                meaning: "迁移，漫游 (wander)",
+                words: [
+                    { word: "migrate", display: "<span class='r'>migr</span><span class='s'>ate</span>", pronunciation: "/maɪˈɡreɪt/", translation: "v. 迁徙，移居", mnemonic: "migr(迁移) + ate(动词) = 动物或人类大规模移动 = 迁徙", example: "These birds <span class='highlight-word'>migrate</span> south for the winter. (这些鸟冬天会迁徙到南方。)" },
+                    { word: "immigrant", display: "<span class='p'>im</span><span class='r'>migr</span><span class='s'>ant</span>", pronunciation: "/ˈɪm·ɪ·ɡrənt/", translation: "n. (入境的) 移民", mnemonic: "im(向内) + migr(迁移) + ant(人) = 从外面迁移进来的人 = 移民", example: "New York is a city built by <span class='highlight-word'>immigrants</span>. (纽约是一座由移民建立的城市。)" },
+                    { word: "emigrate", display: "<span class='p'>e</span><span class='r'>migr</span><span class='s'>ate</span>", pronunciation: "/ˈem·ɪ·ɡreɪt/", translation: "v. 移居国外 (流出)", mnemonic: "e(向外/出) + migr(迁移) + ate = 从自己的国家迁出去 = 移居国外", example: "His family decided to <span class='highlight-word'>emigrate</span> to Canada. (他的家人决定移居加拿大。)" }
+                ]
+            },
+            {
+                root: "-min-",
+                meaning: "小，突出 (small, project)",
+                words: [
+                    { word: "minor", display: "<span class='r'>min</span><span class='s'>or</span>", pronunciation: "/ˈmaɪ·nər/", translation: "adj. 较小的，次要的 n. 未成年人", mnemonic: "min(小) + or = 占较小比例的", example: "It was just a <span class='highlight-word'>minor</span> accident, no one was hurt. (这只是起小事故，没人受伤。)" },
+                    { word: "minute", display: "<span class='r'>min</span><span class='s'>ute</span>", pronunciation: "/ˈmɪn·ɪt/", translation: "n. 分钟 adj. /maɪˈnjuːt/ 微小的", mnemonic: "min(小) + ute = 被切分得很小的时间单位 = 分钟", example: "There is a <span class='highlight-word'>minute</span> difference between the two colors. (这两种颜色之间存在着极其微小的差别。)" },
+                    { word: "prominent", display: "<span class='p'>pro</span><span class='r'>min</span><span class='s'>ent</span>", pronunciation: "/ˈprɒm·ɪ·nənt/", translation: "adj. 突出的，显著的", mnemonic: "pro(向前) + min(突出) + ent = 往前面突出/极其显眼的 = 显著的", example: "She comes from a <span class='highlight-word'>prominent</span> political family. (她出身于一个显赫的政治世家。)" }
+                ]
+            },
+            {
+                root: "-mir-",
+                meaning: "惊奇，看 (wonder, look)",
+                words: [
+                    { word: "mirror", display: "<span class='r'>mirr</span><span class='s'>or</span>", pronunciation: "/ˈmɪr·ər/", translation: "n. 镜子", mnemonic: "mirr(看/惊奇) + or(物品) = 古人第一次看到自己倒影时觉得惊奇的物品 = 镜子", example: "She looked at herself in the <span class='highlight-word'>mirror</span>. (她照了照镜子里的自己。)" },
+                    { word: "admire", display: "<span class='p'>ad</span><span class='r'>mire</span>", pronunciation: "/ədˈmaɪər/", translation: "v. 钦佩，赞赏", mnemonic: "ad(朝向) + mire(看/惊奇) = 怀着惊奇和仰慕的眼光看着 = 钦佩", example: "I really <span class='highlight-word'>admire</span> his courage and determination. (我极度钦佩他的勇气和决心。)" },
+                    { word: "miracle", display: "<span class='r'>mir</span><span class='s'>acle</span>", pronunciation: "/ˈmɪr·ə·kl/", translation: "n. 奇迹", mnemonic: "mir(惊奇) + acle(事物) = 让人感到极度惊奇的事物 = 奇迹", example: "It is a <span class='highlight-word'>miracle</span> that she survived the crash. (她能在空难中幸存下来简直是个奇迹。)" }
+                ]
+            },
+            {
+                root: "-mon-",
+                meaning: "警告，提醒 (warn, advise)",
+                words: [
+                    { word: "monitor", display: "<span class='r'>monit</span><span class='s'>or</span>", pronunciation: "/ˈmɒn·ɪ·tər/", translation: "n. 监视器，显示器 v. 监控", mnemonic: "monit(提醒/警告) + or(物品/人) = 用来时刻提醒或监控机器状态的东西", example: "The doctor is closely <span class='highlight-word'>monitoring</span> the patient's heart rate. (医生正在密切监控病人的心率。)" },
+                    { word: "monument", display: "<span class='r'>monu</span><span class='s'>ment</span>", pronunciation: "/ˈmɒn·jʊ·mənt/", translation: "n. 纪念碑", mnemonic: "monu(提醒) + ment(物品) = 竖立在那提醒后人不要忘记的物品 = 纪念碑", example: "They built a <span class='highlight-word'>monument</span> in honor of the fallen soldiers. (他们建了一座纪念碑来缅怀阵亡将士。)" },
+                    { word: "summon", display: "<span class='p'>sum</span><span class='r'>mon</span>", pronunciation: "/ˈsʌm·ən/", translation: "v. 召唤，召集", mnemonic: "sum(在下面) + mon(警告/提醒) = 暗中或严厉地发出警告让人过来 = 召唤", example: "The president <span class='highlight-word'>summoned</span> a meeting of his top advisors. (总统紧急召集高层顾问开会。)" }
+                ]
+            },
+            {
+                root: "-mut-",
+                meaning: "改变 (change)",
+                words: [
+                    { word: "mutate", display: "<span class='r'>mut</span><span class='s'>ate</span>", pronunciation: "/mjuːˈteɪt/", translation: "v. 突变，变异", mnemonic: "mut(改变) + ate(动词) = 基因层面发生剧烈改变 = 突变", example: "Viruses can <span class='highlight-word'>mutate</span> rapidly to survive. (病毒为了生存会极其迅速地发生变异。)" },
+                    { word: "mutual", display: "<span class='r'>mut</span><span class='s'>ual</span>", pronunciation: "/ˈmjuː·tʃu·əl/", translation: "adj. 相互的，共同的", mnemonic: "mut(改变/交换) + ual = 双方都在互相交换状态 = 相互的", example: "A good relationship is based on <span class='highlight-word'>mutual</span> respect. (良好的关系建立在相互尊重的基础上。)" },
+                    { word: "commute", display: "<span class='p'>com</span><span class='r'>mute</span>", pronunciation: "/kəˈmjuːt/", translation: "v./n. 通勤，上下班往返", mnemonic: "com(共同/往复) + mute(改变) = 每天在工作地和家之间来回改变位置 = 通勤", example: "He has a one-hour <span class='highlight-word'>commute</span> to work every day. (他每天上班需要通勤一个小时。)" }
+                ]
+            },
+            {
+                root: "-neg-",
+                meaning: "否认 (deny)",
+                words: [
+                    { word: "negative", display: "<span class='r'>neg</span><span class='s'>ative</span>", pronunciation: "/ˈneɡ·ə·tɪv/", translation: "adj. 负面的，消极的，否定的", mnemonic: "neg(否认) + ative(形容词) = 充满否定和消极色彩的", example: "Do not let <span class='highlight-word'>negative</span> thoughts ruin your day. (别让消极负面的想法毁了你的一天。)" },
+                    { word: "neglect", display: "<span class='r'>neg</span><span class='s'>lect</span>", pronunciation: "/nɪˈɡlekt/", translation: "v./n. 忽视，疏忽", mnemonic: "neg(不/否认) + lect(选择/收集) = 不去选择它/把它扔在一边 = 忽视", example: "He <span class='highlight-word'>neglected</span> his health for years, and now he is sick. (他常年忽视自己的健康，现在终于病倒了。)" },
+                    { word: "renege", display: "<span class='p'>re</span><span class='r'>nege</span>", pronunciation: "/rɪˈniːɡ/", translation: "v. 食言，违约", mnemonic: "re(向后/反悔) + nege(否认) = 事后反悔不承认了 = 违约/食言", example: "You promised to help me, you can't <span class='highlight-word'>renege</span> on it now. (你答应过帮我的，你现在绝不能食言/出尔反尔。)" }
+                ]
+            },
+            {
+                root: "-nom- / -nym-",
+                meaning: "名字 (name)",
+                words: [
+                    { word: "nominate", display: "<span class='r'>nomin</span><span class='s'>ate</span>", pronunciation: "/ˈnɒm·ɪ·neɪt/", translation: "v. 提名，任命", mnemonic: "nomin(名字) + ate(使动) = 把某人的名字报上去 = 提名", example: "He was <span class='highlight-word'>nominated</span> for an Oscar for best actor. (他被提名为奥斯卡最佳男主角。)" },
+                    { word: "synonym", display: "<span class='p'>syn</span><span class='s'>o</span><span class='r'>nym</span>", pronunciation: "/ˈsɪn·ə·nɪm/", translation: "n. 同义词", mnemonic: "syn(相同) + nym(名字/词) = 意思相同的词 = 同义词", example: "Can you think of a <span class='highlight-word'>synonym</span> for 'happy'? (你能想出一个‘happy’的同义词吗？)" },
+                    { word: "anonymous", display: "<span class='p'>an</span><span class='s'>o</span><span class='r'>nym</span><span class='s'>ous</span>", pronunciation: "/əˈnɒn·ɪ·məs/", translation: "adj. 匿名的，无名的", mnemonic: "an(无/没有) + nym(名字) + ous = 没有留下名字的 = 匿名的", example: "The donor wishes to remain <span class='highlight-word'>anonymous</span>. (捐款人希望能保持匿名/不留姓名。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 171}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 61-70</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-mater- / -matr-",
+                meaning: "母亲 (mother)",
+                words: [
+                    { word: "maternal", display: "<span class='r'>matern</span><span class='s'>al</span>", pronunciation: "/məˈtɜː·nl/", translation: "adj. 母亲的，母性的", mnemonic: "matern(母亲) + al(形容词) = 属于母亲的 = 母性的", example: "She has strong <span class='highlight-word'>maternal</span> instincts. (她有着强烈的母性本能。)" },
+                    { word: "maternity", display: "<span class='r'>mater</span><span class='s'>nity</span>", pronunciation: "/məˈtɜː·nə·ti/", translation: "n. 孕产期，产科 adj. 孕妇的", mnemonic: "mater(母亲) + nity(状态) = 当母亲的状态 = 孕产期", example: "She is currently on <span class='highlight-word'>maternity</span> leave. (她目前正在休产假。)" },
+                    { word: "matriarch", display: "<span class='r'>matri</span><span class='s'>arch</span>", pronunciation: "/ˈmeɪ·tri·ɑːk/", translation: "n. 女族长，女家长", mnemonic: "matri(母亲) + arch(统治者) = 统治家族的母亲 = 女族长", example: "The grandmother is the <span class='highlight-word'>matriarch</span> of the family. (祖母是这个家族的女家长。)" },
+                    { word: "matrix", display: "<span class='r'>matr</span><span class='s'>ix</span>", pronunciation: "/ˈmeɪ·trɪks/", translation: "n. 矩阵，母体，发源地", mnemonic: "matr(母亲) + ix = 孕育事物的母体 = (数学引申为) 矩阵", example: "The city was a <span class='highlight-word'>matrix</span> for early artistic development. (这座城市是早期艺术发展的发源地/母体。)" }
+                ]
+            },
+            {
+                root: "-patr- / -pater-",
+                meaning: "父亲 (father)",
+                words: [
+                    { word: "paternal", display: "<span class='r'>patern</span><span class='s'>al</span>", pronunciation: "/pəˈtɜː·nl/", translation: "adj. 父亲的，像父亲一样的", mnemonic: "patern(父亲) + al(形容词) = 像父亲的", example: "He gave me some <span class='highlight-word'>paternal</span> advice. (他给了我一些如长辈/父亲般的建议。)" },
+                    { word: "patriot", display: "<span class='r'>patri</span><span class='s'>ot</span>", pronunciation: "/ˈpæt·ri·ət/", translation: "n. 爱国者", mnemonic: "patri(祖国/父辈的土地) + ot = 热爱父辈土地的人 = 爱国者", example: "He was a true <span class='highlight-word'>patriot</span> who fought for his country. (他是一位为国而战的真正的爱国者。)" },
+                    { word: "patron", display: "<span class='r'>patr</span><span class='s'>on</span>", pronunciation: "/ˈpeɪ·trən/", translation: "n. 赞助人，老顾客", mnemonic: "patr(父亲) + on = 像父亲一样提供资金保护和支持的人 = 赞助人", example: "He is a wealthy <span class='highlight-word'>patron</span> of the arts. (他是一位富有的艺术赞助人。)" },
+                    { word: "expatriate", display: "<span class='p'>ex</span><span class='r'>patri</span><span class='s'>ate</span>", pronunciation: "/eksˈpæt·ri·ət/", translation: "n. 旅居国外者，外派人员 (简称 expat)", mnemonic: "ex(向外) + patri(祖国) + ate = 离开父辈土地去外面的人 = 外派人员", example: "Many American <span class='highlight-word'>expatriates</span> live in Paris. (许多美国外派侨民居住在巴黎。)" }
+                ]
+            },
+            {
+                root: "-phil-",
+                meaning: "爱，喜爱 (love)",
+                words: [
+                    { word: "philosophy", display: "<span class='r'>philo</span><span class='s'>sophy</span>", pronunciation: "/fəˈlɒs·ə·fi/", translation: "n. 哲学，人生观", mnemonic: "philo(爱) + sophy(智慧) = 热爱智慧的学问 = 哲学", example: "He has a very positive <span class='highlight-word'>philosophy</span> of life. (他有着极其积极的人生哲学/人生观。)" },
+                    { word: "philanthropist", display: "<span class='r'>phil</span><span class='s'>anthrop</span><span class='s'>ist</span>", pronunciation: "/fɪˈlæn·θrə·pɪst/", translation: "n. 慈善家", mnemonic: "phil(爱) + anthrop(人类) + ist(人) = 博爱全人类的人 = 慈善家", example: "The billionaire became a <span class='highlight-word'>philanthropist</span> and donated his wealth. (这位亿万富翁成了一名慈善家并捐出了他的财富。)" },
+                    { word: "bibliophile", display: "<span class='p'>biblio</span><span class='r'>phile</span>", pronunciation: "/ˈbɪb·li·ə·faɪl/", translation: "n. 爱书的人，藏书家", mnemonic: "biblio(书) + phile(爱) = 极其爱书的人 = 藏书家", example: "As a <span class='highlight-word'>bibliophile</span>, his house is filled with rare books. (作为一名爱书狂，他的房子里堆满了珍稀书籍。)" },
+                    { word: "audiophile", display: "<span class='p'>audio</span><span class='r'>phile</span>", pronunciation: "/ˈɔː·di·əʊ·faɪl/", translation: "n. 音响发烧友，高保真音响爱好者", mnemonic: "audio(声音) + phile(爱) = 极其热爱高品质声音的人 = 发烧友", example: "This expensive speaker is designed for <span class='highlight-word'>audiophiles</span>. (这款昂贵的音箱是专为音响发烧友设计的。)" }
+                ]
+            },
+            {
+                root: "-theo- / -div-",
+                meaning: "神 (god)",
+                words: [
+                    { word: "theology", display: "<span class='r'>theo</span><span class='s'>logy</span>", pronunciation: "/θiˈɒl·ə·dʒi/", translation: "n. 神学，宗教学", mnemonic: "theo(神) + logy(学科) = 研究神的学科 = 神学", example: "He studied <span class='highlight-word'>theology</span> at Oxford University. (他在牛津大学学习神学。)" },
+                    { word: "atheist", display: "<span class='p'>a</span><span class='r'>the</span><span class='s'>ist</span>", pronunciation: "/ˈeɪ·θi·ɪst/", translation: "n. 无神论者", mnemonic: "a(无/否定) + the(神) + ist(人) = 不相信有神存在的人 = 无神论者", example: "As an <span class='highlight-word'>atheist</span>, he does not go to church. (作为一名无神论者，他不去教堂。)" },
+                    { word: "divine", display: "<span class='r'>div</span><span class='s'>ine</span>", pronunciation: "/dɪˈvaɪn/", translation: "adj. 神圣的，极好的", mnemonic: "div(神) + ine(形容词) = 属于神的 = 神圣的", example: "The king claimed to have a <span class='highlight-word'>divine</span> right to rule. (国王声称自己拥有神圣的统治权 (君权神授)。)" },
+                    { word: "enthusiasm", display: "<span class='p'>en</span><span class='r'>thu</span><span class='s'>siasm</span>", pronunciation: "/ɪnˈθjuː·zi·æzəm/", translation: "n. 热情，狂热", mnemonic: "en(进入) + thu(神) + siasm = 被神明附体/神明注入体内的状态 = 极其狂热", example: "She showed great <span class='highlight-word'>enthusiasm</span> for the new project. (她对这个新项目展现出了极大的热情。)" }
+                ]
+            },
+            {
+                root: "-dem-",
+                meaning: "人民 (people)",
+                words: [
+                    { word: "democracy", display: "<span class='r'>demo</span><span class='s'>cracy</span>", pronunciation: "/dɪˈmɒk·rə·si/", translation: "n. 民主，民主制度", mnemonic: "demo(人民) + cracy(统治) = 由人民来统治 = 民主", example: "Freedom of speech is a core principle of <span class='highlight-word'>democracy</span>. (言论自由是民主的核心原则。)" },
+                    { word: "demographic", display: "<span class='r'>demo</span><span class='s'>graphic</span>", pronunciation: "/ˌdem·əˈɡræf·ɪk/", translation: "adj. 人口统计的 n. (特定) 人群", mnemonic: "demo(人民) + graphic(记录/画) = 对人群进行画像和记录 = 人口统计的", example: "The product is targeted at a younger <span class='highlight-word'>demographic</span>. (该产品针对的是较年轻的受众群体。)" },
+                    { word: "epidemic", display: "<span class='p'>epi</span><span class='r'>dem</span><span class='s'>ic</span>", pronunciation: "/ˌep·ɪˈdem·ɪk/", translation: "n. 流行病，泛滥", mnemonic: "epi(在...之中) + dem(人民) + ic = 在人民中迅速蔓延的东西 = 流行病", example: "The flu <span class='highlight-word'>epidemic</span> spread rapidly across the city. (流感疫情在全城迅速蔓延。)" },
+                    { word: "pandemic", display: "<span class='p'>pan</span><span class='r'>dem</span><span class='s'>ic</span>", pronunciation: "/pænˈdem·ɪk/", translation: "n. 全球大流行病", mnemonic: "pan(全部) + dem(人民) + ic = 感染了所有人民的疾病 = 全球大流行病", example: "The COVID-19 <span class='highlight-word'>pandemic</span> changed the world forever. (新冠全球大流行病永远地改变了世界。)" }
+                ]
+            },
+            {
+                root: "-pop- / -publ-",
+                meaning: "人民，大众 (people)",
+                words: [
+                    { word: "popular", display: "<span class='r'>pop</span><span class='s'>ular</span>", pronunciation: "/ˈpɒp·jə·lər/", translation: "adj. 受欢迎的，流行的", mnemonic: "pop(人民) + ular(形容词) = 被大众所喜爱的 = 受欢迎的", example: "This restaurant is very <span class='highlight-word'>popular</span> with locals. (这家餐厅极受当地人欢迎。)" },
+                    { word: "population", display: "<span class='r'>popul</span><span class='s'>ation</span>", pronunciation: "/ˌpɒp·juˈleɪ·ʃn/", translation: "n. 人口", mnemonic: "popul(人民) + ation(名词) = 所有人民的总和 = 人口", example: "The city has a <span class='highlight-word'>population</span> of 5 million. (这座城市有500万人口。)" },
+                    { word: "populate", display: "<span class='r'>popul</span><span class='s'>ate</span>", pronunciation: "/ˈpɒp·ju·leɪt/", translation: "v. 居住于，占据", mnemonic: "popul(人民) + ate(动词) = 使人民住进去 = 居住于", example: "The area is heavily <span class='highlight-word'>populated</span> by immigrants. (该地区居住着大量移民。)" },
+                    { word: "public", display: "<span class='r'>publ</span><span class='s'>ic</span>", pronunciation: "/ˈpʌb·lɪk/", translation: "adj. 公众的，公开的 n. 公众", mnemonic: "publ(=popul 人民) + ic = 属于大众的 = 公共的", example: "The park is open to the <span class='highlight-word'>public</span>. (这个公园对公众开放。)" }
+                ]
+            },
+            {
+                root: "-nav- / -naut-",
+                meaning: "船，航行 (ship/sail)",
+                words: [
+                    { word: "navy", display: "<span class='r'>nav</span><span class='s'>y</span>", pronunciation: "/ˈneɪ·vi/", translation: "n. 海军", mnemonic: "nav(船) + y = 由船只组成的军队 = 海军", example: "He served in the US <span class='highlight-word'>Navy</span> for ten years. (他在美国海军服役了十年。)" },
+                    { word: "navigate", display: "<span class='r'>nav</span><span class='s'>igate</span>", pronunciation: "/ˈnæv·ɪ·ɡeɪt/", translation: "v. 导航，航行，应对(困难)", mnemonic: "nav(船) + ig(驱动) + ate = 驾驶船只前行 = 导航", example: "We used a GPS to <span class='highlight-word'>navigate</span> through the city. (我们用GPS在城里导航。)" },
+                    { word: "astronaut", display: "<span class='p'>astro</span><span class='r'>naut</span>", pronunciation: "/ˈæs·trə·nɔːt/", translation: "n. 宇航员", mnemonic: "astro(星星) + naut(航行者) = 在星星之间航行的人 = 宇航员", example: "Neil Armstrong was the first <span class='highlight-word'>astronaut</span> to walk on the moon. (尼尔·阿姆斯特朗是第一位在月球上行走的宇航员。)" },
+                    { word: "nautical", display: "<span class='r'>naut</span><span class='s'>ical</span>", pronunciation: "/ˈnɔː·tɪ·kl/", translation: "adj. 航海的，海员的", mnemonic: "naut(航行) + ical(形容词) = 跟航海有关的", example: "He loves collecting <span class='highlight-word'>nautical</span> antiques like old compasses. (他喜欢收集像旧指南针这样的航海古董。)" }
+                ]
+            },
+            {
+                root: "-astr- / -stell-",
+                meaning: "星星 (star)",
+                words: [
+                    { word: "astronomy", display: "<span class='r'>astr</span><span class='s'>o</span><span class='s'>nomy</span>", pronunciation: "/əˈstrɒn·ə·mi/", translation: "n. 天文学", mnemonic: "astr(星星) + nomy(法则/学科) = 研究星星运行法则的学科 = 天文学", example: "She is taking a course in <span class='highlight-word'>astronomy</span>. (她正在修一门天文学课程。)" },
+                    { word: "disaster", display: "<span class='p'>dis</span><span class='r'>aster</span>", pronunciation: "/dɪˈzɑː·stər/", translation: "n. 灾难，彻底的失败", mnemonic: "dis(坏/偏离) + aster(星星) = 古人认为星星位置偏移会带来厄运 = 灾难", example: "The hurricane was a natural <span class='highlight-word'>disaster</span>. (那场飓风是一场自然灾难。)" },
+                    { word: "constellation", display: "<span class='p'>con</span><span class='r'>stell</span><span class='s'>ation</span>", pronunciation: "/ˌkɒn·stəˈleɪ·ʃn/", translation: "n. 星座，群英荟萃", mnemonic: "con(共同) + stell(星星) + ation = 一群星星连在一起 = 星座", example: "Orion is my favorite <span class='highlight-word'>constellation</span>. (猎户座是我最喜欢的星座。)" },
+                    { word: "stellar", display: "<span class='r'>stell</span><span class='s'>ar</span>", pronunciation: "/ˈstel·ər/", translation: "adj. 恒星的，极其优秀的，卓越的", mnemonic: "stell(星星) + ar(形容词) = 像星星一样闪耀的 = 极其优秀的", example: "The company reported <span class='highlight-word'>stellar</span> earnings this quarter. (公司本季度报告了极其耀眼/卓越的盈利。)" }
+                ]
+            },
+            {
+                root: "-calor- / -cand-",
+                meaning: "热，发白光 (heat/glow)",
+                words: [
+                    { word: "calorie", display: "<span class='r'>calor</span><span class='s'>ie</span>", pronunciation: "/ˈkæl·ə·ri/", translation: "n. 卡路里(热量单位)", mnemonic: "calor(热) + ie = 测量热量和能量的单位 = 卡路里", example: "This chocolate bar contains 300 <span class='highlight-word'>calories</span>. (这块巧克力棒含有300卡路里。)" },
+                    { word: "caloric", display: "<span class='r'>calor</span><span class='s'>ic</span>", pronunciation: "/kəˈlɒr·ɪk/", translation: "adj. 热量的", mnemonic: "calor(热) + ic(形容词) = 有关热量的", example: "You need to reduce your daily <span class='highlight-word'>caloric</span> intake to lose weight. (想要减肥，你需要减少每日热量摄入。)" },
+                    { word: "candle", display: "<span class='r'>cand</span><span class='s'>le</span>", pronunciation: "/ˈkæn·dl/", translation: "n. 蜡烛", mnemonic: "cand(发白光) + le(物品) = 发出光芒的物品 = 蜡烛", example: "She blew out the <span class='highlight-word'>candles</span> on her birthday cake. (她吹灭了生日蛋糕上的蜡烛。)" },
+                    { word: "candid", display: "<span class='r'>cand</span><span class='s'>id</span>", pronunciation: "/ˈkæn·dɪd/", translation: "adj. 坦白的，率直的", mnemonic: "cand(发白光) + id(形容词) = 像白光一样清澈透明没有阴影的 = 坦诚的", example: "Let me be completely <span class='highlight-word'>candid</span> with you. (让我对你彻底坦诚相见吧/打开天窗说亮话吧。)" }
+                ]
+            },
+            {
+                root: "-hydr- / -aqua-",
+                meaning: "水 (water)",
+                words: [
+                    { word: "hydrate", display: "<span class='r'>hydr</span><span class='s'>ate</span>", pronunciation: "/ˈhaɪ·dreɪt/", translation: "v. 补水，保湿", mnemonic: "hydr(水) + ate(动词) = 补充水分", example: "It's important to <span class='highlight-word'>hydrate</span> after a heavy workout. (剧烈运动后补水极其重要。)" },
+                    { word: "dehydrate", display: "<span class='p'>de</span><span class='r'>hydr</span><span class='s'>ate</span>", pronunciation: "/ˌdiː·haɪˈdreɪt/", translation: "v. 使脱水，失去水分", mnemonic: "de(去除) + hydr(水) + ate = 把水抽干 = 脱水", example: "Drinking too much alcohol can <span class='highlight-word'>dehydrate</span> your body. (饮酒过量会导致身体脱水。)" },
+                    { word: "aquarium", display: "<span class='r'>aqua</span><span class='s'>rium</span>", pronunciation: "/əˈkweə·ri·əm/", translation: "n. 水族馆，水族箱", mnemonic: "aqua(水) + rium(场所) = 放满水供人参观的地方 = 水族馆", example: "We took the kids to the <span class='highlight-word'>aquarium</span> to see the sharks. (我们带孩子们去水族馆看鲨鱼了。)" },
+                    { word: "aquatic", display: "<span class='r'>aqua</span><span class='s'>tic</span>", pronunciation: "/əˈkwæt·ɪk/", translation: "adj. 水生的，水上的", mnemonic: "aqua(水) + tic(形容词) = 在水里的 = 水生的", example: "Whales and dolphins are <span class='highlight-word'>aquatic</span> mammals. (鲸鱼和海豚是水生哺乳动物。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 61}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 191-200</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-poli-",
+                meaning: "城市 (city)",
+                words: [
+                    { word: "metropolis", display: "<span class='p'>metro</span><span class='r'>poli</span><span class='s'>s</span>", pronunciation: "/məˈtrɒp·ə·lɪs/", translation: "n. 大都市，首府", mnemonic: "metro(母/大) + polis(城市) = 母亲般的中心大城市 = 大都市", example: "New York is a bustling global <span class='highlight-word'>metropolis</span>. (纽约是一座极其繁华的全球大都市。)" },
+                    { word: "police", display: "<span class='r'>poli</span><span class='s'>ce</span>", pronunciation: "/pəˈliːs/", translation: "n. 警察", mnemonic: "poli(城市) + ce = 管理城市治安的人 = 警察", example: "The <span class='highlight-word'>police</span> were called to the scene immediately. (警察被立刻叫到了现场。)" },
+                    { word: "politics", display: "<span class='r'>poli</span><span class='s'>tics</span>", pronunciation: "/ˈpɒl·ɪ·tɪks/", translation: "n. 政治，政治学", mnemonic: "poli(城市) + tics(学科) = 管理城邦的学问 = 政治", example: "He has a great interest in local <span class='highlight-word'>politics</span>. (他对本地的政治极其感兴趣。)" }
+                ]
+            },
+            {
+                root: "-prim- / -prin-",
+                meaning: "第一 (first)",
+                words: [
+                    { word: "primary", display: "<span class='r'>prim</span><span class='s'>ary</span>", pronunciation: "/ˈpraɪ·mə·ri/", translation: "adj. 首要的，初级的", mnemonic: "prim(第一) + ary(形容词) = 第一位的 = 首要的", example: "The <span class='highlight-word'>primary</span> goal of this project is to increase sales. (该项目首要的目标就是增加销售额。)" },
+                    { word: "principal", display: "<span class='r'>princ</span><span class='s'>ipal</span>", pronunciation: "/ˈprɪn·sə·pl/", translation: "adj. 首要的 n. 校长，资本", mnemonic: "prin(第一) + cipal(人) = 占据第一位的人 = 校长/首要人物", example: "She was appointed as the new <span class='highlight-word'>principal</span> of the school. (她被任命为该校的新校长。)" },
+                    { word: "primitive", display: "<span class='r'>prim</span><span class='s'>itive</span>", pronunciation: "/ˈprɪm·ɪ·tɪv/", translation: "adj. 原始的，远古的", mnemonic: "prim(第一) + itive(状态) = 处于人类文明最早期阶段的 = 原始的", example: "The tribe lived in <span class='highlight-word'>primitive</span> conditions. (那个部落生活在极其原始的状态下。)" }
+                ]
+            },
+            {
+                root: "-priv-",
+                meaning: "私有 (private)",
+                words: [
+                    { word: "private", display: "<span class='r'>priv</span><span class='s'>ate</span>", pronunciation: "/ˈpraɪ·vət/", translation: "adj. 私人的", mnemonic: "priv(私) + ate(形容词) = 个人的 = 私人的", example: "He prefers to keep his personal life <span class='highlight-word'>private</span>. (他倾向于保护自己的个人隐私。)" },
+                    { word: "deprive", display: "<span class='p'>de</span><span class='r'>priv</span><span class='s'>e</span>", pronunciation: "/dɪˈpraɪv/", translation: "v. 剥夺，使丧失", mnemonic: "de(去除) + priv(私有/占有) + e = 把人应有的东西拿走 = 剥夺", example: "They were <b>deprived</b> of basic human rights. (他们被剥夺了基本人权。)" },
+                    { word: "privilege", display: "<span class='r'>priv</span><span class='s'>i</span><span class='r'>leg</span><span class='s'>e</span>", pronunciation: "/ˈprɪv·ə·lɪdʒ/", translation: "n. 特权，优待", mnemonic: "priv(私) + i + leg(法律) = 私人享有的法律优待 = 特权", example: "It's a great <span class='highlight-word'>privilege</span> to meet you. (见到您是我莫大的荣幸/优待。)" }
+                ]
+            },
+            {
+                root: "-prob- / -prov-",
+                meaning: "测试、证明 (test, good)",
+                words: [
+                    { word: "prove", display: "<span class='r'>prov</span><span class='s'>e</span>", pronunciation: "/pruːv/", translation: "v. 证明，证实", mnemonic: "prov(证明) + e = 给出证据证明 = 证实", example: "Can you <span class='highlight-word'>prove</span> that you were there? (你能证明你当时在场吗？)" },
+                    { word: "problem", display: "<span class='r'>prob</span><span class='s'>lem</span>", pronunciation: "/ˈprɒb·ləm/", translation: "n. 问题，难题", mnemonic: "prob(测试) + lem = 需要去测试和解决的难题 = 问题", example: "We have a major <span class='highlight-word'>problem</span> with the software. (我们的软件有个大问题。)" },
+                    { word: "approve", display: "<span class='p'>ap</span><span class='r'>prov</span><span class='s'>e</span>", pronunciation: "/əˈpruːv/", translation: "v. 批准，赞成", mnemonic: "ap(朝向) + prov(证明/好) + e = 认为它是好的并给出证明 = 批准", example: "The committee didn't <span class='highlight-word'>approve</span> the budget. (委员会没有批准那笔预算。)" }
+                ]
+            },
+            {
+                root: "-pung- / -punct-",
+                meaning: "刺，点 (prick, point)",
+                words: [
+                    { word: "puncture", display: "<span class='r'>punct</span><span class='s'>ure</span>", pronunciation: "/ˈpʌŋk·tʃər/", translation: "v./n. 刺穿，打孔，轮胎爆裂", mnemonic: "punct(点/刺) + ure = 被刺了一个点 = 刺穿/爆胎", example: "The sharp nail <span class='highlight-word'>punctured</span> the tire. (尖钉刺穿了轮胎。)" },
+                    { word: "punctual", display: "<span class='r'>punct</span><span class='s'>ual</span>", pronunciation: "/ˈpʌŋk·tʃu·əl/", translation: "adj. 准时的", mnemonic: "punct(点) + ual = 能精准落在时间点上的 = 准时的", example: "She is extremely <span class='highlight-word'>punctual</span> and never late. (她极其准时，从不迟到。)" },
+                    { word: "pungent", display: "<span class='r'>pung</span><span class='s'>ent</span>", pronunciation: "/ˈpʌn·dʒənt/", translation: "adj. 刺鼻的，辛辣的", mnemonic: "pung(刺) + ent(形容词) = 像刺一样扎进鼻子的 = 刺鼻的", example: "The <span class='highlight-word'>pungent</span> smell of onions made me cry. (洋葱那刺鼻的味道熏得我眼泪直流。)" }
+                ]
+            },
+            {
+                root: "-pur- / -purg-",
+                meaning: "纯洁，清洗 (clean)",
+                words: [
+                    { word: "pure", display: "<span class='r'>pur</span><span class='s'>e</span>", pronunciation: "/pjʊər/", translation: "adj. 纯净的，纯粹的", mnemonic: "pur = 本意就是纯净的", example: "The water here is crystal <span class='highlight-word'>pure</span>. (这里的水清澈见底，纯净如水晶。)" },
+                    { word: "purify", display: "<span class='r'>pur</span><span class='s'>ify</span>", pronunciation: "/ˈpjʊə·rɪ·faɪ/", translation: "v. 净化，提纯", mnemonic: "pur(纯) + ify(使动) = 使其变得纯净 = 净化", example: "We need to <span class='highlight-word'>purify</span> the water before drinking it. (我们需要在饮用前净化这些水。)" },
+                    { word: "purge", display: "<span class='r'>purg</span><span class='s'>e</span>", pronunciation: "/pɜːdʒ/", translation: "v. 清除，清洗，净化", mnemonic: "purg(清洗) + e = 彻底洗掉脏东西 = 清洗", example: "The dictator began a massive <span class='highlight-word'>purge</span> of his political enemies. (那位独裁者开始对他所有的政敌进行大规模的清洗。)" }
+                ]
+            },
+            {
+                root: "-rect-",
+                meaning: "直，正 (straight, right)",
+                words: [
+                    { word: "correct", display: "<span class='p'>cor</span><span class='r'>rect</span>", pronunciation: "/kəˈrekt/", translation: "adj. 正确的 v. 纠正", mnemonic: "cor(全部) + rect(直) = 完完全全笔直没有偏差的 = 正确的", example: "Is this the <span class='highlight-word'>correct</span> way to hold the pen? (这是拿笔的正确姿势吗？)" },
+                    { word: "direct", display: "<span class='p'>di</span><span class='r'>rect</span>", pronunciation: "/dɪˈrekt/", translation: "adj. 直接的 v. 指导，导演", mnemonic: "di(分开/方向) + rect(直) = 抛开岔路一直往前走 = 直接的", example: "We need a <span class='highlight-word'>direct</span> flight to London. (我们需要去伦敦的直飞航班。)" },
+                    { word: "rectangle", display: "<span class='r'>rect</span><span class='s'>angle</span>", pronunciation: "/ˈrek·tæŋ·ɡl/", translation: "n. 矩形，长方形", mnemonic: "rect(直) + angle(角) = 直角的图形 = 矩形", example: "The whiteboard is in the shape of a <span class='highlight-word'>rectangle</span>. (白板是长方形的。)" }
+                ]
+            },
+            {
+                root: "-rog-",
+                meaning: "要求，问 (ask)",
+                words: [
+                    { word: "interrogate", display: "<span class='p'>inter</span><span class='r'>rog</span><span class='s'>ate</span>", pronunciation: "/ɪnˈter·ə·ɡeɪt/", translation: "v. 审问，质问", mnemonic: "inter(在中间) + rog(问) + ate = 夹在中间反复询问 = 审问", example: "The detective began to <span class='highlight-word'>interrogate</span> the suspect. (侦探开始审问嫌疑人。)" },
+                    { word: "arrogant", display: "<span class='p'>ar</span><span class='r'>rog</span><span class='s'>ant</span>", pronunciation: "/ˈær·ə·ɡənt/", translation: "adj. 傲慢的，自大的", mnemonic: "ar(朝向) + rog(要求) + ant = 要求别人服从自己/总觉得自己高人一等 = 傲慢的", example: "He is too <span class='highlight-word'>arrogant</span> to apologize for his mistakes. (他太傲慢了，绝不会为自己的错误道歉。)" },
+                    { word: "prerogative", display: "<span class='p'>pre</span><span class='r'>rog</span><span class='s'>ative</span>", pronunciation: "/prɪˈrɒɡ·ə·tɪv/", translation: "n. 特权，优先权", mnemonic: "pre(提前) + rog(要求) + ative = 提前享有要求权的 = 特权", example: "It is the CEO's <b>prerogative</b> to make that decision. (那件事是CEO行使的特权/CEO有权做那个决定。)" }
+                ]
+            },
+            {
+                root: "-sanct-",
+                meaning: "神圣 (holy)",
+                words: [
+                    { word: "sanctuary", display: "<span class='r'>sanct</span><span class='s'>uary</span>", pronunciation: "/ˈsæŋk·tʃu·e·ri/", translation: "n. 避难所，圣所", mnemonic: "sanct(神圣) + uary(场所) = 神圣不可侵犯的庇护所 = 避难所", example: "The wildlife <span class='highlight-word'>sanctuary</span> protects endangered species. (野生动物保护区庇护着濒危物种。)" },
+                    { word: "sanction", display: "<span class='r'>sanct</span><span class='s'>ion</span>", pronunciation: "/ˈsæŋk·ʃn/", translation: "n./v. 批准，制裁", mnemonic: "sanct(神圣的法律) + ion = 法律赋予的批准或惩戒 = 制裁", example: "The UN imposed economic <span class='highlight-word'>sanctions</span> on the country. (联合国对该国实施了经济制裁。)" },
+                    { word: "sanctify", display: "<span class='r'>sanct</span><span class='s'>ify</span>", pronunciation: "/ˈsæŋk·tɪ·faɪ/", translation: "v. 使神圣化，使圣洁", mnemonic: "sanct(神圣) + ify(使动) = 使其变得神圣 = 圣洁化", example: "He believed that his work was <b>sanctified</b> by God. (他相信他的工作是受上帝圣洁化的。)" }
+                ]
+            },
+            {
+                root: "-scend-",
+                meaning: "爬，攀升 (climb)",
+                words: [
+                    { word: "ascend", display: "<span class='p'>a</span><span class='r'>scend</span>", pronunciation: "/əˈsend/", translation: "v. 上升，攀登", mnemonic: "a(加强/向) + scend(爬) = 往上爬 = 上升", example: "The path started to <span class='highlight-word'>ascend</span> as we reached the mountain. (当我们到达山脚时，道路开始向上攀升。)" },
+                    { word: "descend", display: "<span class='p'>de</span><span class='r'>scend</span>", pronunciation: "/dɪˈsend/", translation: "v. 下降，走下", mnemonic: "de(向下) + scend(爬/行) = 往下走 = 下降", example: "We <b>descended</b> the stairs slowly in the dark. (我们在黑暗中慢慢走下了楼梯。)" },
+                    { word: "transcend", display: "<span class='p'>trans</span><span class='r'>scend</span>", pronunciation: "/trænˈsend/", translation: "v. 超越，胜过", mnemonic: "trans(跨越) + scend(爬) = 爬过了原有的界限 = 超越", example: "True art should <span class='highlight-word'>transcend</span> all cultural barriers. (真正的艺术应该超越所有的文化障碍。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 191}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

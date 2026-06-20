@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 141-150</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-derm-",
+                meaning: "皮肤 (skin)",
+                words: [
+                    { word: "dermatology", display: "<span class='r'>dermat</span><span class='s'>ology</span>", pronunciation: "/ˌdɜː·məˈtɒl·ə·dʒi/", translation: "n. 皮肤病学，皮肤科", mnemonic: "dermat(皮肤) + ology(学科) = 研究皮肤的医学", example: "She is studying <span class='highlight-word'>dermatology</span> in medical school. (她在医学院学习皮肤病学。)" },
+                    { word: "epidermis", display: "<span class='p'>epi</span><span class='r'>derm</span><span class='s'>is</span>", pronunciation: "/ˌep·ɪˈdɜː·mɪs/", translation: "n. 表皮，外皮", mnemonic: "epi(在...上面) + derm(皮肤) + is = 在皮肤真皮层上面的一层 = 表皮", example: "The <span class='highlight-word'>epidermis</span> is the outer layer of the skin. (表皮是皮肤的最外层。)" }
+                ]
+            },
+            {
+                root: "-dign-",
+                meaning: "值得，高贵 (worthy)",
+                words: [
+                    { word: "dignity", display: "<span class='r'>dign</span><span class='s'>ity</span>", pronunciation: "/ˈdɪɡ·nə·ti/", translation: "n. 尊严，高贵", mnemonic: "dign(高贵) + ity(名词) = 极其高贵的状态 = 尊严", example: "She faced the harsh criticism with great <span class='highlight-word'>dignity</span>. (她极其从容、极具尊严地面对了严厉的批评。)" },
+                    { word: "indignity", display: "<span class='p'>in</span><span class='r'>dign</span><span class='s'>ity</span>", pronunciation: "/ɪnˈdɪɡ·nə·ti/", translation: "n. 侮辱，轻蔑", mnemonic: "in(不) + dignity(尊严) = 完全剥夺别人的尊严 = 侮辱", example: "He suffered the <span class='highlight-word'>indignity</span> of being fired in front of everyone. (他遭受了在所有人面前被解雇的奇耻大辱。)" },
+                    { word: "dignify", display: "<span class='r'>dign</span><span class='s'>ify</span>", pronunciation: "/ˈdɪɡ·nɪ·faɪ/", translation: "v. 使高贵，使有尊严", mnemonic: "dign(高贵) + ify(使动) = 赋予其尊贵感 = 使高贵", example: "I will not <span class='highlight-word'>dignify</span> your absurd question with an answer. (我才不会屈尊去回答你那个极其荒谬的问题。)" }
+                ]
+            },
+            {
+                root: "-doc- / -doct-",
+                meaning: "教 (teach)",
+                words: [
+                    { word: "doctor", display: "<span class='r'>doct</span><span class='s'>or</span>", pronunciation: "/ˈdɒk·tər/", translation: "n. 医生，博士", mnemonic: "doct(教) + or(人) = 有资格在大学里教书的人 = 博士/医生", example: "He is a <span class='highlight-word'>doctor</span> of philosophy. (他是一位哲学博士。)" },
+                    { word: "document", display: "<span class='r'>doc</span><span class='s'>ument</span>", pronunciation: "/ˈdɒk·jʊ·mənt/", translation: "n. 文件，文献", mnemonic: "doc(教/提供证据) + ument(物品) = 用来证明事实的文字材料 = 文件", example: "Please sign this legal <span class='highlight-word'>document</span>. (请签署这份法律文件。)" },
+                    { word: "docile", display: "<span class='r'>doc</span><span class='s'>ile</span>", pronunciation: "/ˈdəʊ·saɪl/", translation: "adj. 温顺的，易教导的", mnemonic: "doc(教) + ile(易于) = 极其容易被教化驯服的 = 温顺的", example: "Labrador Retrievers are known for being very <span class='highlight-word'>docile</span> dogs. (拉布拉多犬以极其温顺听话而闻名。)" }
+                ]
+            },
+            {
+                root: "-dorm-",
+                meaning: "睡眠 (sleep)",
+                words: [
+                    { word: "dormitory", display: "<span class='r'>dorm</span><span class='s'>itory</span>", pronunciation: "/ˈdɔː·mɪ·tri/", translation: "n. 宿舍 (常简写为 dorm)", mnemonic: "dorm(睡眠) + itory(场所) = 专门用来睡觉休息的场所 = 宿舍", example: "Most freshmen live in the <span class='highlight-word'>dormitory</span> on campus. (大多数大一新生住在校园的宿舍里。)" },
+                    { word: "dormant", display: "<span class='r'>dorm</span><span class='s'>ant</span>", pronunciation: "/ˈdɔː·mənt/", translation: "adj. 休眠的，蛰伏的，(火山)死寂的", mnemonic: "dorm(睡眠) + ant(形容词) = 处于沉睡状态的 = 休眠的", example: "The volcano has been <span class='highlight-word'>dormant</span> for hundreds of years. (那座火山已经休眠数百年了。)" }
+                ]
+            },
+            {
+                root: "-ego-",
+                meaning: "自我 (self)",
+                words: [
+                    { word: "ego", display: "<span class='r'>ego</span>", pronunciation: "/ˈiː·ɡəʊ/", translation: "n. 自我，自尊，自负", mnemonic: "ego = 拉丁语中本身即为“我”的意思", example: "His massive <span class='highlight-word'>ego</span> makes him hard to work with. (他那极度膨胀的自我/自负让他极难共事。)" },
+                    { word: "egocentric", display: "<span class='r'>ego</span><span class='s'>centric</span>", pronunciation: "/ˌiː·ɡəʊˈsen·trɪk/", translation: "adj. 以自我为中心的，极其自私的", mnemonic: "ego(自我) + centric(中心的) = 凡事只围着自己转的", example: "Babies are naturally <span class='highlight-word'>egocentric</span>. (婴儿天生就是以自我为中心的。)" },
+                    { word: "egotist", display: "<span class='r'>ego</span><span class='s'>tist</span>", pronunciation: "/ˈiː·ɡə·tɪst/", translation: "n. 极端利己主义者，自大狂", mnemonic: "ego(自我) + tist(人) = 满脑子只有自己的人 = 自大狂", example: "He talks about himself constantly; he is such an <span class='highlight-word'>egotist</span>. (他不停地谈论自己；他简直是个终极自大狂。)" }
+                ]
+            },
+            {
+                root: "-err-",
+                meaning: "漫游，偏离，犯错 (wander, mistake)",
+                words: [
+                    { word: "error", display: "<span class='r'>err</span><span class='s'>or</span>", pronunciation: "/ˈer·ər/", translation: "n. 错误，差错", mnemonic: "err(偏离正常轨迹) + or(名词) = 走偏了 = 错误", example: "The computer crashed due to a system <span class='highlight-word'>error</span>. (电脑因系统错误而崩溃。)" },
+                    { word: "erratic", display: "<span class='r'>err</span><span class='s'>atic</span>", pronunciation: "/ɪˈræt·ɪk/", translation: "adj. 不稳定的，古怪的，毫无规律的", mnemonic: "err(漫游/偏离) + atic = 偏离正常轨道的/到处乱飘的 = 极其不稳定的", example: "His driving was very <span class='highlight-word'>erratic</span>, swerving all over the road. (他的驾驶极其飘忽不定，在路上到处蛇行。)" },
+                    { word: "aberrant", display: "<span class='p'>ab</span><span class='r'>err</span><span class='s'>ant</span>", pronunciation: "/æˈber·ənt/", translation: "adj. 异常的，反常的", mnemonic: "ab(离开) + err(漫游) + ant = 偏离了正确轨道的 = 反常的", example: "This <span class='highlight-word'>aberrant</span> behavior is completely out of character for him. (这种极度反常的行为完全不符合他的性格。)" }
+                ]
+            },
+            {
+                root: "-ev-",
+                meaning: "时代，年龄 (age, time)",
+                words: [
+                    { word: "medieval", display: "<span class='p'>medi</span><span class='r'>ev</span><span class='s'>al</span>", pronunciation: "/ˌmed·iˈiː·vl/", translation: "adj. 中世纪的，老掉牙的", mnemonic: "medi(中间) + ev(时代) + al = 位于古代和现代中间时代的 = 中世纪的", example: "We visited a <span class='highlight-word'>medieval</span> castle in France. (我们参观了一座法国的中世纪城堡。)" },
+                    { word: "longevity", display: "<span class='p'>long</span><span class='r'>ev</span><span class='s'>ity</span>", pronunciation: "/lɒnˈdʒev·ə·ti/", translation: "n. 长寿，耐久性", mnemonic: "long(长) + ev(时间/寿命) + ity = 极其长久的寿命 = 长寿", example: "The secret to his <span class='highlight-word'>longevity</span> is a healthy diet and daily exercise. (他长寿的秘诀是健康的饮食和每日锻炼。)" },
+                    { word: "inevitable", display: "<span class='p'>in</span><span class='r'>ev</span><span class='s'>it</span><span class='s'>able</span>", pronunciation: "/ɪnˈev·ɪ·tə·bl/", translation: "adj. 不可避免的，必然发生的", mnemonic: "in(不) + evit(逃避) + able = 时间洪流中无法逃避的 = 必然发生的", example: "With inflation rising, an economic recession seems <span class='highlight-word'>inevitable</span>. (随着通胀飙升，一场经济衰退似乎已经不可避免。)" }
+                ]
+            },
+            {
+                root: "-fab- / -fam-",
+                meaning: "说 (speak)",
+                words: [
+                    { word: "fable", display: "<span class='r'>fab</span><span class='s'>le</span>", pronunciation: "/ˈfeɪ·bl/", translation: "n. 寓言故事，神话", mnemonic: "fab(说) + le = 借动物口吻说教编出的故事 = 寓言", example: "Aesop's <span class='highlight-word'>Fables</span> are famous all over the world. (《伊索寓言》在全世界都极其著名。)" },
+                    { word: "famous", display: "<span class='r'>fam</span><span class='s'>ous</span>", pronunciation: "/ˈfeɪ·məs/", translation: "adj. 著名的，出名的", mnemonic: "fam(说/名声) + ous(充满) = 被所有人都在谈论的 = 著名的", example: "Paris is <span class='highlight-word'>famous</span> for its art and architecture. (巴黎以其艺术和建筑而闻名于世。)" },
+                    { word: "defame", display: "<span class='p'>de</span><span class='r'>fame</span>", pronunciation: "/dɪˈfeɪm/", translation: "v. 诽谤，破坏名誉", mnemonic: "de(向下/毁坏) + fame(名声) = 恶意毁坏别人的名声 = 诽谤", example: "The actor sued the newspaper for trying to <span class='highlight-word'>defame</span> him. (该演员起诉了试图诽谤他的那家报纸。)" }
+                ]
+            },
+            {
+                root: "-fall- / -fals-",
+                meaning: "欺骗，犯错 (deceive)",
+                words: [
+                    { word: "false", display: "<span class='r'>fals</span><span class='s'>e</span>", pronunciation: "/fɔːls/", translation: "adj. 错误的，假的", mnemonic: "fals(欺骗) + e = 骗人的 = 虚假的", example: "He gave the police a <span class='highlight-word'>false</span> name and address. (他给警方报了一个假名和假地址。)" },
+                    { word: "fallacy", display: "<span class='r'>fall</span><span class='s'>acy</span>", pronunciation: "/ˈfæl·ə·si/", translation: "n. 谬误，荒谬的观点", mnemonic: "fall(欺骗/犯错) + acy(名词) = 具有欺骗性的错误言论 = 谬误", example: "It is a common <span class='highlight-word'>fallacy</span> that lightning never strikes twice in the same place. (闪电绝不会劈中同一个地方两次，这完全是个常见的谬论。)" },
+                    { word: "infallible", display: "<span class='p'>in</span><span class='r'>fall</span><span class='s'>ible</span>", pronunciation: "/ɪnˈfæl·ə·bl/", translation: "adj. 绝对可靠的，绝无错误的", mnemonic: "in(不) + fall(犯错) + ible(能...的) = 绝不可能犯错的", example: "Even the best experts are not <span class='highlight-word'>infallible</span>. (哪怕是最顶尖的专家也绝非完人/不可能永不犯错。)" }
+                ]
+            },
+            {
+                root: "-fend- / -fens-",
+                meaning: "打击 (strike)",
+                words: [
+                    { word: "defend", display: "<span class='p'>de</span><span class='r'>fend</span>", pronunciation: "/dɪˈfend/", translation: "v. 保卫，防守，辩护", mnemonic: "de(反离) + fend(打击) = 挡开别人的打击 = 保卫", example: "The soldiers fought bravely to <span class='highlight-word'>defend</span> their country. (士兵们英勇奋战保家卫国。)" },
+                    { word: "offend", display: "<span class='p'>of</span><span class='r'>fend</span>", pronunciation: "/əˈfend/", translation: "v. 冒犯，得罪，使不悦", mnemonic: "of(朝向) + fend(打击) = 朝着别人进行语言打击 = 冒犯", example: "I am sorry, I didn't mean to <span class='highlight-word'>offend</span> you. (对不起，我本意绝不是想冒犯/得罪你。)" },
+                    { word: "fence", display: "<span class='r'>fenc</span><span class='s'>e</span>", pronunciation: "/fens/", translation: "n. 栅栏，围栏", mnemonic: "fenc(=fens防御) + e = 用来挡住外界入侵的防御物 = 栅栏", example: "We built a wooden <span class='highlight-word'>fence</span> around the backyard. (我们在后院周围建了一圈木头栅栏。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 141}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

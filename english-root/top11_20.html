@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 11-20</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- JS将在这里生成所有的词根区块 -->
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-phon-",
+                meaning: "声音 (sound)",
+                words: [
+                    { word: "phone", display: "<span class='r'>phone</span>", pronunciation: "/fəʊn/", translation: "n. 电话 v. 打电话", mnemonic: "phone(声音) = 传递声音的工具 = 电话", example: "Please <span class='highlight-word'>phone</span> me when you arrive. (你到了请给我打个电话。)" },
+                    { word: "telephone", display: "<span class='p'>tele</span><span class='r'>phone</span>", pronunciation: "/ˈtelɪfəʊn/", translation: "n. 电话机", mnemonic: "tele(远距离) + phone(声音) = 远距离传声 = 电话", example: "He left his <span class='highlight-word'>telephone</span> at the office. (他把电话落在办公室了。)" },
+                    { word: "microphone", display: "<span class='p'>micro</span><span class='r'>phone</span>", pronunciation: "/ˈmaɪkrəfəʊn/", translation: "n. 麦克风，话筒", mnemonic: "micro(微小) + phone(声音) = 把微小的声音放大 = 麦克风", example: "Speak directly into the <span class='highlight-word'>microphone</span>. (请对着麦克风直接说。)" },
+                    { word: "symphony", display: "<span class='p'>sym</span><span class='r'>phon</span><span class='s'>y</span>", pronunciation: "/ˈsɪmfəni/", translation: "n. 交响乐", mnemonic: "sym(共同/一起) + phon(声音) + y = 各种乐器一起发声 = 交响乐", example: "We went to hear Beethoven's ninth <span class='highlight-word'>symphony</span>. (我们去听了贝多芬的第九交响曲。)" },
+                    { word: "phonics", display: "<span class='r'>phon</span><span class='s'>ics</span>", pronunciation: "/ˈfɒnɪks/", translation: "n. 自然拼读法", mnemonic: "phon(声音) + ics(学科) = 研究发音规律的学科 = 自然拼读", example: "The school uses <span class='highlight-word'>phonics</span> to teach reading. (学校用自然拼读法教阅读。)" }
+                ]
+            },
+            {
+                root: "-aud-",
+                meaning: "听 (hear)",
+                words: [
+                    { word: "audio", display: "<span class='r'>audi</span><span class='s'>o</span>", pronunciation: "/ˈɔːdiəʊ/", translation: "adj. 声音的，音频的", mnemonic: "audi(听) + o(后缀) = 听觉相关的 = 音频的", example: "The video is fine, but the <span class='highlight-word'>audio</span> is out of sync. (视频没问题，但是音频不同步。)" },
+                    { word: "audience", display: "<span class='r'>audi</span><span class='s'>ence</span>", pronunciation: "/ˈɔːdiəns/", translation: "n. 观众，听众", mnemonic: "audi(听) + ence(名词后缀) = 坐着听的人群 = 听众", example: "The <span class='highlight-word'>audience</span> applauded wildly after the show. (演出结束后，观众疯狂鼓掌。)" },
+                    { word: "audition", display: "<span class='r'>audi</span><span class='s'>tion</span>", pronunciation: "/ɔːˈdɪʃn/", translation: "n./v. 试镜，试音", mnemonic: "audi(听) + tion(名词后缀) = 听听你唱/演得如何 = 试镜", example: "She has an <span class='highlight-word'>audition</span> for a Broadway musical tomorrow. (她明天有一场百老汇音乐剧的试镜。)" },
+                    { word: "audible", display: "<span class='r'>aud</span><span class='s'>ible</span>", pronunciation: "/ˈɔːdəbl/", translation: "adj. 听得见的", mnemonic: "aud(听) + ible(能...的) = 能够被听到的 = 听得见的", example: "His voice was barely <span class='highlight-word'>audible</span> over the engine noise. (在引擎的轰鸣声中，他的声音几乎听不见。)" },
+                    { word: "auditorium", display: "<span class='r'>audit</span><span class='s'>orium</span>", pronunciation: "/ˌɔːdɪˈtɔːriəm/", translation: "n. 礼堂，观众席", mnemonic: "audit(听) + orium(场所) = 专门用来听演讲/看戏的场所 = 礼堂", example: "The lecture will be held in the main <span class='highlight-word'>auditorium</span>. (讲座将在主礼堂举行。)" }
+                ]
+            },
+            {
+                root: "-voc- / -vok-",
+                meaning: "呼喊，声音 (call / voice)",
+                words: [
+                    { word: "vocal", display: "<span class='r'>voc</span><span class='s'>al</span>", pronunciation: "/ˈvəʊkl/", translation: "adj. 声音的；直言不讳的", mnemonic: "voc(声音) + al(形容词) = 发声的/敢于发声的 = 声音的/直言不讳的", example: "He has been very <span class='highlight-word'>vocal</span> in his criticism of the policy. (他在批评这项政策时一直非常直言不讳。)" },
+                    { word: "advocate", display: "<span class='p'>ad</span><span class='r'>voc</span><span class='s'>ate</span>", pronunciation: "/ˈædvəkət/", translation: "v. 提倡，拥护 n. 拥护者", mnemonic: "ad(强调/朝向) + voc(呼喊) + ate = 朝着大众呼喊支持 = 提倡", example: "The group <span class='highlight-word'>advocates</span> for animal rights. (该组织提倡动物权益。)" },
+                    { word: "provoke", display: "<span class='p'>pro</span><span class='r'>voke</span>", pronunciation: "/prəˈvəʊk/", translation: "v. 激怒，挑衅，引发", mnemonic: "pro(向前) + voke(呼喊) = 到别人面前去叫嚣 = 挑衅/激怒", example: "He tried to <span class='highlight-word'>provoke</span> a fight by insulting me. (他试图通过辱骂我来挑起斗殴。)" },
+                    { word: "revoke", display: "<span class='p'>re</span><span class='r'>voke</span>", pronunciation: "/rɪˈvəʊk/", translation: "v. 撤销，废除", mnemonic: "re(往回) + voke(呼喊) = 把发出的命令喊回来 = 撤销", example: "His driver's license was <span class='highlight-word'>revoked</span> after the accident. (事故发生后，他的驾照被吊销了。)" },
+                    { word: "vocabulary", display: "<span class='r'>vocab</span><span class='s'>ulary</span>", pronunciation: "/vəˈkæbjələri/", translation: "n. 词汇，词汇量", mnemonic: "vocab(词/发声的单位) + ulary = 能发声的词的集合 = 词汇", example: "Reading is a great way to expand your <span class='highlight-word'>vocabulary</span>. (阅读是扩大词汇量的好方法。)" }
+                ]
+            },
+            {
+                root: "-graph- / -gram-",
+                meaning: "写，记录 (write / draw)",
+                words: [
+                    { word: "grammar", display: "<span class='r'>gram</span><span class='s'>mar</span>", pronunciation: "/ˈɡræmər/", translation: "n. 语法", mnemonic: "gram(写) + mar = 书写的法则 = 语法", example: "He has bad <span class='highlight-word'>grammar</span> but good pronunciation. (他语法不好，但发音不错。)" },
+                    { word: "diagram", display: "<span class='p'>dia</span><span class='r'>gram</span>", pronunciation: "/ˈdaɪəɡræm/", translation: "n. 图表，图解", mnemonic: "dia(穿过/分布) + gram(画) = 画出来的分布结构 = 图表", example: "The <span class='highlight-word'>diagram</span> shows how the machine works. (这张图表展示了机器的运作原理。)" },
+                    { word: "autograph", display: "<span class='p'>auto</span><span class='r'>graph</span>", pronunciation: "/ˈɔːtəɡrɑːf/", translation: "n. 亲笔签名", mnemonic: "auto(自己) + graph(写) = 自己写上的名字 = 亲笔签名", example: "I asked the celebrity for her <span class='highlight-word'>autograph</span>. (我找那位名人要了亲笔签名。)" },
+                    { word: "biography", display: "<span class='p'>bio</span><span class='r'>graph</span><span class='s'>y</span>", pronunciation: "/baɪˈɒɡrəfi/", translation: "n. 传记", mnemonic: "bio(生命) + graph(写) + y = 记录一生的文字 = 传记", example: "I am reading a <span class='highlight-word'>biography</span> of Steve Jobs. (我正在读史蒂夫·乔布斯的传记。)" },
+                    { word: "paragraph", display: "<span class='p'>para</span><span class='r'>graph</span>", pronunciation: "/ˈpærəɡrɑːf/", translation: "n. 段落", mnemonic: "para(在旁边) + graph(写) = 写在旁边作为标记分隔的文字 = 段落", example: "Please read the first <span class='highlight-word'>paragraph</span> aloud. (请大声朗读第一段。)" }
+                ]
+            },
+            {
+                root: "-bio-",
+                meaning: "生命 (life)",
+                words: [
+                    { word: "biology", display: "<span class='r'>bio</span><span class='s'>logy</span>", pronunciation: "/baɪˈɒlədʒi/", translation: "n. 生物学", mnemonic: "bio(生命) + logy(学科) = 研究生命的学科 = 生物学", example: "She is a <span class='highlight-word'>biology</span> major at Stanford. (她在斯坦福主修生物学。)" },
+                    { word: "biography", display: "<span class='r'>bio</span><span class='s'>graphy</span>", pronunciation: "/baɪˈɒɡrəfi/", translation: "n. 传记", mnemonic: "bio(生命) + graph(写) = 记录一生的文字 = 传记", example: "He plans to write an auto<span class='highlight-word'>biography</span>. (他计划写一本自传。)" },
+                    { word: "antibiotic", display: "<span class='p'>anti</span><span class='r'>bio</span><span class='s'>tic</span>", pronunciation: "/ˌæntibaɪˈɒtɪk/", translation: "n. 抗生素", mnemonic: "anti(对抗) + bio(生命/细菌) + tic = 对抗细菌生命体的药 = 抗生素", example: "The doctor prescribed an <span class='highlight-word'>antibiotic</span> for my infection. (医生给我的感染开了抗生素。)" },
+                    { word: "biodegradable", display: "<span class='r'>bio</span><span class='p'>de</span><span class='s'>gradable</span>", pronunciation: "/ˌbaɪəʊdɪˈɡreɪdəbl/", translation: "adj. 可生物降解的", mnemonic: "bio(生物) + de(向下) + grade(走/降) + able(能) = 能被生物降解的", example: "These plastic bags are 100% <span class='highlight-word'>biodegradable</span>. (这些塑料袋是100%可生物降解的。)" }
+                ]
+            },
+            {
+                root: "-geo-",
+                meaning: "地球，土地 (earth)",
+                words: [
+                    { word: "geography", display: "<span class='r'>geo</span><span class='s'>graphy</span>", pronunciation: "/dʒiˈɒɡrəfi/", translation: "n. 地理，地理学", mnemonic: "geo(地球) + graphy(画/记录) = 描绘地球山川的学科 = 地理", example: "We studied the <span class='highlight-word'>geography</span> of Asia. (我们学习了亚洲的地理。)" },
+                    { word: "geology", display: "<span class='r'>geo</span><span class='s'>logy</span>", pronunciation: "/dʒiˈɒlədʒi/", translation: "n. 地质学", mnemonic: "geo(地球/岩石) + logy(学科) = 研究地球岩石构成的学科 = 地质学", example: "She is doing research in <span class='highlight-word'>geology</span>. (她正在进行地质学研究。)" },
+                    { word: "geometry", display: "<span class='r'>geo</span><span class='s'>metry</span>", pronunciation: "/dʒiˈɒmətri/", translation: "n. 几何，几何学", mnemonic: "geo(土地) + metry(测量) = 测量土地面积的学问 = 几何", example: "Students learn shapes and angles in <span class='highlight-word'>geometry</span> class. (学生在几何课上学习形状和角度。)" },
+                    { word: "geopolitics", display: "<span class='r'>geo</span><span class='s'>politics</span>", pronunciation: "/ˌdʒiːəʊˈpɒlətɪks/", translation: "n. 地缘政治学", mnemonic: "geo(地理) + politics(政治) = 与地理位置相关的政治 = 地缘政治", example: "The conflict has complex <span class='highlight-word'>geopolitical</span> roots. (这场冲突有着复杂的地缘政治根源。)" }
+                ]
+            },
+            {
+                root: "-psych-",
+                meaning: "心灵，精神 (mind)",
+                words: [
+                    { word: "psychology", display: "<span class='r'>psych</span><span class='s'>ology</span>", pronunciation: "/saɪˈkɒlədʒi/", translation: "n. 心理学", mnemonic: "psych(心灵) + ology(学科) = 研究人类心灵的学科 = 心理学", example: "He has a degree in <span class='highlight-word'>psychology</span>. (他拥有心理学学位。)" },
+                    { word: "psychiatrist", display: "<span class='r'>psych</span><span class='s'>iatrist</span>", pronunciation: "/saɪˈkaɪətrɪst/", translation: "n. 精神科医生", mnemonic: "psych(精神) + iatr(治疗) + ist(人) = 治疗精神疾病的人 = 精神科医生", example: "She was referred to a <span class='highlight-word'>psychiatrist</span> for depression. (她被转介给了一位精神科医生治疗抑郁症。)" },
+                    { word: "psycho", display: "<span class='r'>psych</span><span class='s'>o</span>", pronunciation: "/ˈsaɪkəʊ/", translation: "n. 精神病患者，疯子 (俚语)", mnemonic: "psych(精神) + o = 精神有问题的人 = 疯子", example: "He acted like a complete <span class='highlight-word'>psycho</span>. (他表现得完全像个疯子。)" },
+                    { word: "psychopath", display: "<span class='r'>psych</span><span class='s'>o</span><span class='s'>path</span>", pronunciation: "/ˈsaɪkəpæθ/", translation: "n. 精神变态者", mnemonic: "psych(心理) + path(疾病) = 心理有严重疾病的人 = 精神变态者", example: "The movie is about a dangerous <span class='highlight-word'>psychopath</span>. (这部电影讲述了一个危险的精神变态者。)" }
+                ]
+            },
+            {
+                root: "-log- / -logy-",
+                meaning: "说，研究，学科 (study / speak)",
+                words: [
+                    { word: "logic", display: "<span class='r'>log</span><span class='s'>ic</span>", pronunciation: "/ˈlɒdʒɪk/", translation: "n. 逻辑，逻辑学", mnemonic: "log(说/理智) + ic(学科) = 说话办事的理智法则 = 逻辑", example: "There is no <span class='highlight-word'>logic</span> to his argument. (他的论点毫无逻辑可言。)" },
+                    { word: "dialogue", display: "<span class='p'>dia</span><span class='r'>log</span><span class='s'>ue</span>", pronunciation: "/ˈdaɪəlɒɡ/", translation: "n. 对话，对白", mnemonic: "dia(两者之间/穿过) + log(说) = 两人之间的交谈 = 对话", example: "The play has some very funny <span class='highlight-word'>dialogue</span>. (这部剧里有一些非常搞笑的对白。)" },
+                    { word: "apology", display: "<span class='p'>apo</span><span class='r'>logy</span>", pronunciation: "/əˈpɒlədʒi/", translation: "n. 道歉", mnemonic: "apo(离开/免除) + logy(说) = 说出免除罪责的话 = 道歉", example: "I owe you an <span class='highlight-word'>apology</span>. (我欠你一个道歉。)" },
+                    { word: "catalog", display: "<span class='p'>cata</span><span class='r'>log</span>", pronunciation: "/ˈkætəlɒɡ/", translation: "n. 目录，商品目录", mnemonic: "cata(向下) + log(说/记录) = 把物品一项项向下记录 = 目录", example: "Please take a look at our new product <span class='highlight-word'>catalog</span>. (请看一下我们的新产品目录。)" },
+                    { word: "technology", display: "<span class='p'>techno</span><span class='r'>logy</span>", pronunciation: "/tekˈnɒlədʒi/", translation: "n. 技术，科技", mnemonic: "techno(技艺) + logy(研究/学科) = 研究技艺的学科 = 科技", example: "Modern <span class='highlight-word'>technology</span> makes communication easier. (现代科技让沟通变得更容易。)" }
+                ]
+            },
+            {
+                root: "-chron-",
+                meaning: "时间 (time)",
+                words: [
+                    { word: "chronic", display: "<span class='r'>chron</span><span class='s'>ic</span>", pronunciation: "/ˈkrɒnɪk/", translation: "adj. 慢性的，长期的", mnemonic: "chron(时间) + ic(形容词) = 时间拖得很长的 = 慢性的", example: "He suffers from <span class='highlight-word'>chronic</span> back pain. (他患有慢性背痛。)" },
+                    { word: "chronicle", display: "<span class='r'>chron</span><span class='s'>icle</span>", pronunciation: "/ˈkrɒnɪkl/", translation: "n. 编年史，年代记", mnemonic: "chron(时间) + icle(名词后缀) = 按时间记录的事件 = 编年史", example: "The book is a <span class='highlight-word'>chronicle</span> of the Civil War. (这本书是一部美国内战编年史。)" },
+                    { word: "synchronize", display: "<span class='p'>syn</span><span class='r'>chron</span><span class='s'>ize</span>", pronunciation: "/ˈsɪŋkrənaɪz/", translation: "v. (使)同步，在时间上一致", mnemonic: "syn(相同) + chron(时间) + ize(动词) = 保持时间一致 = 同步", example: "Let's <span class='highlight-word'>synchronize</span> our watches. (咱们对一下表/同步一下时间。)" },
+                    { word: "chronological", display: "<span class='r'>chron</span><span class='s'>o</span><span class='s'>logical</span>", pronunciation: "/ˌkrɒnəˈlɒdʒɪkl/", translation: "adj. 按时间顺序的", mnemonic: "chron(时间) + logical(逻辑的) = 按时间的逻辑排列的 = 按时间顺序的", example: "The events are listed in <span class='highlight-word'>chronological</span> order. (事件是按时间顺序排列的。)" }
+                ]
+            },
+            {
+                root: "-therm-",
+                meaning: "热 (heat)",
+                words: [
+                    { word: "thermal", display: "<span class='r'>therm</span><span class='s'>al</span>", pronunciation: "/ˈθɜːml/", translation: "adj. 热的，保暖的", mnemonic: "therm(热) + al(形容词) = 跟热量有关的 = 热的/保暖的", example: "You should wear <span class='highlight-word'>thermal</span> underwear in winter. (冬天你应该穿保暖内衣。)" },
+                    { word: "thermometer", display: "<span class='r'>therm</span><span class='p'>o</span><span class='s'>meter</span>", pronunciation: "/θəˈmɒmɪtər/", translation: "n. 温度计", mnemonic: "therm(热) + meter(测量仪器) = 测量热量的仪器 = 温度计", example: "The nurse used a <span class='highlight-word'>thermometer</span> to check his temperature. (护士用温度计测了他的体温。)" },
+                    { word: "thermostat", display: "<span class='r'>therm</span><span class='p'>o</span><span class='s'>stat</span>", pronunciation: "/ˈθɜːməstæt/", translation: "n. 恒温器", mnemonic: "therm(热) + stat(站立/稳定) = 让热量保持稳定的设备 = 恒温器", example: "Can you turn up the <span class='highlight-word'>thermostat</span>? It's cold in here. (你能把恒温器调高点吗？这里面有点冷。)" },
+                    { word: "geothermal", display: "<span class='p'>geo</span><span class='r'>therm</span><span class='s'>al</span>", pronunciation: "/ˌdʒiːəʊˈθɜːml/", translation: "adj. 地热的", mnemonic: "geo(地球) + therm(热) + al = 来自地球内部的热量 = 地热的", example: "Iceland relies heavily on <span class='highlight-word'>geothermal</span> energy. (冰岛严重依赖地热能。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 11}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

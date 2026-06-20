@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Word Families: Top 151-160</title>
+    <style>
+        :root {
+            /* Notion 暗黑模式核心色彩 */
+            --bg-color: #191919;
+            --table-border: #373737;
+            --text-main: #D4D4D4;
+            --text-sub: #9B9B9B;
+            
+            /* 词根词缀高亮色 */
+            --c-prefix: #FF7B72; /* 粉红 - 前缀 */
+            --c-root: #E5C07B;   /* 明黄 - 词根 */
+            --c-suffix: #79C0FF; /* 天蓝 - 后缀 */
+            
+            /* 标签颜色 */
+            --badge-trans: #316DCA;
+            --badge-mnem: #347D39;
+            --badge-exam: #B05C11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .root-section {
+            margin-bottom: 60px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--c-root);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .root-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--c-root);
+        }
+
+        .root-meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* 列表表格容器 */
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .word-row {
+            border-bottom: 1px dashed var(--table-border);
+        }
+        
+        .word-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-word {
+            width: 30%;
+            padding: 25px 25px;
+            vertical-align: top;
+            border-right: 1px dashed var(--table-border);
+        }
+
+        .col-details {
+            width: 70%;
+            padding: 25px;
+            vertical-align: top;
+        }
+
+        /* 左侧单词区样式 */
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+        
+        /* 词根词缀颜色类 */
+        .p { color: var(--c-prefix); }
+        .r { color: var(--c-root); }
+        .s { color: var(--c-suffix); }
+
+        .pronunciation {
+            font-family: "Consolas", monospace;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 右侧详情区样式 */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+        
+        .b-trans { background-color: var(--badge-trans); }
+        .b-mnem { background-color: var(--badge-mnem); }
+        .b-exam { background-color: var(--badge-exam); }
+
+        .detail-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-word {
+            color: var(--c-root);
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- JS将在这里生成所有的词根区块 -->
+    </div>
+
+    <script>
+        const database = [
+            {
+                root: "-fic- / -fig- / -fict-",
+                meaning: "塑造，虚构 (form, shape)",
+                words: [
+                    { word: "figure", display: "<span class='r'>fig</span><span class='s'>ure</span>", pronunciation: "/ˈfɪɡ·jər/", translation: "n. 数字，人物，身材 v. 认为", mnemonic: "fig(塑造) + ure = 被塑造出的形体或符号 = 身材/数字", example: "The sales <span class='highlight-word'>figures</span> are very promising. (销售数据非常有前景。)" },
+                    { word: "fiction", display: "<span class='r'>fict</span><span class='s'>ion</span>", pronunciation: "/ˈfɪk·ʃn/", translation: "n. 小说，虚构", mnemonic: "fict(虚构/塑造) + ion = 凭空塑造/编造出来的故事 = 小说", example: "I prefer reading science <span class='highlight-word'>fiction</span>. (我更喜欢看科幻小说。)" },
+                    { word: "configure", display: "<span class='p'>con</span><span class='r'>fig</span><span class='s'>ure</span>", pronunciation: "/kənˈfɪɡ·ər/", translation: "v. 配置，设定", mnemonic: "con(共同) + fig(塑造) + ure = 把各个部件组合塑造在一起 = 配置", example: "I need to <span class='highlight-word'>configure</span> the network settings on my new router. (我需要配置新路由器的网络设置。)" }
+                ]
+            },
+            {
+                root: "-flor- / -flour-",
+                meaning: "花 (flower)",
+                words: [
+                    { word: "floral", display: "<span class='r'>flor</span><span class='s'>al</span>", pronunciation: "/ˈflɔː·rəl/", translation: "adj. 花的，植物的", mnemonic: "flor(花) + al(形容词) = 有关花的", example: "She wore a beautiful <span class='highlight-word'>floral</span> dress to the wedding. (她穿了一件美丽的碎花连衣裙去参加婚礼。)" },
+                    { word: "florist", display: "<span class='r'>flor</span><span class='s'>ist</span>", pronunciation: "/ˈflɒr·ɪst/", translation: "n. 花商，花店", mnemonic: "flor(花) + ist(人) = 专门卖花的人 = 花商", example: "I bought these roses from the local <span class='highlight-word'>florist</span>. (我从当地花店买了这些玫瑰。)" },
+                    { word: "flourish", display: "<span class='r'>flour</span><span class='s'>ish</span>", pronunciation: "/ˈflʌr·ɪʃ/", translation: "v. 繁荣，茂盛", mnemonic: "flour(=flor花) + ish(动词) = 像花一样尽情盛开 = 繁荣", example: "The tech industry continues to <span class='highlight-word'>flourish</span> in this city. (该市的科技产业持续繁荣。)" }
+                ]
+            },
+            {
+                root: "-foli-",
+                meaning: "树叶 (leaf)",
+                words: [
+                    { word: "foil", display: "<span class='r'>foil</span>", pronunciation: "/fɔɪl/", translation: "n. 箔纸，陪衬 v. 挫败", mnemonic: "foil(源于foli树叶) = 像树叶一样被压薄的金属 = 箔", example: "Wrap the leftovers in aluminum <span class='highlight-word'>foil</span>. (用铝箔纸把剩菜包起来。)" },
+                    { word: "foliage", display: "<span class='r'>foli</span><span class='s'>age</span>", pronunciation: "/ˈfəʊ·li·ɪdʒ/", translation: "n. 树叶 (总称)", mnemonic: "foli(树叶) + age(集合名词) = 所有树叶的统称 = 枝叶", example: "Fall is the best time to see the autumn <span class='highlight-word'>foliage</span> in New England. (秋天是去新英格兰看红叶的最佳时节。)" },
+                    { word: "portfolio", display: "<span class='p'>port</span><span class='r'>foli</span><span class='s'>o</span>", pronunciation: "/pɔːtˈfəʊ·li·əʊ/", translation: "n. 文件夹，作品集，投资组合", mnemonic: "port(拿/带) + foli(树叶/纸张) + o = 用来夹带纸张的夹子 = 文件夹/投资组合", example: "She showed me her impressive design <span class='highlight-word'>portfolio</span>. (她向我展示了她极其出色的设计作品集。)" }
+                ]
+            },
+            {
+                root: "-fus-",
+                meaning: "倾注，流 (pour)",
+                words: [
+                    { word: "refuse", display: "<span class='p'>re</span><span class='r'>fus</span><span class='s'>e</span>", pronunciation: "/rɪˈfjuːz/", translation: "v. 拒绝", mnemonic: "re(往回) + fus(倒) + e = 把别人递过来的东西倒回去 = 拒绝", example: "He absolutely <span class='highlight-word'>refused</span> to compromise. (他坚决拒绝妥协。)" },
+                    { word: "confuse", display: "<span class='p'>con</span><span class='r'>fus</span><span class='s'>e</span>", pronunciation: "/kənˈfjuːz/", translation: "v. 使困惑，混淆", mnemonic: "con(共同) + fus(倒) + e = 把不同的东西全倒在一起 = 混淆/使困惑", example: "The complex instructions completely <span class='highlight-word'>confused</span> me. (极其复杂的指示把我彻底搞晕了。)" },
+                    { word: "infuse", display: "<span class='p'>in</span><span class='r'>fus</span><span class='s'>e</span>", pronunciation: "/ɪnˈfjuːz/", translation: "v. 灌输，注入，浸泡", mnemonic: "in(向内) + fus(倾注) + e = 倒进去 = 注入", example: "The coach tried to <span class='highlight-word'>infuse</span> the team with confidence before the game. (教练试图在赛前为球队注入信心。)" }
+                ]
+            },
+            {
+                root: "-grand-",
+                meaning: "大，宏伟 (large)",
+                words: [
+                    { word: "grand", display: "<span class='r'>grand</span>", pronunciation: "/ɡrænd/", translation: "adj. 宏伟的，重大的", mnemonic: "grand = 大/宏伟", example: "They held a <span class='highlight-word'>grand</span> banquet to celebrate the victory. (他们举行了一场极其宏大的晚宴来庆祝胜利。)" },
+                    { word: "grandiose", display: "<span class='r'>grand</span><span class='s'>iose</span>", pronunciation: "/ˈɡræn·di·əʊs/", translation: "adj. 浮夸的，宏大但不切实际的", mnemonic: "grand(大) + iose(充满...) = 充满宏大元素的 = 浮夸的", example: "He came up with a <span class='highlight-word'>grandiose</span> plan to save the company. (他提出了一个宏大但极其浮夸的不切实际的拯救公司计划。)" },
+                    { word: "aggrandize", display: "<span class='p'>ag</span><span class='r'>grand</span><span class='s'>ize</span>", pronunciation: "/əˈɡræn·daɪz/", translation: "v. 扩大，增加 (权力/财富等)", mnemonic: "ag(加强) + grand(大) + ize = 极力使其变大 = 扩大权力", example: "The king sought to <span class='highlight-word'>aggrandize</span> his own power. (国王试图极力扩大他自己的权力。)" }
+                ]
+            },
+            {
+                root: "-gran-",
+                meaning: "颗粒，谷物 (grain)",
+                words: [
+                    { word: "grain", display: "<span class='r'>grain</span>", pronunciation: "/ɡreɪn/", translation: "n. 谷物，颗粒", mnemonic: "grain = 来源于gran，意为颗粒状的农作物", example: "You should eat more whole <span class='highlight-word'>grains</span> for a healthy diet. (为了健康饮食你应该多吃全谷物。)" },
+                    { word: "granary", display: "<span class='r'>gran</span><span class='s'>ary</span>", pronunciation: "/ˈɡræn·ə·ri/", translation: "n. 粮仓，谷仓", mnemonic: "gran(谷物) + ary(场所) = 存放谷物的地方 = 粮仓", example: "This fertile region was once the <span class='highlight-word'>granary</span> of the Roman Empire. (这片肥沃的地区曾经是罗马帝国的粮仓。)" },
+                    { word: "granite", display: "<span class='r'>gran</span><span class='s'>ite</span>", pronunciation: "/ˈɡræn·ɪt/", translation: "n. 花岗岩", mnemonic: "gran(颗粒) + ite(矿石) = 表面有明显颗粒纹理的坚硬石头 = 花岗岩", example: "The kitchen has beautiful <span class='highlight-word'>granite</span> countertops. (厨房有极其漂亮的花岗岩台面。)" }
+                ]
+            },
+            {
+                root: "-habit- / -hibit-",
+                meaning: "拥有，占据 (have, hold)",
+                words: [
+                    { word: "habit", display: "<span class='r'>habit</span>", pronunciation: "/ˈhæb·ɪt/", translation: "n. 习惯", mnemonic: "habit(拥有) = 长期拥有且难以改变的行为 = 习惯", example: "Biting your nails is a bad <span class='highlight-word'>habit</span>. (咬指甲是个坏习惯。)" },
+                    { word: "exhibit", display: "<span class='p'>ex</span><span class='r'>hibit</span>", pronunciation: "/ɪɡˈzɪb·ɪt/", translation: "v./n. 展览，展出，陈列", mnemonic: "ex(向外) + hibit(拿/拥有) = 把你拥有的好东西拿出来给别人看 = 展览", example: "The museum is <span class='highlight-word'>exhibiting</span> ancient Egyptian artifacts. (博物馆正在展出古埃及文物。)" },
+                    { word: "prohibit", display: "<span class='p'>pro</span><span class='r'>hibit</span>", pronunciation: "/prəˈhɪb·ɪt/", translation: "v. 禁止，阻止", mnemonic: "pro(在前面) + hibit(拿/挡住) = 在前面挡住不让通行 = 禁止", example: "Smoking is strictly <span class='highlight-word'>prohibited</span> in this building. (这栋楼内严格禁止吸烟。)" }
+                ]
+            },
+            {
+                root: "-hosp- / -host-",
+                meaning: "客人，主人 (guest, host)",
+                words: [
+                    { word: "host", display: "<span class='r'>host</span>", pronunciation: "/həʊst/", translation: "n. 主人，主持人 v. 主办", mnemonic: "host = 招待客人的主人", example: "Thank you for being such a wonderful <span class='highlight-word'>host</span>. (谢谢你做如此出色的东道主。)" },
+                    { word: "hospital", display: "<span class='r'>hosp</span><span class='s'>ital</span>", pronunciation: "/ˈhɒs·pɪ·tl/", translation: "n. 医院", mnemonic: "hosp(客人/接待) + ital = 专门接待病人的场所 = 医院", example: "He was rushed to the <span class='highlight-word'>hospital</span> after the accident. (事故发生后他被紧急送往医院。)" },
+                    { word: "hostage", display: "<span class='r'>host</span><span class='s'>age</span>", pronunciation: "/ˈhɒs·tɪdʒ/", translation: "n. 人质", mnemonic: "host(客人) + age(状态) = 被强行留下当作客人的 = 人质", example: "The bank robbers took three people as <span class='highlight-word'>hostages</span>. (银行劫匪将三人劫持为人质。)" }
+                ]
+            },
+            {
+                root: "-init-",
+                meaning: "开始 (beginning)",
+                words: [
+                    { word: "initial", display: "<span class='r'>init</span><span class='s'>ial</span>", pronunciation: "/ɪˈnɪʃ·l/", translation: "adj. 最初的，初始的 n. 首字母", mnemonic: "init(开始) + ial(形容词) = 最开始的", example: "My <span class='highlight-word'>initial</span> reaction was to say no. (我最初的反应是拒绝。)" },
+                    { word: "initiate", display: "<span class='r'>init</span><span class='s'>iate</span>", pronunciation: "/ɪˈnɪʃ·i·eɪt/", translation: "v. 发起，开始", mnemonic: "init(开始) + iate(动词) = 使其开始 = 发起", example: "The company will <span class='highlight-word'>initiate</span> a new marketing project next month. (公司下个月将发起一个新营销项目。)" },
+                    { word: "initiative", display: "<span class='r'>init</span><span class='s'>iative</span>", pronunciation: "/ɪˈnɪʃ·ə·tɪv/", translation: "n. 倡议，主动性", mnemonic: "init(开始) + iative = 主动带头去做的精神 = 主动性", example: "We need an employee who shows <span class='highlight-word'>initiative</span> and takes action. (我们需要一个有主动性、能起带头作用的员工。)" }
+                ]
+            },
+            {
+                root: "-insul- / -isol-",
+                meaning: "岛 (island)",
+                words: [
+                    { word: "isolate", display: "<span class='r'>isol</span><span class='s'>ate</span>", pronunciation: "/ˈaɪ·sə·leɪt/", translation: "v. 孤立，隔离", mnemonic: "isol(=insul 岛) + ate = 把人放到孤岛上 = 孤立", example: "The patient with the virus was quickly <span class='highlight-word'>isolated</span>. (感染病毒的病人被迅速隔离了。)" },
+                    { word: "insulate", display: "<span class='r'>insul</span><span class='s'>ate</span>", pronunciation: "/ˈɪn·sjə·leɪt/", translation: "v. 隔离，绝缘，隔热", mnemonic: "insul(岛) + ate(动词) = 使其像孤岛一样与外界(热量/电流)彻底隔绝 = 绝缘/隔热", example: "You should <span class='highlight-word'>insulate</span> your house to save energy during winter. (你应该做好房子的隔热以在冬天节省能源。)" },
+                    { word: "peninsula", display: "<span class='p'>pen</span><span class='r'>insul</span><span class='s'>a</span>", pronunciation: "/pəˈnɪn·sjə·lə/", translation: "n. 半岛", mnemonic: "pen(近似) + insul(岛) + a = 几乎是个岛但连着陆地的地方 = 半岛", example: "Florida is a very well-known <span class='highlight-word'>peninsula</span>. (佛罗里达是一个极其著名的半岛。)" }
+                ]
+            }
+        ];
+
+        const app = document.getElementById('app');
+
+        database.forEach((group, index) => {
+            let wordsHTML = '';
+            
+            group.words.forEach(item => {
+                wordsHTML += `
+                    <tr class="word-row">
+                        <td class="col-word">
+                            <div class="word-display">${item.display}</div>
+                            <div class="pronunciation">${item.pronunciation}</div>
+                        </td>
+                        <td class="col-details">
+                            <div class="detail-item">
+                                <div class="badge b-trans">译</div>
+                                <div class="detail-content">${item.translation}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-mnem">记</div>
+                                <div class="detail-content">${item.mnemonic}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="badge b-exam">例</div>
+                                <div class="detail-content">${item.example}</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            app.innerHTML += `
+                <div class="root-section">
+                    <div class="header">
+                        <h1 class="root-title">${index + 151}. ${group.root}</h1>
+                        <div class="root-meaning">【 核心含义：${group.meaning} 】</div>
+                    </div>
+                    <table class="word-table">
+                        ${wordsHTML}
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

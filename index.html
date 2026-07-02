@@ -64,7 +64,7 @@
 
         .cockpit-container {
             flex: 1; display: grid; grid-template-columns: 300px 1fr;
-            max-width: 1440px; width: 100%; margin: 0 auto;
+            max-width: 1440px; width: 100%; margin: 0 auto; height: calc(100vh - 70px);
         }
 
         .sidebar {
@@ -91,6 +91,11 @@
         select.custom-select {
             width: 100%; padding: 0.6rem; background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); outline: none; font-size: 0.85rem;
         }
+
+        .hotkeys-panel { background: rgba(255, 255, 255, 0.03); border-radius: 6px; padding: 1em; border: 1px dashed rgba(255, 255, 255, 0.1); margin-top: auto;}
+        .hotkey-title { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; font-weight: 600; }
+        .hotkey-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.35rem; color: var(--text-secondary); }
+        .hotkey-key { background: #2c2c35; padding: 1px 5px; border-radius: 4px; font-family: monospace; color: var(--accent-gold); }
 
         .workspace-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; background: radial-gradient(circle at center, #141419 0%, var(--bg-main) 100%); flex: 1; }
         .view-mode-toggle { position: absolute; top: 1.5rem; right: 2rem; display: flex; background: rgba(255,255,255,0.05); padding: 2px; border-radius: 6px; border: 1px solid var(--border-color); z-index: 10; }
@@ -143,6 +148,7 @@
         .tag-life { background-color: rgba(76, 175, 80, 0.15); color: #a5d6a7; }
         .tag-social { background-color: rgba(255, 152, 0, 0.15); color: #ffcc80; }
 
+        /* ================= 移动端流式布局媒体查询 ================= */
         @media only screen and (max-width: 850px) {
             header { flex-direction: column; gap: 1rem; padding: 1rem; align-items: flex-start; }
             .dashboard-stats { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
@@ -165,106 +171,105 @@
 </head>
 <body>
 
+    <!-- 容错转圈遮罩 -->
     <div id="loading-screen">
         <div class="spinner"></div>
-        <div style="color: var(--text-secondary); font-size: 0.85rem;" id="loading-status">正在无缝挂载 1000 地道短语核心仓...</div>
+        <div style="color: var(--text-secondary); font-size: 0.85rem; padding: 0 2rem; text-align: center;" id="loading-status">正在加载 1000 核心短语数据环路...</div>
     </div>
 
-    <div id="app-wrapper" style="display: none; flex-direction: column; min-height: 100vh;">
-        <header>
-            <div class="logo-section">
-                <h1>PHRASAL VERBS COCKPIT</h1>
-                <p>1000 高频核心英美地道动词短语高效复习系统</p>
-            </div>
-            <div class="dashboard-stats">
-                <div class="stat-item"><div class="stat-val blue" id="totalCountDisplay">0</div><div class="stat-lbl">当前队列</div></div>
-                <div class="stat-item"><div class="stat-val green" id="masteredCountDisplay">0 / 1000</div><div class="stat-lbl">已熟练</div></div>
-                <div class="stat-item"><div class="stat-val gold" id="starredCountDisplay">0</div><div class="stat-lbl">标星难点</div></div>
-                <div class="stat-container"><div class="progress-container"><div class="progress-bar" id="progressBarFill"></div></div></div>
-            </div>
-        </header>
-
-        <div class="cockpit-container">
-            <aside class="sidebar">
-                <div class="control-group">
-                    <div class="control-label">智能搜索</div>
-                    <div class="search-box"><input type="text" id="searchInput" placeholder="搜索短语/释义/例句..."></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label">进度过滤</div>
-                    <div class="filter-options">
-                        <button class="filter-btn active" data-status="all"><span>全部短语库</span><span class="filter-count" id="countAll">0</span></button>
-                        <button class="filter-btn" data-status="unlearned"><span>未掌握 (生词)</span><span class="filter-count" id="countUnlearned">0</span></button>
-                        <button class="filter-btn" data-status="mastered"><span>已熟练掌握</span><span class="filter-count" id="countMastered">0</span></button>
-                        <button class="filter-btn" data-status="starred"><span>标星重点复习</span><span class="filter-count" id="countStarred">0</span></button>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label">语境标签分类</div>
-                    <select class="custom-select" id="tagSelect"><option value="all">显示全部语境</option></select>
-                </div>
-                <div class="control-group">
-                    <div class="control-label">出卡模式</div>
-                    <button class="btn-action" id="randomToggleBtn" style="justify-content: center;"><span id="randomStatusText">顺序播放模式</span></button>
-                </div>
-                <button class="btn-action" id="resetProgressBtn" style="justify-content: center; margin-top: 0.5rem; color: var(--accent-red); border-color: rgba(255,107,107,0.2);">重置系统全部数据</button>
-            </aside>
-
-            <main>
-                <div class="view-mode-toggle">
-                    <button class="mode-btn active" data-mode="card">卡片模式</button>
-                    <button class="mode-btn" data-mode="list">列表模式</button>
-                </div>
-
-                <section class="workspace-stage" id="cardStage">
-                    <div class="flashcard-wrapper" id="flashcardWrapper">
-                        <div class="flashcard-inner">
-                            <div class="card-face card-front-face">
-                                <div class="card-meta-top">
-                                    <span class="card-id-badge">ID: <span id="cardId">-</span></span>
-                                    <span id="cardProgressIndex">0 / 0</span>
-                                </div>
-                                <h2 class="card-verb-title" id="cardVerb">-</h2>
-                                <a id="frontYouGlishBtn" class="youglish-btn" target="_blank" style="margin-top: 1rem; z-index: 10;" onclick="event.stopPropagation();">🔊 YouGlish 地道发音</a>
-                                <div class="card-tags-area" id="cardTags"></div>
-                                <div class="hint-click-flip">点击卡片或按 [空格] 翻面</div>
-                            </div>
-                            <div class="card-face card-back-face">
-                                <div class="back-title-row">
-                                    <div style="display: flex; align-items: baseline; gap: 0.5rem;">
-                                        <span class="back-label">Phrasal Verb</span>
-                                        <span class="back-verb" id="backVerb">-</span>
-                                    </div>
-                                    <a id="backYouGlishBtn" class="youglish-btn" target="_blank" onclick="event.stopPropagation();">🔊 发音</a>
-                                </div>
-                                <div class="back-label" style="margin-bottom: 0.2rem;">核心精准释义</div>
-                                <div class="meaning-section" id="cardMeaning">-</div>
-                                <div class="back-label" style="margin-bottom: 0.2rem;">🇺🇸 实战语境 & 地道例句</div>
-                                <div class="scenario-section" id="cardScenario">-</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-dock">
-                        <button class="btn-status-toggle btn-star" id="starCardBtn">☆ 标星难点 (S)</button>
-                        <div class="nav-controls">
-                            <button class="btn-action" id="prevCardBtn">◀ 上一张 (A)</button>
-                            <button class="btn-action" id="nextCardBtn">下一张 (D) ▶</button>
-                        </div>
-                        <button class="btn-status-toggle btn-mastered" id="masterCardBtn">✔ 我已学会 (Enter)</button>
-                    </div>
-                </section>
-
-                <section class="list-stage" id="listStage">
-                    <table class="dense-table">
-                        <thead>
-                            <tr><th>序号</th><th>动词短语</th><th>核心含义</th><th>实战语境例句</th><th>状态</th></tr>
-                        </thead>
-                        <tbody id="denseTableBody"></tbody>
-                    </table>
-                </section>
-            </main>
+    <header>
+        <div class="logo-section">
+            <h1>PHRASAL VERBS COCKPIT</h1>
+            <p>1000 高频核心英美地道动词短语高效复习系统</p>
         </div>
+        <div class="dashboard-stats">
+            <div class="stat-item"><div class="stat-val blue" id="totalCountDisplay">0</div><div class="stat-lbl">当前队列</div></div>
+            <div class="stat-item"><div class="stat-val green" id="masteredCountDisplay">0 / 1000</div><div class="stat-lbl">已熟练</div></div>
+            <div class="stat-item"><div class="stat-val gold" id="starredCountDisplay">0</div><div class="stat-lbl">标星难点</div></div>
+            <div class="stat-container"><div class="progress-container"><div class="progress-bar" id="progressBarFill"></div></div></div>
+        </div>
+    </header>
+
+    <div class="cockpit-container">
+        <aside class="sidebar">
+            <div class="control-group">
+                <div class="control-label">智能搜索</div>
+                <div class="search-box"><input type="text" id="searchInput" placeholder="搜索短语/释义/例句..."></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">进度过滤</div>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-status="all"><span>全部短语库</span><span class="filter-count" id="countAll">0</span></button>
+                    <button class="filter-btn" data-status="unlearned"><span>未掌握 (生词)</span><span class="filter-count" id="countUnlearned">0</span></button>
+                    <button class="filter-btn" data-status="mastered"><span>已熟练掌握</span><span class="filter-count" id="countMastered">0</span></button>
+                    <button class="filter-btn" data-status="starred"><span>标星重点复习</span><span class="filter-count" id="countStarred">0</span></button>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">语境标签分类</div>
+                <select class="custom-select" id="tagSelect"><option value="all">显示全部语境</option></select>
+            </div>
+            <div class="control-group">
+                <div class="control-label">出卡模式</div>
+                <button class="btn-action" id="randomToggleBtn" style="justify-content: center;"><span id="randomStatusText">顺序播放模式</span></button>
+            </div>
+            <button class="btn-action" id="resetProgressBtn" style="justify-content: center; margin-top: 0.5rem; color: var(--accent-red); border-color: rgba(255,107,107,0.2);">重置系统全部数据</button>
+        </aside>
+
+        <main>
+            <div class="view-mode-toggle">
+                <button class="mode-btn active" data-mode="card">卡片模式</button>
+                <button class="mode-btn" data-mode="list">列表模式</button>
+            </div>
+
+            <section class="workspace-stage" id="cardStage">
+                <div class="flashcard-wrapper" id="flashcardWrapper">
+                    <div class="flashcard-inner">
+                        <div class="card-face card-front-face">
+                            <div class="card-meta-top">
+                                <span class="card-id-badge">ID: <span id="cardId">-</span></span>
+                                <span id="cardProgressIndex">0 / 0</span>
+                            </div>
+                            <h2 class="card-verb-title" id="cardVerb">-</h2>
+                            <a id="frontYouGlishBtn" class="youglish-btn" target="_blank" style="margin-top: 1rem; z-index: 10;" onclick="event.stopPropagation();">🔊 YouGlish 地道发音</a>
+                            <div class="card-tags-area" id="cardTags"></div>
+                            <div class="hint-click-flip">点击卡片或按 [空格] 翻面</div>
+                        </div>
+                        <div class="card-face card-back-face">
+                            <div class="back-title-row">
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                                    <span class="back-label">Phrasal Verb</span>
+                                    <span class="back-verb" id="backVerb">-</span>
+                                </div>
+                                <a id="backYouGlishBtn" class="youglish-btn" target="_blank" onclick="event.stopPropagation();">🔊 发音</a>
+                            </div>
+                            <div class="back-label" style="margin-bottom: 0.2rem;">核心精准释义</div>
+                            <div class="meaning-section" id="cardMeaning">-</div>
+                            <div class="back-label" style="margin-bottom: 0.2rem;">🇺🇸 实战语境 & 地道例句</div>
+                            <div class="scenario-section" id="cardScenario">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-dock">
+                    <button class="btn-status-toggle btn-star" id="starCardBtn">☆ 标星难点 (S)</button>
+                    <div class="nav-controls">
+                        <button class="btn-action" id="prevCardBtn">◀ 上一张 (A)</button>
+                        <button class="btn-action" id="nextCardBtn">下一张 (D) ▶</button>
+                    </div>
+                    <button class="btn-status-toggle btn-mastered" id="masterCardBtn">✔ 我已学会 (Enter)</button>
+                </div>
+            </section>
+
+            <section class="list-stage" id="listStage">
+                <table class="dense-table">
+                    <thead>
+                        <tr><th>序号</th><th>动词短语</th><th>核心含义</th><th>实战语境例句</th><th>状态</th></tr>
+                    </thead>
+                    <tbody id="denseTableBody"></tbody>
+                </table>
+            </section>
+        </main>
     </div>
 
     <script>
@@ -285,6 +290,7 @@
                 const s = localStorage.getItem('pv_starred_v2');
                 const idx = localStorage.getItem('pv_current_index_v2');
                 const r = localStorage.getItem('pv_random_mode_v2');
+
                 if (m) masteredList = JSON.parse(m);
                 if (s) starredList = JSON.parse(s);
                 if (idx) currentIndex = parseInt(idx, 10) || 0;
@@ -490,10 +496,9 @@
             });
         }
 
-        // 核心加载自举生命周期
         window.addEventListener('DOMContentLoaded', () => {
             fetch('./phrasal_verbs.html')
-                .then(r => { if(!r.ok) throw new Error(); return r.text(); })
+                .then(r => { if(!r.ok) throw new Error("无法读取同目录下的 phrasal_verbs.html 核心数据文件"); return r.text(); })
                 .then(text => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(text, 'text/html');
@@ -501,7 +506,9 @@
                     DATASET = [];
                     rows.forEach(row => {
                         const id = row.getAttribute('data-row');
-                        const verb = row.querySelector('.cell-title').textContent.trim();
+                        const titleEl = row.querySelector('.cell-title');
+                        if (!titleEl) return;
+                        const verb = titleEl.textContent.trim();
                         const tds = row.querySelectorAll('td');
                         const tags = [];
                         row.querySelectorAll('.context-tag').forEach(t => tags.push(t.textContent.trim()));
@@ -509,8 +516,6 @@
                     });
                     
                     document.getElementById('loading-screen').style.display = 'none';
-                    document.getElementById('app-wrapper').style.display = 'flex';
-                    
                     loadProgress();
                     initTagsDropdown();
                     setupEventListeners();
@@ -518,11 +523,14 @@
                     updateDashboardCounters();
                 })
                 .catch(err => {
-                    document.getElementById('loading-status').innerHTML = `<span style="color:var(--accent-red); line-height:1.5; padding:2rem; text-align:center; display:block;">
-                        ⚠️ 引擎加载失败诊断：<br>
-                        1. 请确认当前目录下是否存在 <b>phrasal_verbs.html</b> 文件。<br>
-                        2. 或者是由于本地双击打开文件触发了浏览器安全跨域限制，请直接将该文件 Push 到您的 GitHub Pages 线上环境中运行。
+                    document.getElementById('loading-status').innerHTML = `<span style="color:var(--accent-red); line-height:1.6; font-size:0.9rem; max-width:550px; display:inline-block;">
+                        ⚠️ 核心数据仓异步挂载阻断！<br><br>
+                        <b>排查指引：</b><br>
+                        请检查您的 GitHub 仓库中，除了 <code>index.html</code> 外，是否已经将原始表格文件上传，并且命名为 <b><code>phrasal_verbs.html</code></b>（一字不能错）。<br>
+                        <span style="font-size:0.75rem; color:gray; display:block; margin-top:0.5rem;">错误详情: ${err.message}</span>
                     </span>`;
+                    const spinner = document.querySelector('#loading-screen .spinner');
+                    if (spinner) spinner.style.display = 'none';
                 });
         });
     </script>

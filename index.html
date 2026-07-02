@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Phrasal Verbs Cockpit - 地道动词短语终端</title>
+    <style>
+        :root {
+            --bg-main: #0c0c0e;
+            --bg-surface: #16161a;
+            --bg-card-front: #1e1e24;
+            --bg-card-back: #1b1b22;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: rgba(255, 255, 255, 0.9);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --accent-blue: #64B5F6;
+            --accent-green: #81c784;
+            --accent-gold: #FFD54F;
+            --accent-red: #ff6b6b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-main); z-index: 2000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 1rem; font-family: monospace;
+        }
+        .spinner {
+            width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent-blue); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        header {
+            background-color: var(--bg-surface); border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-section h1 { font-size: 1.25rem; font-weight: 700; color: var(--accent-blue); letter-spacing: -0.02em; }
+        .logo-section p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.2rem; }
+
+        .dashboard-stats { display: flex; gap: 1.5rem; align-items: center; }
+        .stat-item { text-align: right; }
+        .stat-val { font-size: 1.1rem; font-weight: 600; font-family: monospace; }
+        .stat-val.blue { color: var(--accent-blue); }
+        .stat-val.green { color: var(--accent-green); }
+        .stat-val.gold { color: var(--accent-gold); }
+        .stat-lbl { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; }
+
+        .progress-container { width: 180px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-green)); transition: width 0.4s ease; }
+
+        .cockpit-container {
+            flex: 1; display: grid; grid-template-columns: 300px 1fr;
+            max-width: 1440px; width: 100%; margin: 0 auto;
+        }
+
+        .sidebar {
+            background-color: var(--bg-surface); border-right: 1px solid var(--border-color);
+            padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; overflow-y: auto;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .control-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .search-box input {
+            width: 100%; padding: 0.6rem 1rem; background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff; font-size: 0.85rem; outline: none;
+        }
+        .search-box input:focus { border-color: var(--accent-blue); }
+
+        .filter-options { display: flex; flex-direction: column; gap: 0.35rem; }
+        .filter-btn {
+            display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0.8rem;
+            background: transparent; border: 1px solid transparent; border-radius: 6px; color: var(--text-primary); text-align: left; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .filter-btn:hover { background-color: rgba(255,255,255,0.03); }
+        .filter-btn.active { background-color: rgba(100, 181, 246, 0.1); border-color: rgba(100, 181, 246, 0.2); color: var(--accent-blue); font-weight: 600; }
+        .filter-count { font-size: 0.75rem; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 10px; font-family: monospace; color: var(--text-secondary); }
+
+        select.custom-select {
+            width: 100%; padding: 0.6rem; background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); outline: none; font-size: 0.85rem;
+        }
+
+        .workspace-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; background: radial-gradient(circle at center, #141419 0%, var(--bg-main) 100%); flex: 1; }
+        .view-mode-toggle { position: absolute; top: 1.5rem; right: 2rem; display: flex; background: rgba(255,255,255,0.05); padding: 2px; border-radius: 6px; border: 1px solid var(--border-color); z-index: 10; }
+        .mode-btn { padding: 0.4rem 1rem; background: transparent; border: none; color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; border-radius: 4px; }
+        .mode-btn.active { background-color: var(--bg-card-front); color: var(--accent-blue); font-weight: 600; }
+
+        .flashcard-wrapper { width: 100%; max-width: 640px; height: 380px; perspective: 1200px; margin-bottom: 2rem; }
+        .flashcard-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .flashcard-wrapper.flipped .flashcard-inner { transform: rotateY(180deg); }
+
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 16px; border: 1px solid var(--border-color); padding: 2.5rem; display: flex; flex-direction: column; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); }
+        .card-front-face { background: linear-gradient(145deg, var(--bg-card-front), #15151a); justify-content: center; align-items: center; }
+        .card-meta-top { position: absolute; top: 1.5rem; left: 1.5rem; right: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); font-family: monospace; }
+        .card-id-badge { background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .card-verb-title { font-size: 3rem; font-weight: 800; color: #fff; text-align: center; letter-spacing: -0.02em; }
+        .card-tags-area { margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+        .tag-pill { font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 12px; background-color: rgba(100, 181, 246, 0.12); color: var(--accent-blue); border: 1px solid rgba(100, 181, 246, 0.2); }
+        .hint-click-flip { position: absolute; bottom: 1.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+
+        .card-back-face { background: linear-gradient(145deg, var(--bg-card-back), #111116); transform: rotateY(180deg); justify-content: flex-start; }
+        .back-title-row { display: flex; align-items: center; justify-content: space-between; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+        .back-verb { font-size: 1.5rem; font-weight: 700; color: var(--accent-blue); }
+        .back-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; }
+
+        .meaning-section { font-size: 1.25rem; color: #fff; line-height: 1.4; font-weight: 600; margin-bottom: 1.2rem; }
+        .scenario-section { flex: 1; background: rgba(0, 0, 0, 0.15); border-radius: 8px; padding: 1.2rem; border: 1px solid rgba(255,255,255,0.03); overflow-y: auto; font-size: 0.95rem; line-height: 1.6; }
+        .scenario-section b { color: var(--accent-gold); font-weight: 700; background: rgba(255, 213, 79, 0.08); padding: 0 4px; border-radius: 3px; }
+
+        .action-dock { display: flex; gap: 1rem; align-items: center; width: 100%; max-width: 640px; justify-content: space-between; }
+        .nav-controls { display: flex; gap: 0.5rem; }
+        .btn-action { background-color: rgba(255,255,255,0.04); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+        .btn-action:hover { background-color: rgba(255,255,255,0.08); }
+        .btn-status-toggle { padding: 0.6rem 1.5rem; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; border: 1px solid transparent; }
+        .btn-mastered { background-color: rgba(129, 199, 132, 0.1); border-color: rgba(129, 199, 132, 0.2); color: var(--accent-green); }
+        .btn-mastered.active { background-color: var(--accent-green); color: #000; }
+        .btn-star { background-color: rgba(255, 213, 79, 0.1); border-color: rgba(255, 213, 79, 0.2); color: var(--accent-gold); }
+        .btn-star.active { background-color: var(--accent-gold); color: #000; }
+
+        .list-stage { display: none; width: 100%; height: 100%; padding: 1.5rem 2rem; overflow-y: auto; }
+        .list-stage.active { display: block; }
+        .dense-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; text-align: left; }
+        .dense-table th, .dense-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); }
+        .dense-table th { background-color: rgba(255,255,255,0.02); color: var(--text-secondary); font-size: 0.75rem; position: sticky; top: 0; }
+        .dense-table tbody tr.mastered { opacity: 0.4; }
+
+        .youglish-btn { display: inline-block; padding: 4px 10px; background: rgba(255, 213, 79, 0.1); color: var(--accent-gold); text-decoration: none; font-size: 0.75rem; font-weight: 600; border-radius: 6px; border: 1px solid rgba(255, 213, 79, 0.25); transition: all 0.2s; cursor: pointer; }
+        .youglish-btn:hover { background: var(--accent-gold); color: #000; }
+        .context-tag { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-right: 4px; background: rgba(255,255,255,0.08); }
+        .tag-work { background-color: rgba(35, 131, 226, 0.15); color: #90caf9; }
+        .tag-life { background-color: rgba(76, 175, 80, 0.15); color: #a5d6a7; }
+        .tag-social { background-color: rgba(255, 152, 0, 0.15); color: #ffcc80; }
+
+        @media only screen and (max-width: 850px) {
+            header { flex-direction: column; gap: 1rem; padding: 1rem; align-items: flex-start; }
+            .dashboard-stats { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
+            .progress-container { width: 100%; flex-basis: 100%; }
+            .cockpit-container { display: flex; flex-direction: column; height: auto; }
+            main { order: 1; height: auto; min-height: 480px; width: 100%; display: flex; flex-direction: column; }
+            #cardStage { order: -1; padding: 1rem; }
+            .sidebar { order: 2; border-right: none; border-top: 1px solid var(--border-color); height: auto; padding: 1.2rem; }
+            .view-mode-toggle { position: static; margin: 0.5rem 1rem 0 auto; width: fit-content; }
+            .workspace-stage { padding: 1rem; }
+            .flashcard-wrapper { height: 320px; margin-bottom: 1.2rem; }
+            .card-verb-title { font-size: 2.2rem; word-break: break-word; }
+            .action-dock { flex-direction: column; gap: 0.6rem; width: 100%; }
+            .action-dock .btn-status-toggle, .action-dock .nav-controls { width: 100%; justify-content: center; }
+            .nav-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; width: 100%; }
+            .action-dock .nav-controls .btn-action { justify-content: center; }
+            .dense-table th, .dense-table td { padding: 0.5rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div style="color: var(--text-secondary); font-size: 0.85rem;" id="loading-status">正在无缝挂载 1000 地道短语核心仓...</div>
+    </div>
+
+    <div id="app-wrapper" style="display: none; flex-direction: column; min-height: 100vh;">
+        <header>
+            <div class="logo-section">
+                <h1>PHRASAL VERBS COCKPIT</h1>
+                <p>1000 高频核心英美地道动词短语高效复习系统</p>
+            </div>
+            <div class="dashboard-stats">
+                <div class="stat-item"><div class="stat-val blue" id="totalCountDisplay">0</div><div class="stat-lbl">当前队列</div></div>
+                <div class="stat-item"><div class="stat-val green" id="masteredCountDisplay">0 / 1000</div><div class="stat-lbl">已熟练</div></div>
+                <div class="stat-item"><div class="stat-val gold" id="starredCountDisplay">0</div><div class="stat-lbl">标星难点</div></div>
+                <div class="stat-container"><div class="progress-container"><div class="progress-bar" id="progressBarFill"></div></div></div>
+            </div>
+        </header>
+
+        <div class="cockpit-container">
+            <aside class="sidebar">
+                <div class="control-group">
+                    <div class="control-label">智能搜索</div>
+                    <div class="search-box"><input type="text" id="searchInput" placeholder="搜索短语/释义/例句..."></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">进度过滤</div>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-status="all"><span>全部短语库</span><span class="filter-count" id="countAll">0</span></button>
+                        <button class="filter-btn" data-status="unlearned"><span>未掌握 (生词)</span><span class="filter-count" id="countUnlearned">0</span></button>
+                        <button class="filter-btn" data-status="mastered"><span>已熟练掌握</span><span class="filter-count" id="countMastered">0</span></button>
+                        <button class="filter-btn" data-status="starred"><span>标星重点复习</span><span class="filter-count" id="countStarred">0</span></button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">语境标签分类</div>
+                    <select class="custom-select" id="tagSelect"><option value="all">显示全部语境</option></select>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">出卡模式</div>
+                    <button class="btn-action" id="randomToggleBtn" style="justify-content: center;"><span id="randomStatusText">顺序播放模式</span></button>
+                </div>
+                <button class="btn-action" id="resetProgressBtn" style="justify-content: center; margin-top: 0.5rem; color: var(--accent-red); border-color: rgba(255,107,107,0.2);">重置系统全部数据</button>
+            </aside>
+
+            <main>
+                <div class="view-mode-toggle">
+                    <button class="mode-btn active" data-mode="card">卡片模式</button>
+                    <button class="mode-btn" data-mode="list">列表模式</button>
+                </div>
+
+                <section class="workspace-stage" id="cardStage">
+                    <div class="flashcard-wrapper" id="flashcardWrapper">
+                        <div class="flashcard-inner">
+                            <div class="card-face card-front-face">
+                                <div class="card-meta-top">
+                                    <span class="card-id-badge">ID: <span id="cardId">-</span></span>
+                                    <span id="cardProgressIndex">0 / 0</span>
+                                </div>
+                                <h2 class="card-verb-title" id="cardVerb">-</h2>
+                                <a id="frontYouGlishBtn" class="youglish-btn" target="_blank" style="margin-top: 1rem; z-index: 10;" onclick="event.stopPropagation();">🔊 YouGlish 地道发音</a>
+                                <div class="card-tags-area" id="cardTags"></div>
+                                <div class="hint-click-flip">点击卡片或按 [空格] 翻面</div>
+                            </div>
+                            <div class="card-face card-back-face">
+                                <div class="back-title-row">
+                                    <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                                        <span class="back-label">Phrasal Verb</span>
+                                        <span class="back-verb" id="backVerb">-</span>
+                                    </div>
+                                    <a id="backYouGlishBtn" class="youglish-btn" target="_blank" onclick="event.stopPropagation();">🔊 发音</a>
+                                </div>
+                                <div class="back-label" style="margin-bottom: 0.2rem;">核心精准释义</div>
+                                <div class="meaning-section" id="cardMeaning">-</div>
+                                <div class="back-label" style="margin-bottom: 0.2rem;">🇺🇸 实战语境 & 地道例句</div>
+                                <div class="scenario-section" id="cardScenario">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-dock">
+                        <button class="btn-status-toggle btn-star" id="starCardBtn">☆ 标星难点 (S)</button>
+                        <div class="nav-controls">
+                            <button class="btn-action" id="prevCardBtn">◀ 上一张 (A)</button>
+                            <button class="btn-action" id="nextCardBtn">下一张 (D) ▶</button>
+                        </div>
+                        <button class="btn-status-toggle btn-mastered" id="masterCardBtn">✔ 我已学会 (Enter)</button>
+                    </div>
+                </section>
+
+                <section class="list-stage" id="listStage">
+                    <table class="dense-table">
+                        <thead>
+                            <tr><th>序号</th><th>动词短语</th><th>核心含义</th><th>实战语境例句</th><th>状态</th></tr>
+                        </thead>
+                        <tbody id="denseTableBody"></tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let DATASET = [];
+        let currentIndex = 0;
+        let activeViewMode = 'card';
+        let currentStatusFilter = 'all';
+        let currentTagFilter = 'all';
+        let currentSearchQuery = '';
+        let isRandomMode = false;
+        let masteredList = [];
+        let starredList = [];
+        let displayQueue = [];
+
+        function loadProgress() {
+            try {
+                const m = localStorage.getItem('pv_mastered_v2');
+                const s = localStorage.getItem('pv_starred_v2');
+                const idx = localStorage.getItem('pv_current_index_v2');
+                const r = localStorage.getItem('pv_random_mode_v2');
+                if (m) masteredList = JSON.parse(m);
+                if (s) starredList = JSON.parse(s);
+                if (idx) currentIndex = parseInt(idx, 10) || 0;
+                if (r) isRandomMode = (r === 'true');
+            } catch (e) { console.error(e); }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('pv_mastered_v2', JSON.stringify(masteredList));
+            localStorage.setItem('pv_starred_v2', JSON.stringify(starredList));
+            localStorage.setItem('pv_current_index_v2', currentIndex.toString());
+            localStorage.setItem('pv_random_mode_v2', isRandomMode.toString());
+            updateDashboardCounters();
+        }
+
+        function initTagsDropdown() {
+            const tagSelect = document.getElementById('tagSelect');
+            const allTags = new Set();
+            DATASET.forEach(item => { if (item.tags) item.tags.forEach(t => allTags.add(t)); });
+            allTags.forEach(tag => {
+                const opt = document.createElement('option');
+                opt.value = tag; opt.textContent = tag;
+                tagSelect.appendChild(opt);
+            });
+        }
+
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function rebuildDisplayQueue() {
+            let result = [...DATASET];
+            if (currentSearchQuery) {
+                const query = currentSearchQuery.toLowerCase();
+                result = result.filter(item => item.verb.toLowerCase().includes(query) || item.meaning.toLowerCase().includes(query) || item.scenario.toLowerCase().includes(query));
+            }
+            if (currentStatusFilter === 'unlearned') {
+                result = result.filter(item => !masteredList.includes(item.id));
+            } else if (currentStatusFilter === 'mastered') {
+                result = result.filter(item => masteredList.includes(item.id));
+            } else if (currentStatusFilter === 'starred') {
+                result = result.filter(item => starredList.includes(item.id));
+            }
+            if (currentTagFilter !== 'all') {
+                result = result.filter(item => item.tags && item.tags.includes(currentTagFilter));
+            }
+            if (isRandomMode) { shuffleArray(result); } else { result.sort((a, b) => a.id - b.id); }
+            displayQueue = result;
+            if (currentIndex >= displayQueue.length) { currentIndex = Math.max(0, displayQueue.length - 1); }
+            document.getElementById('totalCountDisplay').textContent = displayQueue.length;
+            renderCurrentView();
+        }
+
+        function updateDashboardCounters() {
+            const masteredCount = masteredList.length;
+            const starredCount = starredList.length;
+            document.getElementById('countMastered').textContent = masteredCount;
+            document.getElementById('countStarred').textContent = starredCount;
+            document.getElementById('countUnlearned').textContent = DATASET.length - masteredCount;
+            document.getElementById('masteredCountDisplay').textContent = `${masteredCount} / ${DATASET.length}`;
+            document.getElementById('starredCountDisplay').textContent = starredCount;
+            const percent = DATASET.length ? (masteredCount / DATASET.length) * 100 : 0;
+            document.getElementById('progressBarFill').style.width = `${percent}%`;
+        }
+
+        function renderCurrentView() {
+            if (activeViewMode === 'card') { renderFlashcard(); } else { renderDenseList(); }
+        }
+
+        function renderFlashcard() {
+            const wrapper = document.getElementById('flashcardWrapper');
+            wrapper.classList.remove('flipped');
+            if (displayQueue.length === 0) {
+                document.getElementById('cardVerb').textContent = "Empty Queue";
+                document.getElementById('cardMeaning').innerHTML = "无匹配短语。";
+                document.getElementById('cardScenario').innerHTML = "-";
+                document.getElementById('cardId').textContent = "-";
+                document.getElementById('cardProgressIndex').textContent = "0 / 0";
+                document.getElementById('cardTags').innerHTML = "";
+                return;
+            }
+            const item = displayQueue[currentIndex];
+            document.getElementById('cardId').textContent = item.id;
+            document.getElementById('cardProgressIndex').textContent = `${currentIndex + 1} / ${displayQueue.length}`;
+            document.getElementById('cardVerb').textContent = item.verb;
+            document.getElementById('backVerb').textContent = item.verb;
+            document.getElementById('cardMeaning').innerHTML = item.meaning;
+            document.getElementById('cardScenario').innerHTML = item.scenario;
+            const encodedPhrase = encodeURIComponent(item.verb);
+            const ygUrl = `https://youglish.com/pronounce/${encodedPhrase}/english`;
+            document.getElementById('frontYouGlishBtn').href = ygUrl;
+            document.getElementById('backYouGlishBtn').href = ygUrl;
+            const tagsArea = document.getElementById('cardTags');
+            tagsArea.innerHTML = '';
+            if (item.tags) {
+                item.tags.forEach(t => {
+                    const el = document.createElement('span');
+                    el.className = 'tag-pill'; el.textContent = t;
+                    tagsArea.appendChild(el);
+                });
+            }
+            const starBtn = document.getElementById('starCardBtn');
+            starBtn.className = `btn-status-toggle btn-star ${starredList.includes(item.id) ? 'active' : ''}`;
+            starBtn.textContent = starredList.includes(item.id) ? '★ 已标星 (S)' : '☆ 标星难点 (S)';
+            const masterBtn = document.getElementById('masterCardBtn');
+            masterBtn.className = `btn-status-toggle btn-mastered ${masteredList.includes(item.id) ? 'active' : ''}`;
+            masterBtn.textContent = masteredList.includes(item.id) ? '✔ 已学会 (Enter)' : '检测：未学会 (Enter)';
+        }
+
+        function renderDenseList() {
+            const tbody = document.getElementById('denseTableBody'); tbody.innerHTML = '';
+            if (displayQueue.length === 0) return;
+            displayQueue.forEach(item => {
+                const tr = document.createElement('tr');
+                if (masteredList.includes(item.id)) tr.classList.add('mastered');
+                const encodedPhrase = encodeURIComponent(item.verb);
+                const ygUrl = `https://youglish.com/pronounce/${encodedPhrase}/english`;
+                tr.innerHTML = `
+                    <td class="td-id">${item.id}</td>
+                    <td class="td-verb">${item.verb} <a class="youglish-btn" href="${ygUrl}" target="_blank" style="font-size:0.65rem; padding:1px 5px;" onclick="event.stopPropagation();">🔊</a></td>
+                    <td class="td-meaning">${item.meaning}</td>
+                    <td class="td-example">${item.scenario}</td>
+                    <td><button class="star-icon-btn ${starredList.includes(item.id) ? 'active' : ''}">★</button></td>
+                `;
+                tr.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('star-icon-btn')) {
+                        e.stopPropagation(); toggleStarStatus(item.id); e.target.classList.toggle('active'); return;
+                    }
+                    if (e.target.classList.contains('youglish-btn')) return;
+                    const idx = displayQueue.findIndex(d => d.id === item.id);
+                    if (idx !== -1) {
+                        currentIndex = idx; activeViewMode = 'card';
+                        document.querySelector('[data-mode="card"]').click();
+                    }
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleStarStatus(id) {
+            const idx = starredList.indexOf(id);
+            if (idx > -1) { starredList.splice(idx, 1); } else { starredList.push(id); }
+            saveProgress(); if (currentStatusFilter === 'starred') rebuildDisplayQueue();
+        }
+
+        function toggleMasteredStatus(id) {
+            const idx = masteredList.indexOf(id);
+            if (idx > -1) { masteredList.splice(idx, 1); } else { masteredList.push(id); }
+            saveProgress(); rebuildDisplayQueue();
+        }
+
+        function nextCard() { if (!displayQueue.length) return; currentIndex = (currentIndex + 1) % displayQueue.length; renderFlashcard(); }
+        function prevCard() { if (!displayQueue.length) return; currentIndex = (currentIndex - 1 + displayQueue.length) % displayQueue.length; renderFlashcard(); }
+
+        function setupEventListeners() {
+            document.getElementById('flashcardWrapper').addEventListener('click', (e) => {
+                if (e.target.classList.contains('youglish-btn')) return;
+                document.getElementById('flashcardWrapper').classList.toggle('flipped');
+            });
+            document.getElementById('nextCardBtn').addEventListener('click', (e) => { e.stopPropagation(); nextCard(); });
+            document.getElementById('prevCardBtn').addEventListener('click', (e) => { e.stopPropagation(); prevCard(); });
+            document.getElementById('starCardBtn').addEventListener('click', (e) => { e.stopPropagation(); if (displayQueue[currentIndex]) toggleStarStatus(displayQueue[currentIndex].id); renderFlashcard(); });
+            document.getElementById('masterCardBtn').addEventListener('click', (e) => { e.stopPropagation(); if (displayQueue[currentIndex]) toggleMasteredStatus(displayQueue[currentIndex].id); });
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active'); activeViewMode = btn.getAttribute('data-mode');
+                    document.getElementById('cardStage').style.display = activeViewMode === 'card' ? 'flex' : 'none';
+                    document.getElementById('listStage').style.display = activeViewMode === 'list' ? 'block' : 'none';
+                    renderCurrentView();
+                });
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active'); currentStatusFilter = btn.getAttribute('data-status');
+                    currentIndex = 0; rebuildDisplayQueue();
+                });
+            });
+            document.getElementById('tagSelect').addEventListener('change', (e) => { currentTagFilter = e.target.value; currentIndex = 0; rebuildDisplayQueue(); });
+            document.getElementById('searchInput').addEventListener('input', (e) => { currentSearchQuery = e.target.value; currentIndex = 0; rebuildDisplayQueue(); });
+            
+            const randomBtn = document.getElementById('randomToggleBtn');
+            randomBtn.addEventListener('click', () => {
+                isRandomMode = !isRandomMode; currentIndex = 0; saveProgress();
+                randomBtn.textContent = isRandomMode ? '🎲 随机乱序模式' : '🔁 顺序播放模式';
+                rebuildDisplayQueue();
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT') return;
+                if (e.code === 'Space') { e.preventDefault(); document.getElementById('flashcardWrapper').classList.toggle('flipped'); }
+                if (e.code === 'ArrowRight' || e.code === 'KeyD') nextCard();
+                if (e.code === 'ArrowLeft' || e.code === 'KeyA') prevCard();
+                if (e.code === 'Enter' || e.code === 'KeyW') { e.preventDefault(); if (displayQueue[currentIndex]) toggleMasteredStatus(displayQueue[currentIndex].id); }
+                if (e.code === 'KeyS') { if (displayQueue[currentIndex]) toggleStarStatus(displayQueue[currentIndex].id); renderFlashcard(); }
+            });
+        }
+
+        // 核心加载自举生命周期
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('./phrasal_verbs.html')
+                .then(r => { if(!r.ok) throw new Error(); return r.text(); })
+                .then(text => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const rows = doc.querySelectorAll('.pv-row');
+                    DATASET = [];
+                    rows.forEach(row => {
+                        const id = row.getAttribute('data-row');
+                        const verb = row.querySelector('.cell-title').textContent.trim();
+                        const tds = row.querySelectorAll('td');
+                        const tags = [];
+                        row.querySelectorAll('.context-tag').forEach(t => tags.push(t.textContent.trim()));
+                        DATASET.push({ id: parseInt(id,10), verb, meaning: tds[2].innerHTML, scenario: tds[3].innerHTML, tags });
+                    });
+                    
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('app-wrapper').style.display = 'flex';
+                    
+                    loadProgress();
+                    initTagsDropdown();
+                    setupEventListeners();
+                    rebuildDisplayQueue();
+                    updateDashboardCounters();
+                })
+                .catch(err => {
+                    document.getElementById('loading-status').innerHTML = `<span style="color:var(--accent-red); line-height:1.5; padding:2rem; text-align:center; display:block;">
+                        ⚠️ 引擎加载失败诊断：<br>
+                        1. 请确认当前目录下是否存在 <b>phrasal_verbs.html</b> 文件。<br>
+                        2. 或者是由于本地双击打开文件触发了浏览器安全跨域限制，请直接将该文件 Push 到您的 GitHub Pages 线上环境中运行。
+                    </span>`;
+                });
+        });
+    </script>
+</body>
+</html>
